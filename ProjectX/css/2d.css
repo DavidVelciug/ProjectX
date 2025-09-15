@@ -1,0 +1,479 @@
+/* Базовые настройки страницы */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Цветовая схема для темной темы */
+:root {
+    --primary-color: #0a1929;
+    --secondary-color: #0d2337;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #0b1c2e;
+    --light-color: #e6f2ff;
+    --text-color: #e0f2fe;
+    --header-height: 70px;
+    --transition-speed: 0.3s;
+    --bg-color: #0a1929;
+    --content-bg: rgba(13, 35, 55, 0.4);
+    --card-bg: rgba(13, 35, 55, 0.4);
+    --border-color: rgba(42, 157, 143, 0.25);
+}
+
+/* Цветовая схема для светлой темы */
+body.light-theme {
+    --primary-color: #e6f2ff;
+    --secondary-color: #d4e6f9;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #c5d9e8;
+    --light-color: #0a1929;
+    --text-color: #0a1929;
+    --bg-color: #e6f2ff;
+    --content-bg: rgba(212, 230, 249, 0.6);
+    --card-bg: rgba(212, 230, 249, 0.8);
+    --border-color: rgba(42, 157, 143, 0.4);
+}
+
+/* Основной фон страницы */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.15) 0%, transparent 25%);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Фон для светлой темы */
+body.light-theme {
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.1) 0%, transparent 25%);
+}
+
+/* Фиксированная шапка сайта */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all var(--transition-speed);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Логотип в шапке */
+.logo {
+    display: flex;
+    align-items: center;
+    animation: fadeIn 1s ease;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-light);
+    text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+}
+
+/* Контейнер для элементов управления в шапке */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Кнопка переключения темы */
+.theme-toggle {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    color: var(--accent-light);
+}
+
+.theme-toggle:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+/* Выпадающие меню */
+.dropdown-menu {
+    position: relative;
+}
+
+.dropdown-btn {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+}
+
+.dropdown-btn:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+.dropdown-btn i {
+    margin-left: 8px;
+}
+
+/* Содержимое выпадающего меню */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: var(--dark-color);
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 1;
+    animation: slideDown 0.5s ease;
+    border: 1px solid var(--accent-color);
+}
+
+.dropdown-content a {
+    color: var(--light-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: all var(--transition-speed);
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(42, 157, 143, 0.2);
+    padding-left: 20px;
+    color: var(--accent-light);
+}
+
+.dropdown-content a i {
+    margin-right: 10px;
+    color: var(--accent-light);
+}
+
+.show {
+    display: block;
+}
+
+/* Основная область содержимого */
+.app-content {
+    margin-top: var(--header-height);
+    padding: 30px;
+    background: var(--bg-color);
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Секция для рисования цифр */
+.drawing-section {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(6px);
+    transition: all var(--transition-speed);
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+}
+
+.drawing-section h2 {
+    color: var(--accent-light);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Контейнеры для холстов */
+.canvases-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin: 30px 0;
+}
+
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas-title {
+    margin-bottom: 15px;
+    color: var(--accent-light);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Контейнер для canvas элементов */
+.canvas-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#drawing-canvas,
+#result-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+#result-canvas {
+    background-color: #000;
+    cursor: default;
+}
+
+/* Панель управления */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.control-btn {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 12px 24px;
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+}
+
+.control-btn:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+.control-btn i {
+    margin-right: 8px;
+}
+
+/* Блок с результатом распознавания */
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(42, 157, 143, 0.15);
+    border-left: 4px solid var(--accent-color);
+}
+
+.result h3 {
+    color: var(--accent-light);
+    margin-bottom: 10px;
+}
+
+.result-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-light);
+}
+
+/* Визуализация распознанной цифры */
+.visualization-2d {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.digit-display {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+/* Анимированная граница для цифры */
+.digit-display::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, var(--accent-color), var(--accent-light), var(--accent-color));
+    z-index: -1;
+    border-radius: 20px;
+    animation: borderAnimation 3s linear infinite;
+}
+
+.digit {
+    font-size: 100px;
+    font-weight: bold;
+    color: var(--accent-light);
+    text-shadow: 0 0 15px rgba(56, 178, 172, 0.7);
+    animation: pulse 2s infinite;
+}
+
+/* Анимации для интерфейса */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes borderAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes eraseAnimation {
+    from {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    to {
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 768px) {
+    .canvases-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .canvas-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .control-btn {
+        width: 200px;
+        justify-content: center;
+    }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .drawing-section {
+        padding: 20px;
+    }
+
+    .canvas-container {
+        width: 200px;
+        height: 200px;
+    }
+
+    .digit {
+        font-size: 80px;
+    }
+}
