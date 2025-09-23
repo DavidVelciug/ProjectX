@@ -141,21 +141,63 @@ canvas.addEventListener('touchend', (e) => {
     canvas.dispatchEvent(mouseEvent);
 });
 
-// Обработка нажатия кнопки распознавания
-recognizeBtn.addEventListener('click', () => {
-    // Демонстрационный результат
-    const randomDigit = Math.floor(Math.random() * 10);
-    resultText.textContent = randomDigit;
+// Обработка нажатия кнопки распознавания !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Обработка нажатия кнопки распознавания  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+recognizeBtn.addEventListener('click', async () => {
+    // Получаем пиксели холста
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // Анимация результата
-    resultText.style.transition = 'all 0.5s ease';
-    resultText.style.transform = 'scale(1.2)';
-    resultText.style.color = '#38b2ac';
+    // Переведем в массив "0/1" (белый пиксель = закрашено, черный = пусто)
+    const pixels = [];
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        // Берем значение яркости (R=G=B, т.к. у тебя белый по черному)
+        const r = imageData.data[i];
+        const g = imageData.data[i + 1];
+        const b = imageData.data[i + 2];
 
-    setTimeout(() => {
-        resultText.style.transform = 'scale(1)';
-        resultText.style.color = '';
-    }, 500);
+        // если яркость ближе к белому → считаем как закрашенный
+        const isFilled = (r + g + b) / 3 > 127 ? 1 : 0;
+        pixels.push(isFilled);
+    }
+
+    // Формируем данные для отправки
+    const requestData = {
+        width: canvas.width,
+        height: canvas.height,
+        pixels: pixels
+    };
+
+    try {
+        // Отправляем на бэкенд
+        const response = await fetch("http://localhost:8080/api/recognize", {  // ссылка на хост бэкэнда
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+            throw new Error("Ошибка при запросе к серверу");
+        }
+
+        const result = await response.json();
+
+        // Ожидаем, что сервер вернёт { digit: число }
+        resultText.textContent = result.digit ?? "—";
+
+        // Анимация результата
+        resultText.style.transition = 'all 0.5s ease';
+        resultText.style.transform = 'scale(1.2)';
+        resultText.style.color = '#38b2ac';
+
+        setTimeout(() => {
+            resultText.style.transform = 'scale(1)';
+            resultText.style.color = '';
+        }, 500);
+
+    } catch (error) {
+        console.error("Ошибка:", error);
+        resultText.textContent = "Ошибка";
+    }
 });
 
 // Обработка нажатия кнопки очистки
