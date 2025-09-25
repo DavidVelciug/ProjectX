@@ -1,702 +1,780 @@
-        /* Базовые настройки страницы */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Цветовая схема для темной темы */
-        :root {
-            --primary-color: #0a1929;
-            --secondary-color: #0d2337;
-            --accent-color: #2a9d8f;
-            --accent-light: #38b2ac;
-            --dark-color: #0b1c2e;
-            --light-color: #e6f2ff;
-            --text-color: #e0f2fe;
-            --header-height: 90px;
-            --transition-speed: 0.3s;
-            --bg-color: #0a1929;
-            --content-bg: rgba(13, 35, 55, 0.4);
-            --card-bg: rgba(13, 35, 55, 0.4);
-            --border-color: rgba(42, 157, 143, 0.25);
-        }
-
-        /* Цветовая схема для светлой темы */
-        body.light-theme {
-            --primary-color: #e6f2ff;
-            --secondary-color: #d4e6f9;
-            --accent-color: #2a9d8f;
-            --accent-light: #38b2ac;
-            --dark-color: #c5d9e8;
-            --light-color: #0a1929;
-            --text-color: #0a1929;
-            --bg-color: #e6f2ff;
-            --content-bg: rgba(212, 230, 249, 0.6);
-            --card-bg: rgba(212, 230, 249, 0.8);
-            --border-color: rgba(42, 157, 143, 0.4);
-        }
-
-        /* Основной фон страницы */
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.15) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.15) 0%, transparent 25%);
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-        }
-
-        /* Фон для светлой темы */
-        body.light-theme {
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.1) 0%, transparent 25%);
-        }
-
-        /* Фиксированная шапка сайта */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--header-height);
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: all var(--transition-speed);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* Логотип в шапке */
-        .logo {
-            display: flex;
-            align-items: center;
-            animation: fadeIn 1s ease;
-        }
-
-        .logo img {
-            height: 50px;
-            margin-right: 15px;
-            border-radius: 5px;
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent-light);
-            text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
-        }
-
-        /* Контейнер для элементов управления в шапке */
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        /* Кнопка переключения темы */
-        .theme-toggle {
-            background: rgba(42, 157, 143, 0.25);
-            border: 1px solid var(--accent-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all var(--transition-speed);
-            color: var(--accent-light);
-            font-size: 20px;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(42, 157, 143, 0.35);
-            transform: translateY(-2px);
-            box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
-        }
-
-        /* Выпадающие меню */
-        .dropdown-menu {
-            position: relative;
-        }
-
-        .dropdown-btn {
-            background: rgba(42, 157, 143, 0.25);
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            padding: 12px 25px;
-            color: var(--accent-light);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all var(--transition-speed);
-            font-size: 16px;
-        }
-
-        .dropdown-btn:hover {
-            background: rgba(42, 157, 143, 0.35);
-            transform: translateY(-2px);
-            box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
-        }
-
-        .dropdown-btn i {
-            margin-left: 10px;
-        }
-
-        /* Содержимое выпадающего меню */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 60px;
-            background-color: var(--dark-color);
-            min-width: 250px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            overflow: hidden;
-            z-index: 1;
-            animation: slideDown 0.5s ease;
-            border: 1px solid var(--accent-color);
-        }
-
-        .dropdown-content a {
-            color: var(--light-color);
-            padding: 15px 20px;
-            text-decoration: none;
-            display: block;
-            transition: all var(--transition-speed);
-            font-size: 16px;
-        }
-
-        .dropdown-content a:hover {
-            background-color: rgba(42, 157, 143, 0.2);
-            padding-left: 25px;
-            color: var(--accent-light);
-        }
-
-        .dropdown-content a i {
-            margin-right: 12px;
-            color: var(--accent-light);
-        }
-
-        .show {
-            display: block;
-        }
-
-        /* Основная область содержимого */
-        .app-content {
-            margin-top: var(--header-height);
-            padding: 40px;
-            background: var(--bg-color);
-            min-height: calc(100vh - var(--header-height));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Секция для рисования цифр */
-        .drawing-section {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.8s ease;
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(6px);
-            transition: all var(--transition-speed);
-            max-width: 1600px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .drawing-section h2 {
-            color: var(--accent-light);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            font-size: 32px;
-        }
-
-        .drawing-section p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        /* Контейнеры для холстов */
-        .canvases-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 60px;
-            margin: 40px 0;
-        }
-
-        .canvas-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .canvas-title {
-            margin-bottom: 20px;
-            color: var(--accent-light);
-            font-weight: 600;
-            font-size: 22px;
-        }
-
-        /* Контейнер для canvas элементов */
-        .canvas-container {
-            position: relative;
-            width: 450px;
-            height: 450px;
-            border: 3px solid var(--accent-color);
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: #000;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        #drawing-canvas,
-        #result-canvas {
-            width: 100%;
-            height: 100%;
-            cursor: crosshair;
-        }
-
-        #result-canvas {
-            background-color: #111;
-            cursor: default;
-        }
-
-        /* Панель управления */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .control-btn {
-            background: rgba(42, 157, 143, 0.25);
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            padding: 15px 30px;
-            color: var(--accent-light);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all var(--transition-speed);
-            font-size: 18px;
-            transform-style: preserve-3d;
-            transform: translateZ(0);
-        }
-
-        .control-btn:hover {
-            background: rgba(42, 157, 143, 0.35);
-            transform: translateY(-2px) translateZ(10px);
-            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.5);
-        }
-
-        .control-btn i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        /* Блок с результатом распознавания */
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(42, 157, 143, 0.15);
-            border-left: 5px solid var(--accent-color);
-            transform-style: preserve-3d;
-            transform: translateZ(5px);
-        }
-
-        .result h3 {
-            color: var(--accent-light);
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        .result-text {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--accent-light);
-        }
-
-        /* 3D визуализация результата */
-        .visualization-3d {
-            perspective: 1200px;
-            margin: 50px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .cube-container {
-            width: 280px;
-            height: 280px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: cubeRotate 15s infinite linear;
-            margin-bottom: 50px;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 0 25px rgba(42, 157, 143, 0.6);
-            opacity: 0.9;
-            backface-visibility: visible;
-        }
-
-        .cube-front {
-            transform: translateZ(140px);
-        }
-
-        .cube-back {
-            transform: rotateY(180deg) translateZ(140px);
-        }
-
-        .cube-right {
-            transform: rotateY(90deg) translateZ(140px);
-        }
-
-        .cube-left {
-            transform: rotateY(-90deg) translateZ(140px);
-        }
-
-        .cube-top {
-            transform: rotateX(90deg) translateZ(140px);
-        }
-
-        .cube-bottom {
-            transform: rotateX(-90deg) translateZ(140px);
-        }
-
-        .cube-digit {
-            font-size: 90px;
-            font-weight: bold;
-            color: var(--accent-light);
-            text-shadow: 0 0 20px rgba(56, 178, 172, 0.8);
-        }
-
-        /* Анимации для интерфейса */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0.8;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes eraseAnimation {
-            from {
-                background-color: rgba(255, 255, 255, 0.8);
-            }
-
-            to {
-                background-color: rgba(255, 255, 255, 0);
-            }
-        }
-
-        @keyframes cubeRotate {
-            from {
-                transform: rotateX(0) rotateY(0) rotateZ(0);
-            }
-
-            to {
-                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-            }
-        }
-
-        /* Адаптивность для больших экранов 2560x1600 */
-        @media (min-width: 1921px) and (max-width: 2560px) {
-            .drawing-section {
-                max-width: 1800px;
-                padding: 50px;
-            }
-            
-            .canvas-container {
-                width: 500px;
-                height: 500px;
-            }
-            
-            .cube-container {
-                width: 320px;
-                height: 320px;
-            }
-            
-            .cube-front {
-                transform: translateZ(160px);
-            }
-
-            .cube-back {
-                transform: rotateY(180deg) translateZ(160px);
-            }
-
-            .cube-right {
-                transform: rotateY(90deg) translateZ(160px);
-            }
-
-            .cube-left {
-                transform: rotateY(-90deg) translateZ(160px);
-            }
-
-            .cube-top {
-                transform: rotateX(90deg) translateZ(160px);
-            }
-
-            .cube-bottom {
-                transform: rotateX(-90deg) translateZ(160px);
-            }
-            
-            .cube-digit {
-                font-size: 100px;
-            }
-        }
-
-        /* Адаптивность для планшетов */
-        @media (max-width: 1024px) {
-            .canvases-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 40px;
-            }
-
-            .canvas-container {
-                width: 400px;
-                height: 400px;
-            }
-
-            .controls {
-                flex-direction: row;
-                align-items: center;
-            }
-
-            .control-btn {
-                width: auto;
-                justify-content: center;
-            }
-            
-            .cube-container {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .cube-front {
-                transform: translateZ(110px);
-            }
-
-            .cube-back {
-                transform: rotateY(180deg) translateZ(110px);
-            }
-
-            .cube-right {
-                transform: rotateY(90deg) translateZ(110px);
-            }
-
-            .cube-left {
-                transform: rotateY(-90deg) translateZ(110px);
-            }
-
-            .cube-top {
-                transform: rotateX(90deg) translateZ(110px);
-            }
-
-            .cube-bottom {
-                transform: rotateX(-90deg) translateZ(110px);
-            }
-            
-            .cube-digit {
-                font-size: 70px;
-            }
-            
-            header {
-                padding: 0 30px;
-            }
-            
-            .logo-text {
-                font-size: 24px;
-            }
-        }
-
-        /* Адаптивность для мобильных устройств */
-        @media (max-width: 768px) {
-            .drawing-section {
-                padding: 30px;
-            }
-
-            .canvas-container {
-                width: 320px;
-                height: 320px;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .cube-container {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .cube-front {
-                transform: translateZ(90px);
-            }
-
-            .cube-back {
-                transform: rotateY(180deg) translateZ(90px);
-            }
-
-            .cube-right {
-                transform: rotateY(90deg) translateZ(90px);
-            }
-
-            .cube-left {
-                transform: rotateY(-90deg) translateZ(90px);
-            }
-
-            .cube-top {
-                transform: rotateX(90deg) translateZ(90px);
-            }
-
-            .cube-bottom {
-                transform: rotateX(-90deg) translateZ(90px);
-            }
-            
-            .cube-digit {
-                font-size: 60px;
-            }
-            
-            header {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-            }
-            
-            .header-controls {
-                margin-top: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .logo {
-                margin-bottom: 10px;
-            }
-        }
-
-        /* Адаптивность для маленьких мобильных устройств */
-        @media (max-width: 480px) {
-            .drawing-section {
-                padding: 20px;
-            }
-
-            .canvas-container {
-                width: 280px;
-                height: 280px;
-            }
-            
-            .cube-container {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .cube-front {
-                transform: translateZ(75px);
-            }
-
-            .cube-back {
-                transform: rotateY(180deg) translateZ(75px);
-            }
-
-            .cube-right {
-                transform: rotateY(90deg) translateZ(75px);
-            }
-
-            .cube-left {
-                transform: rotateY(-90deg) translateZ(75px);
-            }
-
-            .cube-top {
-                transform: rotateX(90deg) translateZ(75px);
-            }
-
-            .cube-bottom {
-                transform: rotateX(-90deg) translateZ(75px);
-            }
-            
-            .cube-digit {
-                font-size: 50px;
-            }
-            
-            .app-content {
-                padding: 20px;
-            }
-            
-            .dropdown-btn {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-        }
+/* Базовые настройки страницы */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Цветовая схема для темной темы */
+:root {
+    --primary-color: #0a1929;
+    --secondary-color: #0d2337;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #0b1c2e;
+    --light-color: #e6f2ff;
+    --text-color: #e0f2fe;
+    --header-height: 90px;
+    --transition-speed: 0.3s;
+    --bg-color: #0a1929;
+    --content-bg: rgba(13, 35, 55, 0.4);
+    --card-bg: rgba(13, 35, 55, 0.4);
+    --border-color: rgba(42, 157, 143, 0.25);
+}
+
+/* Цветовая схема для светлой темы */
+body.light-theme {
+    --primary-color: #e6f2ff;
+    --secondary-color: #d4e6f9;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #c5d9e8;
+    --light-color: #0a1929;
+    --text-color: #0a1929;
+    --bg-color: #e6f2ff;
+    --content-bg: rgba(212, 230, 249, 0.6);
+    --card-bg: rgba(212, 230, 249, 0.8);
+    --border-color: rgba(42, 157, 143, 0.4);
+}
+
+/* Основной фон страницы */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.15) 0%, transparent 25%);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Фон для светлой темы */
+body.light-theme {
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.1) 0%, transparent 25%);
+}
+
+/* Фиксированная шапка сайта */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all var(--transition-speed);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Стили для кликабельного логотипа */
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Логотип в шапке */
+.logo {
+    display: flex;
+    align-items: center;
+    animation: fadeIn 1s ease;
+    transition: all var(--transition-speed);
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Анимация при наведении на логотип */
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+/* Анимация для изображения логотипа */
+.logo img {
+    height: 50px;
+    margin-right: 15px;
+    border-radius: 5px;
+    transition: all var(--transition-speed);
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Анимация для текста логотипа */
+.logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent-light);
+    text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    transition: all var(--transition-speed);
+}
+
+.logo:hover .logo-text {
+    color: #48cae4;
+    text-shadow: 0 0 12px rgba(72, 202, 228, 0.6);
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Пульсация при загрузке страницы */
+.logo {
+    animation: fadeIn 1s ease, pulse 2s ease-in-out 1s;
+}
+
+/* Контейнер для элементов управления в шапке */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Кнопка переключения темы */
+.theme-toggle {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    color: var(--accent-light);
+    font-size: 20px;
+}
+
+.theme-toggle:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+/* Выпадающие меню */
+.dropdown-menu {
+    position: relative;
+}
+
+.dropdown-btn {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 12px 25px;
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+    font-size: 16px;
+}
+
+.dropdown-btn:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+.dropdown-btn i {
+    margin-left: 10px;
+}
+
+/* Содержимое выпадающего меню */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: var(--dark-color);
+    min-width: 250px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1;
+    animation: slideDown 0.5s ease;
+    border: 1px solid var(--accent-color);
+}
+
+.dropdown-content a {
+    color: var(--light-color);
+    padding: 15px 20px;
+    text-decoration: none;
+    display: block;
+    transition: all var(--transition-speed);
+    font-size: 16px;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(42, 157, 143, 0.2);
+    padding-left: 25px;
+    color: var(--accent-light);
+}
+
+.dropdown-content a i {
+    margin-right: 12px;
+    color: var(--accent-light);
+}
+
+.show {
+    display: block;
+}
+
+/* Основная область содержимого */
+.app-content {
+    margin-top: var(--header-height);
+    padding: 40px;
+    background: var(--bg-color);
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Секция для рисования цифр */
+.drawing-section {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(6px);
+    transition: all var(--transition-speed);
+    max-width: 1600px;
+    width: 100%;
+    text-align: center;
+}
+
+.drawing-section h2 {
+    color: var(--accent-light);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 32px;
+}
+
+.drawing-section p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Контейнеры для холстов */
+.canvases-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px;
+    margin: 40px 0;
+}
+
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas-title {
+    margin-bottom: 20px;
+    color: var(--accent-light);
+    font-weight: 600;
+    font-size: 22px;
+}
+
+/* Контейнер для canvas элементов */
+.canvas-container {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+#drawing-canvas,
+#result-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    display: block; /* Важно для корректного отображения */
+}
+
+#result-canvas {
+    background-color: #111;
+    cursor: default;
+}
+
+/* Панель управления */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.control-btn {
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 15px 30px;
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+    font-size: 18px;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+}
+
+.control-btn:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px) translateZ(10px);
+    box-shadow: 0 5px 15px rgba(42, 157, 143, 0.5);
+}
+
+.control-btn i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Блок с результатом распознавания */
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(42, 157, 143, 0.15);
+    border-left: 5px solid var(--accent-color);
+    transform-style: preserve-3d;
+    transform: translateZ(5px);
+}
+
+.result h3 {
+    color: var(--accent-light);
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.result-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--accent-light);
+}
+
+/* 3D визуализация результата */
+.visualization-3d {
+    perspective: 1200px;
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.cube-container {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: cubeRotate 15s infinite linear;
+    margin-bottom: 50px;
+}
+
+.cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 0 25px rgba(42, 157, 143, 0.6);
+    opacity: 0.9;
+    backface-visibility: visible;
+}
+
+.cube-front {
+    transform: translateZ(140px);
+}
+
+.cube-back {
+    transform: rotateY(180deg) translateZ(140px);
+}
+
+.cube-right {
+    transform: rotateY(90deg) translateZ(140px);
+}
+
+.cube-left {
+    transform: rotateY(-90deg) translateZ(140px);
+}
+
+.cube-top {
+    transform: rotateX(90deg) translateZ(140px);
+}
+
+.cube-bottom {
+    transform: rotateX(-90deg) translateZ(140px);
+}
+
+.cube-digit {
+    font-size: 90px;
+    font-weight: bold;
+    color: var(--accent-light);
+    text-shadow: 0 0 20px rgba(56, 178, 172, 0.8);
+}
+
+/* Анимации для интерфейса */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes eraseAnimation {
+    from {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    to {
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes cubeRotate {
+    from {
+        transform: rotateX(0) rotateY(0) rotateZ(0);
+    }
+    to {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+/* Адаптивность для больших экранов 2560x1600 */
+@media (min-width: 1921px) and (max-width: 2560px) {
+    .drawing-section {
+        max-width: 1800px;
+        padding: 50px;
+    }
+    
+    .canvas-container {
+        width: 500px;
+        height: 500px;
+    }
+    
+    .cube-container {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .cube-front {
+        transform: translateZ(160px);
+    }
+
+    .cube-back {
+        transform: rotateY(180deg) translateZ(160px);
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(160px);
+    }
+
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(160px);
+    }
+
+    .cube-top {
+        transform: rotateX(90deg) translateZ(160px);
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(160px);
+    }
+    
+    .cube-digit {
+        font-size: 100px;
+    }
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+    .canvases-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .canvas-container {
+        width: 400px;
+        height: 400px;
+    }
+
+    .controls {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .control-btn {
+        width: auto;
+        justify-content: center;
+    }
+    
+    .cube-container {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .cube-front {
+        transform: translateZ(110px);
+    }
+
+    .cube-back {
+        transform: rotateY(180deg) translateZ(110px);
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(110px);
+    }
+
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(110px);
+    }
+
+    .cube-top {
+        transform: rotateX(90deg) translateZ(110px);
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(110px);
+    }
+    
+    .cube-digit {
+        font-size: 70px;
+    }
+    
+    header {
+        padding: 0 30px;
+    }
+    
+    .logo-text {
+        font-size: 24px;
+    }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .drawing-section {
+        padding: 30px;
+    }
+
+    .canvas-container {
+        width: 320px;
+        height: 320px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .cube-container {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .cube-front {
+        transform: translateZ(90px);
+    }
+
+    .cube-back {
+        transform: rotateY(180deg) translateZ(90px);
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(90px);
+    }
+
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(90px);
+    }
+
+    .cube-top {
+        transform: rotateX(90deg) translateZ(90px);
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(90px);
+    }
+    
+    .cube-digit {
+        font-size: 60px;
+    }
+    
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .header-controls {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .logo {
+        margin-bottom: 10px;
+    }
+    
+    /* Адаптация для логотипа на мобильных устройствах */
+    .logo {
+        padding: 3px 8px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    
+    .logo:hover {
+        transform: none;
+    }
+    
+    .logo:hover img {
+        transform: none;
+        filter: none;
+    }
+    
+    .logo:hover .logo-text {
+        color: var(--accent-light);
+        text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    }
+}
+
+/* Адаптивность для маленьких мобильных устройств */
+@media (max-width: 480px) {
+    .drawing-section {
+        padding: 20px;
+    }
+
+    .canvas-container {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .cube-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .cube-front {
+        transform: translateZ(75px);
+    }
+
+    .cube-back {
+        transform: rotateY(180deg) translateZ(75px);
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(75px);
+    }
+
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(75px);
+    }
+
+    .cube-top {
+        transform: rotateX(90deg) translateZ(75px);
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(75px);
+    }
+    
+    .cube-digit {
+        font-size: 50px;
+    }
+    
+    .app-content {
+        padding: 20px;
+    }
+    
+    .dropdown-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .logo-text {
+        font-size: 18px;
+    }
+    
+    .logo:hover {
+        background: rgba(42, 157, 143, 0.2);
+        border-radius: 50%;
+    }
+    
+    .logo img {
+        margin-right: 0;
+    }
+}
