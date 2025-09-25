@@ -43,12 +43,8 @@ window.addEventListener('click', function (event) {
     if (!event.target.matches('.dropdown-btn')) {
         const dropdown = document.getElementById('dropdownContent');
         const variantsDropdown = document.getElementById('variantsContent');
-        if (dropdown.classList.contains('show')) {
-            dropdown.classList.remove('show');
-        }
-        if (variantsDropdown.classList.contains('show')) {
-            variantsDropdown.classList.remove('show');
-        }
+        if (dropdown.classList.contains('show')) dropdown.classList.remove('show');
+        if (variantsDropdown.classList.contains('show')) variantsDropdown.classList.remove('show');
     }
 });
 
@@ -141,47 +137,41 @@ canvas.addEventListener('touchend', (e) => {
     canvas.dispatchEvent(mouseEvent);
 });
 
-// Обработка нажатия кнопки распознавания !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Обработка нажатия кнопки распознавания  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Обработка нажатия кнопки распознавания
 recognizeBtn.addEventListener('click', async () => {
-    // Получаем пиксели холста
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    // Переведем в массив "0/1" (белый пиксель = закрашено, черный = пусто)
-    const pixels = [];
-    for (let i = 0; i < imageData.data.length; i += 4) {
-        // Берем значение яркости (R=G=B, т.к. у тебя белый по черному)
-        const r = imageData.data[i];
-        const g = imageData.data[i + 1];
-        const b = imageData.data[i + 2];
-
-        // если яркость ближе к белому → считаем как закрашенный
-        const isFilled = (r + g + b) / 3 > 127 ? 1 : 0;
-        pixels.push(isFilled);
-    }
-
-    // Формируем данные для отправки
-    const requestData = {
-        width: canvas.width,
-        height: canvas.height,
-        pixels: pixels
-    };
-
     try {
+        // Получаем данные холста в формате base64
+        const base64Image = canvas.toDataURL();
+
+        // Получаем выбранную модель ИИ
+        const modelSelect = document.getElementById('II_model-select');
+        const model = modelSelect.value;
+
+        // Получаем предполагаемую цифру
+        const targetInput = document.getElementById('expected-number');
+        let target = targetInput.value.trim();
+        target = target === '' ? null : target;
+
+        // Формируем данные для отправки
+        const requestData = {
+            image: base64Image,
+            model: model,
+            target: target
+        };
+
         // Отправляем на бэкенд
-        const response = await fetch("http://localhost:8080/api/recognize", {  // ссылка на хост бэкэнда
+        const response = await fetch("http://localhost:8080/api/recognize", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
         });
 
-        if (!response.ok) {
-            throw new Error("Ошибка при запросе к серверу");
-        }
+        if (!response.ok) throw new Error("Ошибка при запросе к серверу");
 
+        // Получаем результат от сервера
         const result = await response.json();
 
-        // Ожидаем, что сервер вернёт { digit: число }
+        // Отображаем распознанную цифру
         resultText.textContent = result.digit ?? "—";
 
         // Анимация результата
