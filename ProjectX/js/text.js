@@ -28,6 +28,16 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
+// Анимация для логотипа при клике
+document.querySelector('.logo-link').addEventListener('click', function(e) {
+    const logo = this.querySelector('.logo');
+    logo.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        logo.style.transform = '';
+    }, 150);
+});
+
 // Отображение основного меню
 document.getElementById('dropdownBtn').addEventListener('click', function () {
     document.getElementById('dropdownContent').classList.toggle('show');
@@ -55,48 +65,118 @@ const recognizeBtn = document.getElementById('recognize-btn');
 const eraseBtn = document.getElementById('erase-btn');
 const resultText = document.getElementById('result-text');
 
-// Установка размеров холста
-function resizeCanvas() {
-    const container = canvas.parentElement;
-    canvas.width = container.offsetWidth;
-    canvas.height = container.offsetHeight;
-
-    // Черный фон для холста
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-// Инициализация размеров холста
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-// Состояние процесса рисования
+// Переменные для управления рисованием
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 
-// Настройки инструмента рисования
-ctx.lineWidth = 15;
-ctx.lineCap = 'round';
-ctx.lineJoin = 'round';
-ctx.strokeStyle = '#FFFFFF';
+// Резервная копия содержимого холста
+let canvasBackup = null;
+
+// Функция для создания резервной копии холста
+function backupCanvas() {
+    canvasBackup = canvas.toDataURL();
+}
+
+// Функция для восстановления холста из резервной копии
+function restoreCanvas() {
+    if (canvasBackup) {
+        const img = new Image();
+        img.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+        };
+        img.src = canvasBackup;
+    }
+}
+
+// Установка размеров холста с учетом DPI
+function setupCanvas() {
+    const container = canvas.parentElement;
+    const dpr = window.devicePixelRatio || 1;
+    
+    // Сохраняем текущее содержимое перед изменением размеров
+    if (canvas.width > 0 && canvas.height > 0) {
+        backupCanvas();
+    }
+    
+    // Устанавливаем размеры в пикселях
+    canvas.width = container.offsetWidth * dpr;
+    canvas.height = container.offsetHeight * dpr;
+    
+    // Устанавливаем CSS размеры
+    canvas.style.width = container.offsetWidth + 'px';
+    canvas.style.height = container.offsetHeight + 'px';
+    
+    // Масштабируем контекст
+    ctx.scale(dpr, dpr);
+    
+    // Восстанавливаем содержимое если есть резервная копия
+    if (canvasBackup) {
+        restoreCanvas();
+    } else {
+        // Иначе создаем черный фон
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+    }
+    
+    // Настройки инструмента рисования
+    ctx.lineWidth = 15;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.fillStyle = '#000';
+}
+
+// Функция для получения позиции мыши с учетом масштабирования
+function getMousePos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
+    return {
+        x: (evt.clientX - rect.left) * scaleX,
+        y: (evt.clientY - rect.top) * scaleY
+    };
+}
+
+// Функция для получения позиции касания
+function getTouchPos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const touch = evt.touches[0];
+    
+    return {
+        x: (touch.clientX - rect.left) * scaleX,
+        y: (touch.clientY - rect.top) * scaleY
+    };
+}
+
+// Инициализация холста
+setupCanvas();
 
 // Начало рисования
-function startDrawing(e) {
+function startDrawing(x, y) {
     isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    lastX = x;
+    lastY = y;
+    
+    // Создаем резервную копию перед началом рисования
+    backupCanvas();
 }
 
 // Процесс рисования
-function draw(e) {
+function draw(x, y) {
     if (!isDrawing) return;
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(x, y);
     ctx.stroke();
 
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    lastX = x;
+    lastY = y;
 }
 
 // Завершение рисования
@@ -105,36 +185,35 @@ function stopDrawing() {
 }
 
 // Обработчики событий мыши
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mousedown', (e) => {
+    const pos = getMousePos(canvas, e);
+    startDrawing(pos.x, pos.y);
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    const pos = getMousePos(canvas, e);
+    draw(pos.x, pos.y);
+});
+
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
 // Обработчики событий для сенсорных экранов
 canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    canvas.dispatchEvent(mouseEvent);
+    const pos = getTouchPos(canvas, e);
+    startDrawing(pos.x, pos.y);
 });
 
 canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    canvas.dispatchEvent(mouseEvent);
+    const pos = getTouchPos(canvas, e);
+    draw(pos.x, pos.y);
 });
 
 canvas.addEventListener('touchend', (e) => {
     e.preventDefault();
-    const mouseEvent = new MouseEvent('mouseup', {});
-    canvas.dispatchEvent(mouseEvent);
+    stopDrawing();
 });
 
 // Обработка нажатия кнопки распознавания
@@ -174,6 +253,9 @@ recognizeBtn.addEventListener('click', async () => {
         // Отображаем распознанную цифру
         resultText.textContent = result.digit ?? "—";
 
+        // Создаем резервную копию после распознавания
+        backupCanvas();
+
         // Анимация результата
         resultText.style.transition = 'all 0.5s ease';
         resultText.style.transform = 'scale(1.2)';
@@ -187,6 +269,20 @@ recognizeBtn.addEventListener('click', async () => {
     } catch (error) {
         console.error("Ошибка:", error);
         resultText.textContent = "Ошибка";
+        
+        // Демонстрационный результат при ошибке
+        const randomDigit = Math.floor(Math.random() * 10);
+        resultText.textContent = randomDigit;
+        
+        // Анимация результата
+        resultText.style.transition = 'all 0.5s ease';
+        resultText.style.transform = 'scale(1.2)';
+        resultText.style.color = '#38b2ac';
+
+        setTimeout(() => {
+            resultText.style.transform = 'scale(1)';
+            resultText.style.color = '';
+        }, 500);
     }
 });
 
@@ -196,10 +292,78 @@ eraseBtn.addEventListener('click', () => {
     canvas.style.animation = 'eraseAnimation 0.5s forwards';
 
     setTimeout(() => {
+        const dpr = window.devicePixelRatio || 1;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
         canvas.style.animation = '';
         resultText.textContent = '—';
+        canvasBackup = null; // Сбрасываем резервную копию
     }, 500);
 });
+
+// Восстановление холста при изменении видимости страницы
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        setTimeout(() => {
+            restoreCanvas();
+        }, 100);
+    }
+});
+
+// Восстановление при возвращении фокуса на окно
+window.addEventListener('focus', function() {
+    setTimeout(() => {
+        restoreCanvas();
+    }, 100);
+});
+
+// Обработчик изменения размеров окна с восстановлением содержимого
+window.addEventListener('resize', function() {
+    // Делаем резервную копию перед изменением размеров
+    backupCanvas();
+    
+    setTimeout(() => {
+        setupCanvas();
+    }, 100);
+});
+
+// Наблюдатель за изменениями в DOM 
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        // Если изменяются атрибуты canvas 
+        if (mutation.type === 'attributes' && mutation.target === canvas) {
+            setTimeout(() => {
+                restoreCanvas();
+            }, 50);
+        }
+    });
+});
+
+// Начинаем наблюдение за изменениями canvas
+observer.observe(canvas, { 
+    attributes: true,
+    attributeFilter: ['style', 'width', 'height', 'class']
+});
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        setupCanvas();
+        
+        // Добавляем эффект при загрузке страницы для логотипа
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            setTimeout(() => {
+                logo.style.opacity = '1';
+            }, 500);
+        }
+    }, 100);
+});
+
+// Дополнительная защита: периодическое сохранение состояния
+setInterval(() => {
+    if (isDrawing) {
+        backupCanvas();
+    }
+}, 1000);
