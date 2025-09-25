@@ -28,6 +28,16 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
+// Анимация для логотипа при клике
+document.querySelector('.logo-link').addEventListener('click', function(e) {
+    const logo = this.querySelector('.logo');
+    logo.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        logo.style.transform = '';
+    }, 150);
+});
+
 // Отображение основного меню
 document.getElementById('dropdownBtn').addEventListener('click', function () {
     document.getElementById('dropdownContent').classList.toggle('show');
@@ -62,53 +72,143 @@ const eraseBtn = document.getElementById('erase-btn');
 const resultText = document.getElementById('result-text');
 const cubeDigit = document.getElementById('cube-digit');
 
-// Установка размеров холстов
-function resizeCanvases() {
-    const container = drawingCanvas.parentElement;
-    drawingCanvas.width = container.offsetWidth;
-    drawingCanvas.height = container.offsetHeight;
-    resultCanvas.width = container.offsetWidth;
-    resultCanvas.height = container.offsetHeight;
-
-    // Черный фон для холстов
-    drawingCtx.fillStyle = '#000';
-    drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-
-    resultCtx.fillStyle = '#111';
-    resultCtx.fillRect(0, 0, resultCanvas.width, resultCanvas.height);
-}
-
-// Инициализация размеров холстов
-resizeCanvases();
-window.addEventListener('resize', resizeCanvases);
-
-// Состояние процесса рисования
+// Переменные для управления рисованием
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 
-// Настройки инструмента рисования
-drawingCtx.lineWidth = 15;
-drawingCtx.lineCap = 'round';
-drawingCtx.lineJoin = 'round';
-drawingCtx.strokeStyle = '#FFFFFF';
+// Резервные копии содержимого холстов
+let drawingCanvasBackup = null;
+let resultCanvasBackup = null;
+let currentDigit = '—';
+
+// Функция для создания резервных копий холстов
+function backupCanvases() {
+    drawingCanvasBackup = drawingCanvas.toDataURL();
+    resultCanvasBackup = resultCanvas.toDataURL();
+}
+
+// Функция для восстановления холстов из резервных копий
+function restoreCanvases() {
+    if (drawingCanvasBackup) {
+        const img = new Image();
+        img.onload = function() {
+            drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+            drawingCtx.drawImage(img, 0, 0);
+        };
+        img.src = drawingCanvasBackup;
+    }
+    
+    if (resultCanvasBackup) {
+        const img = new Image();
+        img.onload = function() {
+            resultCtx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+            resultCtx.drawImage(img, 0, 0);
+        };
+        img.src = resultCanvasBackup;
+    }
+    
+    // Восстанавливаем цифру
+    if (currentDigit && currentDigit !== '—') {
+        update3DDisplay(currentDigit);
+    }
+}
+
+// Установка размеров холстов с учетом DPI
+function setupCanvases() {
+    const container = drawingCanvas.parentElement;
+    const dpr = window.devicePixelRatio || 1;
+    
+    // Сохраняем текущее содержимое перед изменением размеров
+    if (drawingCanvas.width > 0 && drawingCanvas.height > 0) {
+        backupCanvases();
+    }
+    
+    // Устанавливаем размеры в пикселях
+    drawingCanvas.width = container.offsetWidth * dpr;
+    drawingCanvas.height = container.offsetHeight * dpr;
+    resultCanvas.width = container.offsetWidth * dpr;
+    resultCanvas.height = container.offsetHeight * dpr;
+    
+    // Устанавливаем CSS размеры
+    drawingCanvas.style.width = container.offsetWidth + 'px';
+    drawingCanvas.style.height = container.offsetHeight + 'px';
+    resultCanvas.style.width = container.offsetWidth + 'px';
+    resultCanvas.style.height = container.offsetHeight + 'px';
+    
+    // Масштабируем контексты
+    drawingCtx.scale(dpr, dpr);
+    resultCtx.scale(dpr, dpr);
+    
+    // Восстанавливаем содержимое если есть резервные копии
+    if (drawingCanvasBackup) {
+        restoreCanvases();
+    } else {
+        // Иначе создаем черный фон
+        drawingCtx.fillStyle = '#000';
+        drawingCtx.fillRect(0, 0, drawingCanvas.width / dpr, drawingCanvas.height / dpr);
+        
+        resultCtx.fillStyle = '#111';
+        resultCtx.fillRect(0, 0, resultCanvas.width / dpr, resultCanvas.height / dpr);
+    }
+    
+    // Настройки инструмента рисования
+    drawingCtx.lineWidth = 15;
+    drawingCtx.lineCap = 'round';
+    drawingCtx.lineJoin = 'round';
+    drawingCtx.strokeStyle = '#FFFFFF';
+    drawingCtx.fillStyle = '#000';
+}
+
+// Функция для получения позиции мыши с учетом масштабирования
+function getMousePos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
+    return {
+        x: (evt.clientX - rect.left) * scaleX,
+        y: (evt.clientY - rect.top) * scaleY
+    };
+}
+
+// Функция для получения позиции касания
+function getTouchPos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const touch = evt.touches[0];
+    
+    return {
+        x: (touch.clientX - rect.left) * scaleX,
+        y: (touch.clientY - rect.top) * scaleY
+    };
+}
+
+// Инициализация холстов
+setupCanvases();
 
 // Начало рисования
-function startDrawing(e) {
+function startDrawing(x, y) {
     isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    lastX = x;
+    lastY = y;
+    
+    // Создаем резервную копию перед началом рисования
+    backupCanvases();
 }
 
 // Процесс рисования
-function draw(e) {
+function draw(x, y) {
     if (!isDrawing) return;
 
     drawingCtx.beginPath();
     drawingCtx.moveTo(lastX, lastY);
-    drawingCtx.lineTo(e.offsetX, e.offsetY);
+    drawingCtx.lineTo(x, y);
     drawingCtx.stroke();
 
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    lastX = x;
+    lastY = y;
 }
 
 // Завершение рисования
@@ -117,44 +217,44 @@ function stopDrawing() {
 }
 
 // Обработчики событий мыши
-drawingCanvas.addEventListener('mousedown', startDrawing);
-drawingCanvas.addEventListener('mousemove', draw);
+drawingCanvas.addEventListener('mousedown', (e) => {
+    const pos = getMousePos(drawingCanvas, e);
+    startDrawing(pos.x, pos.y);
+});
+
+drawingCanvas.addEventListener('mousemove', (e) => {
+    const pos = getMousePos(drawingCanvas, e);
+    draw(pos.x, pos.y);
+});
+
 drawingCanvas.addEventListener('mouseup', stopDrawing);
 drawingCanvas.addEventListener('mouseout', stopDrawing);
 
 // Обработчики событий для сенсорных экранов
 drawingCanvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    drawingCanvas.dispatchEvent(mouseEvent);
+    const pos = getTouchPos(drawingCanvas, e);
+    startDrawing(pos.x, pos.y);
 });
 
 drawingCanvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    drawingCanvas.dispatchEvent(mouseEvent);
+    const pos = getTouchPos(drawingCanvas, e);
+    draw(pos.x, pos.y);
 });
 
 drawingCanvas.addEventListener('touchend', (e) => {
     e.preventDefault();
-    const mouseEvent = new MouseEvent('mouseup', {});
-    drawingCanvas.dispatchEvent(mouseEvent);
+    stopDrawing();
 });
 
 // 3D эффект для отображения результата
 function draw3DEffect(digit) {
     // Очистка холста результата
+    const dpr = window.devicePixelRatio || 1;
     resultCtx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
     resultCtx.fillStyle = '#111';
-    resultCtx.fillRect(0, 0, resultCanvas.width, resultCanvas.height);
+    resultCtx.fillRect(0, 0, resultCanvas.width / dpr, resultCanvas.height / dpr);
 
     // Размер цифры в зависимости от размера холста
     const size = Math.min(resultCanvas.width, resultCanvas.height) * 0.6;
@@ -164,21 +264,30 @@ function draw3DEffect(digit) {
 
     // Тень для эффекта объема
     resultCtx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    resultCtx.fillText(digit, resultCanvas.width / 2 + 4, resultCanvas.height / 2 + 4);
+    resultCtx.fillText(digit, resultCanvas.width / (2 * dpr) + 4, resultCanvas.height / (2 * dpr) + 4);
 
     // Основной текст с градиентом
     const gradient = resultCtx.createLinearGradient(
-        0, 0, resultCanvas.width, resultCanvas.height
+        0, 0, resultCanvas.width / dpr, resultCanvas.height / dpr
     );
     gradient.addColorStop(0, '#38b2ac');
     gradient.addColorStop(1, '#48cae4');
 
     resultCtx.fillStyle = gradient;
-    resultCtx.fillText(digit, resultCanvas.width / 2, resultCanvas.height / 2);
+    resultCtx.fillText(digit, resultCanvas.width / (2 * dpr), resultCanvas.height / (2 * dpr));
 
     // Бликовый эффект
     resultCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-    resultCtx.fillText(digit, resultCanvas.width / 2 - 2, resultCanvas.height / 2 - 2);
+    resultCtx.fillText(digit, resultCanvas.width / (2 * dpr) - 2, resultCanvas.height / (2 * dpr) - 2);
+}
+
+// Обновление 3D отображения
+function update3DDisplay(digit) {
+    resultText.textContent = digit;
+    document.querySelectorAll('.cube-digit').forEach(el => {
+        el.textContent = digit;
+    });
+    currentDigit = digit;
 }
 
 // Обработка нажатия кнопки распознавания
@@ -190,10 +299,10 @@ recognizeBtn.addEventListener('click', () => {
     draw3DEffect(randomDigit);
 
     // Обновление текстового результата и 3D куба
-    resultText.textContent = randomDigit;
-    document.querySelectorAll('.cube-digit').forEach(el => {
-        el.textContent = randomDigit;
-    });
+    update3DDisplay(randomDigit.toString());
+
+    // Создаем резервную копию после распознавания
+    backupCanvases();
 
     // Анимация результата
     resultText.style.transition = 'all 0.5s ease';
@@ -212,19 +321,24 @@ eraseBtn.addEventListener('click', () => {
     drawingCanvas.style.animation = 'eraseAnimation 0.5s forwards';
 
     setTimeout(() => {
+        const dpr = window.devicePixelRatio || 1;
+        
+        // Очищаем холсты
         drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
         drawingCtx.fillStyle = '#000';
-        drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        drawingCtx.fillRect(0, 0, drawingCanvas.width / dpr, drawingCanvas.height / dpr);
 
         resultCtx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
         resultCtx.fillStyle = '#111';
-        resultCtx.fillRect(0, 0, resultCanvas.width, resultCanvas.height);
+        resultCtx.fillRect(0, 0, resultCanvas.width / dpr, resultCanvas.height / dpr);
 
         drawingCanvas.style.animation = '';
-        resultText.textContent = '';
-        document.querySelectorAll('.cube-digit').forEach(el => {
-            el.textContent = '';
-        });
+        update3DDisplay('—');
+        
+        // Сбрасываем резервные копии
+        drawingCanvasBackup = null;
+        resultCanvasBackup = null;
+        currentDigit = '—';
     }, 500);
 });
 
@@ -239,3 +353,75 @@ cube.addEventListener('mouseenter', () => {
 cube.addEventListener('mouseleave', () => {
     cube.style.animationPlayState = 'running';
 });
+
+// Восстановление холстов при изменении видимости страницы
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        setTimeout(() => {
+            restoreCanvases();
+        }, 100);
+    }
+});
+
+// Восстановление при возвращении фокуса на окно
+window.addEventListener('focus', function() {
+    setTimeout(() => {
+        restoreCanvases();
+    }, 100);
+});
+
+// Обработчик изменения размеров окна с восстановлением содержимого
+window.addEventListener('resize', function() {
+    // Делаем резервную копию перед изменением размеров
+    backupCanvases();
+    
+    setTimeout(() => {
+        setupCanvases();
+    }, 100);
+});
+
+// Наблюдатель за изменениями в DOM 
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        // Если изменяются атрибуты canvas 
+        if (mutation.type === 'attributes' && 
+            (mutation.target === drawingCanvas || mutation.target === resultCanvas)) {
+            setTimeout(() => {
+                restoreCanvases();
+            }, 50);
+        }
+    });
+});
+
+// Начинаем наблюдение за изменениями canvas
+observer.observe(drawingCanvas, { 
+    attributes: true,
+    attributeFilter: ['style', 'width', 'height', 'class']
+});
+
+observer.observe(resultCanvas, { 
+    attributes: true,
+    attributeFilter: ['style', 'width', 'height', 'class']
+});
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        setupCanvases();
+        
+        // Добавляем эффект при загрузке страницы для логотипа
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            setTimeout(() => {
+                logo.style.opacity = '1';
+            }, 500);
+        }
+    }, 100);
+});
+
+// Дополнительная защита: периодическое сохранение состояния
+setInterval(() => {
+    if (isDrawing || currentDigit !== '—') {
+        backupCanvases();
+    }
+}, 1000);
