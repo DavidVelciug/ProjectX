@@ -75,24 +75,72 @@ header {
     border-bottom: 1px solid var(--border-color);
 }
 
+/* Стили для кликабельного логотипа */
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
 /* Логотип в шапке */
 .logo {
     display: flex;
     align-items: center;
     animation: fadeIn 1s ease;
+    transition: all var(--transition-speed);
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
+/* Анимация при наведении на логотип */
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+/* Анимация для изображения логотипа */
 .logo img {
     height: 50px;
     margin-right: 15px;
     border-radius: 5px;
+    transition: all var(--transition-speed);
 }
 
+.logo:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Анимация для текста логотипа */
 .logo-text {
     font-size: 28px;
     font-weight: 700;
     color: var(--accent-light);
     text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    transition: all var(--transition-speed);
+}
+
+.logo:hover .logo-text {
+    color: #48cae4;
+    text-shadow: 0 0 12px rgba(72, 202, 228, 0.6);
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Пульсация при загрузке страницы */
+.logo {
+    animation: fadeIn 1s ease, pulse 2s ease-in-out 1s;
 }
 
 /* Контейнер для элементов управления в шапке */
@@ -272,6 +320,7 @@ header {
     width: 100%;
     height: 100%;
     cursor: crosshair;
+    display: block; /* Важно для корректного отображения */
 }
 
 #result-canvas {
@@ -383,7 +432,6 @@ header {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -394,7 +442,6 @@ header {
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -406,7 +453,6 @@ header {
         opacity: 0;
         transform: translateY(-10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -417,11 +463,9 @@ header {
     0% {
         opacity: 0.8;
     }
-
     50% {
         opacity: 1;
     }
-
     100% {
         opacity: 0.8;
     }
@@ -431,11 +475,9 @@ header {
     0% {
         background-position: 0% 50%;
     }
-
     50% {
         background-position: 100% 50%;
     }
-
     100% {
         background-position: 0% 50%;
     }
@@ -445,7 +487,6 @@ header {
     from {
         background-color: rgba(255, 255, 255, 0.8);
     }
-
     to {
         background-color: rgba(255, 255, 255, 0);
     }
@@ -540,6 +581,28 @@ header {
     .logo {
         margin-bottom: 10px;
     }
+    
+    .logo {
+        padding: 3px 8px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    
+    .logo:hover {
+        transform: none;
+    }
+    
+    .logo:hover img {
+        transform: none;
+        filter: none;
+    }
+    
+    .logo:hover .logo-text {
+        color: var(--accent-light);
+        text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    }
 }
 
 /* Адаптивность для маленьких мобильных устройств */
@@ -564,5 +627,18 @@ header {
     .dropdown-btn {
         padding: 10px 15px;
         font-size: 14px;
+    }
+    
+    .logo-text {
+        font-size: 18px;
+    }
+    
+    .logo:hover {
+        background: rgba(42, 157, 143, 0.2);
+        border-radius: 50%;
+    }
+    
+    .logo img {
+        margin-right: 0;
     }
 }
