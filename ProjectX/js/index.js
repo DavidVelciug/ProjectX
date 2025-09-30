@@ -192,11 +192,49 @@ function setupNavigation(prefix, totalPages) {
     }
 }
 
+function initWelcomeSection() {
+    // Добавление обработчиков для ссылок в welcome-section
+    const theoryLinks = document.querySelectorAll('.theory-link');
+    theoryLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            showSection(targetId);
+        });
+    });
+}
+
+function showSection(sectionId) {
+    // Скрыть все разделы
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    // Показать целевой раздел
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+        window.scrollTo(0, 0);
+        
+        // Инициализировать навигацию раздела
+        initSectionNavigation(sectionId);
+    }
+}
+
 // Инициализация навигации при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+        const menuItems = document.querySelectorAll('.submenu-item');
+    menuItems.forEach(item => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+    });
+    
     // Проверяем, какой раздел активен при загрузке и инициализируем соответствующую навигацию
     const activeSection = document.querySelector('.content-section:not(.hidden)');
     if (activeSection) {
         initSectionNavigation(activeSection.id);
     }
+    initWelcomeSection();
 });
