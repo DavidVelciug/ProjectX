@@ -45,7 +45,7 @@
                 <div class="dropdown-content" id="dropdownContent">
                     <a href="index.html"><i class="fas fa-home"></i> Главная</a>
                     <a href="app.html"><i class="fas fa-rocket"></i> Приложение</a>
-                    <a href="#"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="aboutproject.html"><i class="fas fa-book"></i> О проекте</a>
                     <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
                 </div>
             </div>
@@ -116,12 +116,106 @@
     <!-- Основная область содержимого -->
     <main class="main-content">
         <!-- Приветственный раздел -->
-        <section id="welcome-section" class="content-section">
-            <h2>Добро пожаловать в мир машинного обучения!</h2>
-            <p>Этот сайт предоставляет информацию об основных концепциях машинного обучения и нейронных сетей. Выберите
-                интересующую вас тему в боковом меню для получения подробной информации.</p>
-            <p>Машинное обучение — это подраздел искусственного интеллекта, который focuses на разработке систем,
-                которые обучаются или улучшают свою производительность на основе данных.</p>
+<section id="welcome-section" class="content-section">
+            <h2>Добро пожаловать в мир распознавания рукописных цифр!</h2>
+            
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <p>Этот сайт посвящен увлекательной области машинного обучения - распознаванию рукописных цифр с помощью нейронных сетей. Здесь вы найдете:</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-car">
+                            <i class="fas fa-paint-brush"></i>
+                            <h3>Интерактивное приложение</h3>
+                            <p>Нарисуйте цифру от 0 до 9 и наблюдайте, как нейронная сеть распознает ее с высокой точностью</p>
+                        </div>
+                        
+                        <div class="feature-car">
+                            <i class="fas fa-brain"></i>
+                            <h3>Обучение нейронных сетей</h3>
+                            <p>Подробные объяснения принципов работы и обучения различных архитектур нейронных сетей</p>
+                        </div>
+                        
+                        <div class="feature-car">
+                            <i class="fas fa-history"></i>
+                            <h3>История развития</h3>
+                            <p>От первых перцептронов до современных сверточных сетей - полная история технологии</p>
+                        </div>
+                    </div>
+                    
+                    <div class="application-description">
+                        <h3>О приложении для распознавания цифр</h3>
+                        <p>Наше веб-приложение использует предварительно обученную нейронную сеть для распознавания рукописных цифр. Вы можете:</p>
+                        <ul>
+                            <li><strong>Рисовать цифры</strong> с помощью мыши или касания на специальном холсте</li>
+                            <li><strong>Наблюдать процесс распознавания</strong> в реальном времени</li>
+                            <li><strong>Узнавать вероятность</strong> для каждой возможной цифры</li>
+                            <li><strong>Тестировать разные стили написания</strong> и оценивать точность модели</li>
+                        </ul>
+                        
+                        <div class="tech-stack">
+                            <h4>Технологический стек:</h4>
+                            <div class="tech-items">
+                                <span class="tech-item">TensorFlow.js</span>
+                                <span class="tech-item">Сверточные нейронные сети (CNN)</span>
+                                <span class="tech-item">HTML5 Canvas</span>
+                                <span class="tech-item">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-start">
+                        <h3>Как начать?</h3>
+                        <div class="steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <p>Перейдите в раздел <a href="app.html" class="app-link">"Распознавание цифр"</a></p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <p>Нарисуйте цифру от 0 до 9 на холсте</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <p>Нажмите кнопку "Распознать" и наблюдайте результат!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="welcome-visual">
+                    <div class="demo-container">
+                        <div class="canvas-placeholder">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <p>Область для рисования цифр</p>
+                        </div>
+                        <div class="recognition-result">
+                            <div class="result-label">Распознанная цифра:</div>
+                            <div class="result-value">-</div>
+                            <div class="confidence">Вероятность: -</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-promo">
+                <h3>Изучите теорию перед практикой</h3>
+                <p>Прежде чем переходить к приложению, рекомендуем ознакомиться с теоретическими основами:</p>
+                <div class="theory-links">
+                    <a href="#ml-section" class="theory-link">
+                        <i class="fas fa-robot"></i>
+                        <span>Основы машинного обучения</span>
+                    </a>
+                    <a href="#section2-3" class="theory-link">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Сверточные нейронные сети</span>
+                    </a>
+                    <a href="#section3-2" class="theory-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Обучение с учителем</span>
+                    </a>
+                </div>
+            </div>
         </section>
 
         <!-- Раздел машинного обучения с навигацией -->
