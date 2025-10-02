@@ -130,9 +130,11 @@ header {
     0% {
         transform: scale(1);
     }
+
     70% {
         transform: scale(1.02);
     }
+
     100% {
         transform: scale(1);
     }
@@ -241,6 +243,56 @@ header {
     display: block;
 }
 
+/* Стили для блока выбора модели ИИ */
+.model-selector {
+    display: inline-block;
+    background: rgba(42, 157, 143, 0.25);
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 12px 25px;
+    color: var(--accent-light);
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    font-size: 16px;
+    position: relative;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.model-selector:hover {
+    background: rgba(42, 157, 143, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+.model-selector form {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.model-selector label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+.model-selector select {
+    padding: 6px 12px;
+    font-size: 16px;
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    background-color: rgba(56, 178, 172, 0.1);
+    color: var(--accent-light);
+    cursor: pointer;
+    font-weight: 600;
+    min-width: 130px;
+}
+
 /* Основная область содержимого */
 .app-content {
     margin-top: var(--header-height);
@@ -320,7 +372,8 @@ header {
     width: 100%;
     height: 100%;
     cursor: crosshair;
-    display: block; /* Важно для корректного отображения */
+    display: block;
+    /* Важно для корректного отображения */
 }
 
 #result-canvas {
@@ -432,6 +485,7 @@ header {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -442,6 +496,7 @@ header {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -453,6 +508,7 @@ header {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -463,9 +519,11 @@ header {
     0% {
         opacity: 0.8;
     }
+
     50% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.8;
     }
@@ -475,9 +533,11 @@ header {
     0% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -487,6 +547,7 @@ header {
     from {
         background-color: rgba(255, 255, 255, 0.8);
     }
+
     to {
         background-color: rgba(255, 255, 255, 0);
     }
@@ -581,27 +642,41 @@ header {
     .logo {
         margin-bottom: 10px;
     }
-    
+
     .logo {
         padding: 3px 8px;
     }
-    
+
     .logo-text {
         font-size: 20px;
     }
-    
+
     .logo:hover {
         transform: none;
     }
-    
+
     .logo:hover img {
         transform: none;
         filter: none;
     }
-    
+
     .logo:hover .logo-text {
         color: var(--accent-light);
         text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    }
+
+    .model-selector {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .model-selector label {
+        font-size: 14px;
+    }
+
+    .model-selector select {
+        font-size: 14px;
+        min-width: 110px;
     }
 }
 
@@ -628,17 +703,32 @@ header {
         padding: 10px 15px;
         font-size: 14px;
     }
-    
+
     .logo-text {
         font-size: 18px;
     }
-    
+
     .logo:hover {
         background: rgba(42, 157, 143, 0.2);
         border-radius: 50%;
     }
-    
+
     .logo img {
         margin-right: 0;
+    }
+
+    .model-selector {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .model-selector label {
+        font-size: 12px;
+    }
+
+    .model-selector select {
+        font-size: 12px;
+        min-width: 90px;
+        padding: 4px 8px;
     }
 }
