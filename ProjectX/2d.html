@@ -7,7 +7,6 @@
     <title>2D вариант - Рисование цифр</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/2d.css">
-
 </head>
 
 <body>
@@ -46,9 +45,23 @@
                 <div class="dropdown-content" id="dropdownContent">
                     <a href="index.html"><i class="fas fa-home"></i> Главная</a>
                     <a href="app.html"><i class="fas fa-rocket"></i> Приложение</a>
-                    <a href="#"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="aboutproject.html"><i class="fas fa-book"></i> О проекте</a>
                     <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
                 </div>
+            </div>
+
+            <!-- модель ИИ выбранная пользователем -->
+            <div class="model-selector">
+                <form>
+                    <label for="II_model-select">
+                        Модель ИИ:
+                    </label>
+                    <select id="II_model-select">
+                        <option value="CNN">CNN</option>
+                        <option value="MLP">MLP</option>
+                        <option value="Perceptron">Perceptron</option>
+                    </select>
+                </form>
             </div>
         </div>
     </header>
@@ -89,19 +102,20 @@
             <!-- Визуальное отображение результата -->
             <div class="visualization-2d">
                 <div class="digit-display">
-                    <div class="digit" id="digit">5</div>
+                    <div class="digit" id="digit">—</div>
                 </div>
             </div>
 
             <!-- Текстовый результат распознавания -->
             <div class="result">
                 <h3>Распознанная цифра:</h3>
-                <div class="result-text" id="result-text">5</div>
+                <div class="result-text" id="result-text">—</div>
             </div>
         </section>
     </main>
 
-    <script src="js/2d.js"></script>
+    <script src="js/2d.js">
+    </script>
 </body>
 
 </html>
