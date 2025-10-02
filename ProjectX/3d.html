@@ -45,9 +45,23 @@
                 <div class="dropdown-content" id="dropdownContent">
                     <a href="index.html"><i class="fas fa-home"></i> Главная</a>
                     <a href="app.html"><i class="fas fa-rocket"></i> Приложение</a>
-                    <a href="#"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="aboutproject.html"><i class="fas fa-book"></i> О проекте</a>
                     <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
                 </div>
+            </div>
+
+            <!-- модель ИИ выбранная пользователем -->
+            <div class="model-selector">
+                <form>
+                    <label for="II_model-select">
+                        Модель ИИ:
+                    </label>
+                    <select id="II_model-select">
+                        <option value="CNN">CNN</option>
+                        <option value="MLP">MLP</option>
+                        <option value="Perceptron">Perceptron</option>
+                    </select>
+                </form>
             </div>
         </div>
     </header>
@@ -89,22 +103,22 @@
             <div class="visualization-3d">
                 <div class="cube-container">
                     <div class="cube-face cube-front">
-                        <div class="cube-digit" id="cube-digit">5</div>
+                        <div class="cube-digit" id="cube-digit">—</div>
                     </div>
                     <div class="cube-face cube-back">
-                        <div class="cube-digit">5</div>
+                        <div class="cube-digit">—</div>
                     </div>
                     <div class="cube-face cube-right">
-                        <div class="cube-digit">5</div>
+                        <div class="cube-digit">—</div>
                     </div>
                     <div class="cube-face cube-left">
-                        <div class="cube-digit">5</div>
+                        <div class="cube-digit">—</div>
                     </div>
                     <div class="cube-face cube-top">
-                        <div class="cube-digit">5</div>
+                        <div class="cube-digit">—</div>
                     </div>
                     <div class="cube-face cube-bottom">
-                        <div class="cube-digit">5</div>
+                        <div class="cube-digit">—</div>
                     </div>
                 </div>
             </div>
@@ -112,12 +126,13 @@
             <!-- Текстовый результат распознавания -->
             <div class="result">
                 <h3>Распознанная цифра:</h3>
-                <div class="result-text" id="result-text">5</div>
+                <div class="result-text" id="result-text">—</div>
             </div>
         </section>
     </main>
 
-    <script src="js/3d.js"></script>
+    <script src="js/3d.js">
+    </script>
 </body>
 
 </html>
