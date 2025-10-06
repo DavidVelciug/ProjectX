@@ -314,5 +314,5 @@ C:.\
 │           variants-selector.html\
 │           youtube-player.html\
 │\
-└─\──__pycache__
+└───__pycache__\
         manage.cpython-39.pyc
