@@ -54,7 +54,7 @@ python manage.py runserver
 <h4>POST /api_v1/recognize/</h4>
 
 ```bash
-POST /api_v1/get_canvas_info/
+POST /api_v1/recognize/
 Content-Type: application/json
 ```
 <b>Body request</b>
