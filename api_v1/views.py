@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .models import Canvas
 from .serializers import CanvasSerializer
 
 from ml.services.model_loader import model_manager
@@ -16,6 +17,7 @@ from .utils import base64_to_pixel_vector
 class GetCanvasInfoView(APIView):
 	def post(self, request):
 		data = request.data
+		print(11111111111111111111)
 		serializer = CanvasSerializer(data=data)
 
 		if not serializer.is_valid():
@@ -31,13 +33,11 @@ class GetCanvasInfoView(APIView):
 		for i, network in enumerate(_models):
 			pixels, height = base64_to_pixel_vector(image)
 			tensor: torch.Tensor = preprocess_image_to_tensor(pixels, height)
-			model_nn = model_manager.get_model(network)
-			probs, y_pred, activations = model_manager.predict(model_nn, tensor)
+			probs, y_pred = model_manager.predict(model_manager.get_model(network), tensor)
 			res = {
 				"model": network,
 				"digit": y_pred,
-				"probabilities": probs,
-				"activations": activations
+				"probabilities": probs
 			}
 			result.append(res)
 			if not i:

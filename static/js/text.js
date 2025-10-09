@@ -32,7 +32,7 @@
         document.querySelector('.logo').addEventListener('click', function(e) {
             const logo = this;
             logo.style.transform = 'scale(0.95)';
-            
+
             setTimeout(() => {
                 logo.style.transform = '';
             }, 150);
@@ -48,10 +48,10 @@
         dropdownBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             const isShowing = dropdownContent.classList.contains('show');
-            
+
             // Закрываем все меню
             closeAllMenus();
-            
+
             // Открываем текущее меню, если оно было закрыто
             if (!isShowing) {
                 dropdownContent.classList.add('show');
@@ -62,10 +62,10 @@
         variantsBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             const isShowing = variantsContent.classList.contains('show');
-            
+
             // Закрываем все меню
             closeAllMenus();
-            
+
             // Открываем текущее меню, если оно было закрыто
             if (!isShowing) {
                 variantsContent.classList.add('show');
@@ -116,23 +116,23 @@
         function setupCanvas() {
             const container = canvas.parentElement;
             const dpr = window.devicePixelRatio || 1;
-            
+
             // Сохраняем текущее содержимое перед изменением размеров
             if (canvas.width > 0 && canvas.height > 0) {
                 backupCanvas();
             }
-            
+
             // Устанавливаем размеры в пикселях
             canvas.width = container.offsetWidth * dpr;
             canvas.height = container.offsetHeight * dpr;
-            
+
             // Устанавливаем CSS размеры
             canvas.style.width = container.offsetWidth + 'px';
             canvas.style.height = container.offsetHeight + 'px';
-            
+
             // Масштабируем контекст
             ctx.scale(dpr, dpr);
-            
+
             // Восстанавливаем содержимое если есть резервная копия
             if (canvasBackup) {
                 restoreCanvas();
@@ -141,7 +141,7 @@
                 ctx.fillStyle = '#000';
                 ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
             }
-            
+
             // Настройки инструмента рисования
             ctx.lineWidth = 15;
             ctx.lineCap = 'round';
@@ -155,7 +155,7 @@
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-            
+
             return {
                 x: (evt.clientX - rect.left) * scaleX,
                 y: (evt.clientY - rect.top) * scaleY
@@ -168,7 +168,7 @@
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
             const touch = evt.touches[0];
-            
+
             return {
                 x: (touch.clientX - rect.left) * scaleX,
                 y: (touch.clientY - rect.top) * scaleY
@@ -182,7 +182,7 @@
         function startDrawing(x, y) {
             isDrawing = true;
             [lastX, lastY] = [x, y];
-            
+
             // Создаем резервную копию перед началом рисования
             backupCanvas();
         }
@@ -289,11 +289,11 @@
             } catch (error) {
                 console.error("Ошибка:", error);
                 resultText.textContent = "Ошибка";
-                
+
                 // Демонстрационный результат при ошибке
                 const randomDigit = Math.floor(Math.random() * 10);
                 resultText.textContent = randomDigit;
-                
+
                 // Анимация результата
                 resultText.style.transition = 'all 0.5s ease';
                 resultText.style.transform = 'scale(1.2)';
@@ -342,7 +342,7 @@
         window.addEventListener('resize', function() {
             // Делаем резервную копию перед изменением размеров
             backupCanvas();
-            
+
             setTimeout(() => {
                 setupCanvas();
             }, 100);
@@ -352,7 +352,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 setupCanvas();
-                
+
                 // Добавляем эффект при загрузке страницы для логотипа
                 const logo = document.querySelector('.logo');
                 if (logo) {

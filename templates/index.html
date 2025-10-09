@@ -7,7 +7,7 @@
 <body>
     <!-- Шапка с навигацией -->
     <header>
-        <a href="index.html" class="logo-link">
+        <a href="{% url 'index' %}" class="logo-link">
             <div class="logo">
                 <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
                 <span class="logo-text">Нейронные сети</span>
@@ -113,31 +113,31 @@
         <!-- Приветственный раздел -->
 <section id="welcome-section" class="content-section">
             <h2>Добро пожаловать в мир распознавания рукописных цифр!</h2>
-            
+
             <div class="welcome-content">
                 <div class="welcome-text">
                     <p>Этот сайт посвящен увлекательной области машинного обучения - распознаванию рукописных цифр с помощью нейронных сетей. Здесь вы найдете:</p>
-                    
+
                     <div class="features-grid">
                         <div class="feature-car">
                             <i class="fas fa-paint-brush"></i>
                             <h3>Интерактивное приложение</h3>
                             <p>Нарисуйте цифру от 0 до 9 и наблюдайте, как нейронная сеть распознает ее с высокой точностью</p>
                         </div>
-                        
+
                         <div class="feature-car">
                             <i class="fas fa-brain"></i>
                             <h3>Обучение нейронных сетей</h3>
                             <p>Подробные объяснения принципов работы и обучения различных архитектур нейронных сетей</p>
                         </div>
-                        
+
                         <div class="feature-car">
                             <i class="fas fa-history"></i>
                             <h3>История развития</h3>
                             <p>От первых перцептронов до современных сверточных сетей - полная история технологии</p>
                         </div>
                     </div>
-                    
+
                     <div class="application-description">
                         <h3>О приложении для распознавания цифр</h3>
                         <p>Наше веб-приложение использует предварительно обученную нейронную сеть для распознавания рукописных цифр. Вы можете:</p>
@@ -147,7 +147,7 @@
                             <li><strong>Узнавать вероятность</strong> для каждой возможной цифры</li>
                             <li><strong>Тестировать разные стили написания</strong> и оценивать точность модели</li>
                         </ul>
-                        
+
                         <div class="tech-stack">
                             <h4>Технологический стек:</h4>
                             <div class="tech-items">
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="quick-start">
                         <h3>Как начать?</h3>
                         <div class="steps">
@@ -177,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="welcome-visual">
                     <div class="demo-container">
                         <div class="canvas-placeholder">
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="navigation-promo">
                 <h3>Изучите теорию перед практикой</h3>
                 <p>Прежде чем переходить к приложению, рекомендуем ознакомиться с теоретическими основами:</p>

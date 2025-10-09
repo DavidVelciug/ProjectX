@@ -37,7 +37,7 @@ let isMusicPlaying = false;
 // Переключение музыки
 musicToggle.addEventListener('click', () => {
     isMusicPlaying = !isMusicPlaying;
-    
+
     if (isMusicPlaying) {
         youtubePlayer.classList.remove('hidden');
         musicToggle.classList.add('playing');
@@ -158,7 +158,7 @@ function updatePageDisplay(prefix, currentPage, totalPages) {
     // Отображение/скрытие кнопок навигации
     const prevBtn = document.getElementById(`${prefix}-prev-btn`);
     const nextBtn = document.getElementById(`${prefix}-next-btn`);
-    
+
     if (prevBtn) prevBtn.style.visibility = currentPage === 1 ? 'hidden' : 'visible';
     if (nextBtn) nextBtn.style.visibility = currentPage === totalPages ? 'hidden' : 'visible';
 }
@@ -166,7 +166,7 @@ function updatePageDisplay(prefix, currentPage, totalPages) {
 // Настройка навигации для раздела
 function setupNavigation(prefix, totalPages) {
     let currentPage = 1;
-    
+
     // Обработка нажатия кнопки "Назад"
     const prevBtn = document.getElementById(`${prefix}-prev-btn`);
     if (prevBtn) {
@@ -209,13 +209,13 @@ function showSection(sectionId) {
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.add('hidden');
     });
-    
+
     // Показать целевой раздел
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.remove('hidden');
         window.scrollTo(0, 0);
-        
+
         // Инициализировать навигацию раздела
         initSectionNavigation(sectionId);
     }
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
         });
     });
-    
+
     // Проверяем, какой раздел активен при загрузке и инициализируем соответствующую навигацию
     const activeSection = document.querySelector('.content-section:not(.hidden)');
     if (activeSection) {
