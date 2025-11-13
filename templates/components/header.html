@@ -1,0 +1,40 @@
+{% load static %}
+<!-- Шапка с навигацией -->
+<header>
+    <a href="{% url 'index' %}" class="logo-link">
+        <div class="logo">
+            <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+            <span class="logo-text" id="pageTitle">Нейронные сети</span>
+        </div>
+    </a>
+
+    <div class="header-controls">
+        <!-- Кнопка музыки -->
+        <button class="music-toggle" id="musicToggle">
+            <i class="fas fa-music"></i>
+        </button>
+
+        <!-- Переключение между темной и светлой темой -->
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Динамическая область для специфичных элементов страницы -->
+        <div id="dynamic-controls">
+            <!-- Сюда будут вставляться специфичные элементы для каждой страницы -->
+        </div>
+
+        <!-- Основное меню навигации -->
+        <div class="dropdown-menu">
+            <button class="dropdown-btn" id="dropdownBtn">
+                Меню <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
+            </div>
+        </div>
+    </div>
+</header>

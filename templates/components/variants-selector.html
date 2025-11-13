@@ -1,0 +1,12 @@
+{% load static %}
+<!-- Выбор вариантов интерфейса -->
+<div class="dropdown-menu">
+    <button class="dropdown-btn" id="variantsBtn">
+        Варианты <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="dropdown-content" id="variantsContent">
+        <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+        <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+        <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+    </div>
+</div>

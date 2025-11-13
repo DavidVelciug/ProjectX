@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="Машинное обучение и нейронные сети - О проекте" css="css/aboutproject.css" %}
+
+<body>
+    <!-- Шапка с навигацией -->
+    {% include 'components/header.html' %}
+    <!-- YouTube плеер -->
+    {% include 'components/youtube-player.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <!-- Герой-секция -->
+        <section class="about-hero">
+            <h1 class="about-title">О проекте</h1>
+            <p class="about-subtitle">
+                Исследование возможностей нейронных сетей в распознавании рукописных цифр.
+                Инновационный подход к визуализации и взаимодействию с технологиями машинного обучения.
+            </p>
+        </section>
+
+        <!-- Миссия проекта -->
+        <section class="mission-section">
+            <h2 class="section-title">Наша миссия</h2>
+            <div class="mission-content">
+                <div class="mission-text">
+                    <p>Наш проект посвящен исследованию и демонстрации возможностей нейронных сетей в области
+                        распознавания рукописных цифр. Мы создали интерактивную платформу, которая позволяет не только
+                        использовать готовые модели, но и понять принципы их работы.</p>
+                    <p>Основная цель - сделать сложные технологии машинного обучения доступными и понятными для широкой
+                        аудитории, от студентов до профессионалов в области IT.</p>
+                    <p>Мы верим, что понимание основ искусственного интеллекта - ключ к созданию инновационных решений
+                        будущего.</p>
+                </div>
+                <div class="mission-visual">
+                    <div class="visual-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Искусственный интеллект для всех</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ключевые особенности -->
+        <section class="mission-section">
+            <h2 class="section-title">Ключевые особенности</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">Три интерфейса</h3>
+                    <p class="feature-description">
+                        Текстовый, 2D и 3D интерфейсы для различного опыта взаимодействия с нейронными сетями.
+                        Каждый вариант предлагает уникальный подход к визуализации результатов.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="feature-title">Образовательный контент</h3>
+                    <p class="feature-description">
+                        Подробные теоретические материалы по машинному обучению, нейронным сетям
+                        и методам их обучения. От основ до продвинутых концепций.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="feature-title">Практическое применение</h3>
+                    <p class="feature-description">
+                        Реальное распознавание рукописных цифр с использованием предварительно
+                        обученных моделей. Интерактивное тестирование и эксперименты.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Технологический стек -->
+        <section class="tech-stack-section">
+            <h2 class="section-title">Технологический стек</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <h4 class="tech-name">JavaScript</h4>
+                    <p class="tech-description">Основной язык программирования для фронтенд-разработки</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h4 class="tech-name">TensorFlow.js</h4>
+                    <p class="tech-description">Библиотека для машинного обучения в браузере</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h4 class="tech-name">HTML5 Canvas</h4>
+                    <p class="tech-description">Для интерактивного рисования и визуализации</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h4 class="tech-name">CSS3</h4>
+                    <p class="tech-description">Современные стили и анимации</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- История развития -->
+        <section class="timeline-section">
+            <h2 class="section-title">История развития проекта</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3 class="timeline-title">Запуск проекта</h3>
+                        <p>Начало разработки образовательной платформы по машинному обучению. Создание базовой
+                            архитектуры и первого прототипа.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3 class="timeline-title">Разработка интерфейсов</h3>
+                        <p>Создание трех различных интерфейсов для взаимодействия с нейронными сетями. Интеграция
+                            TensorFlow.js для распознавания цифр.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3 class="timeline-title">Образовательный контент</h3>
+                        <p>Разработка подробных теоретических материалов по машинному обучению, нейронным сетям и
+                            методам их обучения.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3 class="timeline-title">Оптимизация и тестирование</h3>
+                        <p>Улучшение производительности, добавление анимаций и интерактивных элементов. Тестирование на
+                            различных устройствах.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Команда -->
+        <section class="team-section">
+            <h2 class="section-title">Наша команда</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="{% static 'img/daniil.jpg' %}" alt="Злобарь Даниил"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="avatar-placeholder" style="display: none;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Злобарь Даниил</h3>
+                    <p class="member-role">Backend</p>
+                    <p class="member-bio">-------------------------------</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="{% static 'img/evgeniy.jpg' %}" alt="Березницкий Евгений"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="avatar-placeholder" style="display: none;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Березницкий Евгений</h3>
+                    <p class="member-role">Backend</p>
+                    <p class="member-bio">---------------------------</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="{% static 'img/maxim.jpg' %}" alt="Гук Максим"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="avatar-placeholder" style="display: none;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Гук Максим</h3>
+                    <p class="member-role">Fronted</p>
+                    <p class="member-bio">-----------------------------</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="{% static 'img/DavidVelciug.png' %}" alt="Вельчуг Давид"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="avatar-placeholder" style="display: none;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Вельчуг Давид</h3>
+                    <p class="member-role">Fronted</p>
+                    <p class="member-bio">-------------------------------</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Будущее проекта -->
+        <section class="future-section">
+            <h2 class="section-title">Будущее проекта</h2>
+            <div class="future-content">
+                <p class="future-text">
+                    Мы планируем расширить функциональность платформы, добавив поддержку распознавания более сложных
+                    объектов, реализацию обучения моделей прямо в браузере и создание сообщества для обмена знаниями
+                    и опытом в области машинного обучения.
+                </p>
+                <a href="{% url 'app' %}" class="cta-button">
+                    <i class="fas fa-rocket"></i> Попробовать приложение
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/aboutproject.js' %}">
+
+    </script>
+</body>
+
+</html>

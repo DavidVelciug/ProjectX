@@ -1,0 +1,407 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+{% include 'components/head.html' with title="Градиентный спуск - Нейронные сети" css="css/index.css" %}
+<body>
+    <!-- Шапка с навигацией -->
+    {% include 'components/header.html' %}
+<!-- YouTube плеер -->
+{% include 'components/youtube-player.html' %}
+    <!-- Боковая панель навигации -->
+{% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="gradient-page-1">
+                <h2>Градиентный спуск</h2>
+
+                <div class="definition">
+                    <p>Градиентный спуск — это оптимизационный алгоритм, используемый для минимизации функции потерь
+                        путём итеративного движения в направлении, противоположном градиенту функции.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Градиентный спуск.png' %}" alt="Градиентный спуск" class="content-image">
+                    <div class="image-caption">Визуализация процесса градиентного спуска</div>
+                </div>
+
+                <h3>Цель обучения нейронной сети</h3>
+                <p>Обучение сети — это поиск таких <strong>весов</strong> и <strong>смещений (bias)</strong>, чтобы сеть
+                    правильно предсказывала выходные данные.</p>
+
+                <div class="math-formula">
+                    <div class="formula-item">
+                        <span>Вход:</span>
+                        <code>x</code>
+                    </div>
+                    <div class="formula-item">
+                        <span>Вес:</span>
+                        <code>w</code>
+                    </div>
+                    <div class="formula-item">
+                        <span>Выход сети:</span>
+                        <code>ŷ = f(x, w)</code>
+                    </div>
+                    <div class="formula-item">
+                        <span>Функция потерь:</span>
+                        <code>L(ŷ, y)</code>
+                    </div>
+                </div>
+
+                <div class="optimization-goal">
+                    <h4>Задача оптимизации:</h4>
+                    <div class="formula-large">
+                        min L(ŷ, y) по w
+                    </div>
+                    <p>Минимизировать функцию потерь по весам сети</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="gradient-page-2" style="display: none;">
+                <h3>Градиентный спуск (Gradient Descent)</h3>
+                <p><strong>Идея:</strong> двигаться в направлении наибольшего уменьшения функции потерь, используя её
+                    градиент.</p>
+
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Вычисление градиента</h4>
+                        <p>Градиент — это вектор частных производных функции потерь по всем весам сети:</p>
+                        <div class="formula">
+                            ∇w L = [∂L/∂w₁, ∂L/∂w₂, ..., ∂L/∂wₙ]
+                        </div>
+                        <p>Он показывает, куда и насколько изменить каждый вес, чтобы уменьшить ошибку.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Обновление весов</h4>
+                        <div class="formula">
+                            w := w - η · ∇w L
+                        </div>
+                        <div class="parameters-list">
+                            <div class="parameter">
+                                <span class="param-symbol">w</span>
+                                <span class="param-desc">— текущие веса</span>
+                            </div>
+                            <div class="parameter">
+                                <span class="param-symbol">η</span>
+                                <span class="param-desc">— скорость обучения (learning rate)</span>
+                            </div>
+                            <div class="parameter">
+                                <span class="param-symbol">∇w L</span>
+                                <span class="param-desc">— градиент функции потерь</span>
+                            </div>
+                        </div>
+                        <p>Таким образом, веса постепенно подбираются так, чтобы сеть училась на примерах.</p>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/ProccesGradient.png' %}" alt="Процесс градиентного спуска" class="content-image">
+                    <div class="image-caption">Итеративный процесс обновления весов с помощью градиентного спуска</div>
+                </div>
+            </div>
+
+            <div class="page-content" id="gradient-page-3" style="display: none;">
+                <h3>Варианты градиентного спуска</h3>
+
+                <div class="method-comparison">
+                    <div class="method-card">
+                        <div class="method-header">
+                            <div class="method-icon">📊</div>
+                            <div class="method-title">
+                                <h4>Batch Gradient Descent</h4>
+                            </div>
+                        </div>
+                        <div class="method-content">
+                            <p><strong>Описание:</strong> Градиент вычисляется на всей обучающей выборке.</p>
+                            <div class="method-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Скорость:</span>
+                                    <span class="stat-value">🔄 Медленная</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Стабильность:</span>
+                                    <span class="stat-value">✅ Высокая</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Память:</span>
+                                    <span class="stat-value">📈 Высокие требования</span>
+                                </div>
+                            </div>
+                            <div class="method-pros-cons">
+                                <div class="pros">
+                                    <h5>✓ Преимущества</h5>
+                                    <ul>
+                                        <li>Стабильная сходимость</li>
+                                        <li>Детерминированные обновления</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>✗ Недостатки</h5>
+                                    <ul>
+                                        <li>Медленно для больших данных</li>
+                                        <li>Может застревать в локальных минимумах</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <div class="method-header">
+                            <div class="method-icon">🎯</div>
+                            <div class="method-title">
+                                <h4>Stochastic Gradient Descent (SGD)</h4>
+                            </div>
+                        </div>
+                        <div class="method-content">
+                            <p><strong>Описание:</strong> Градиент вычисляется для одного примера за раз.</p>
+                            <div class="method-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Скорость:</span>
+                                    <span class="stat-value">⚡ Быстрая</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Стабильность:</span>
+                                    <span class="stat-value">⚠️ Низкая</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Память:</span>
+                                    <span class="stat-value">📉 Низкие требования</span>
+                                </div>
+                            </div>
+                            <div class="method-pros-cons">
+                                <div class="pros">
+                                    <h5>✓ Преимущества</h5>
+                                    <ul>
+                                        <li>Быстрая сходимость</li>
+                                        <li>Может избегать локальных минимумов</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>✗ Недостатки</h5>
+                                    <ul>
+                                        <li>Высокая дисперсия (шум)</li>
+                                        <li>Может «прыгать» вокруг оптимума</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <div class="method-header">
+                            <div class="method-icon">⚖️</div>
+                            <div class="method-title">
+                                <h4>Mini-batch Gradient Descent</h4>
+                            </div>
+                        </div>
+                        <div class="method-content">
+                            <p><strong>Описание:</strong> Градиент вычисляется на небольших пакетах данных (например,
+                                32–128 примеров).</p>
+                            <div class="method-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Скорость:</span>
+                                    <span class="stat-value">🔸 Умеренная</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Стабильность:</span>
+                                    <span class="stat-value">🔸 Средняя</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Память:</span>
+                                    <span class="stat-value">🔸 Средние требования</span>
+                                </div>
+                            </div>
+                            <div class="method-pros-cons">
+                                <div class="pros">
+                                    <h5>✓ Преимущества</h5>
+                                    <ul>
+                                        <li>Компромисс между скоростью и стабильностью</li>
+                                        <li>Хорошо параллелится на GPU</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>✗ Недостатки</h5>
+                                    <ul>
+                                        <li>Требует настройки размера батча</li>
+                                        <li>Может требовать больше итераций</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="gradient-page-4" style="display: none;">
+                <h3>Улучшения градиентного спуска</h3>
+
+                <div class="improvements-grid">
+                    <div class="improvement-card">
+                        <div class="improvement-icon">🚀</div>
+                        <div class="improvement-content">
+                            <h4>Momentum</h4>
+                            <p>Учитывает прошлое направление движения, ускоряет обучение.</p>
+                            <div class="improvement-formula">
+                                vₜ = β·vₜ₋₁ + (1-β)·∇w L<br>
+                                w := w - η·vₜ
+                            </div>
+                            <div class="improvement-details">
+                                <p><strong>Принцип:</strong> Добавляет "инерцию" к обновлениям, сглаживая колебания.</p>
+                                <p><strong>Применение:</strong> Особенно полезно в областях с малым градиентом.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="improvement-card">
+                        <div class="improvement-icon">📐</div>
+                        <div class="improvement-content">
+                            <h4>AdaGrad</h4>
+                            <p>Адаптивная настройка скорости обучения для каждого параметра.</p>
+                            <div class="improvement-formula">
+                                Gₜ = Gₜ₋₁ + (∇w L)²<br>
+                                w := w - η/√(Gₜ + ε) · ∇w L
+                            </div>
+                            <div class="improvement-details">
+                                <p><strong>Принцип:</strong> Уменьшает LR для часто обновляемых параметров.</p>
+                                <p><strong>Особенность:</strong> Может слишком агрессивно уменьшать LR.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="improvement-card">
+                        <div class="improvement-icon">⚡</div>
+                        <div class="improvement-content">
+                            <h4>RMSProp</h4>
+                            <p>Улучшение AdaGrad с экспоненциальным скользящим средним.</p>
+                            <div class="improvement-formula">
+                                Gₜ = β·Gₜ₋₁ + (1-β)·(∇w L)²<br>
+                                w := w - η/√(Gₜ + ε) · ∇w L
+                            </div>
+                            <div class="improvement-details">
+                                <p><strong>Принцип:</strong> Решает проблему агрессивного уменьшения LR.</p>
+                                <p><strong>Преимущество:</strong> Лучшая адаптация к изменяющимся градиентам.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="improvement-card">
+                        <div class="improvement-icon">🤖</div>
+                        <div class="improvement-content">
+                            <h4>Adam</h4>
+                            <p>Комбинация Momentum и RMSProp (наиболее популярный).</p>
+                            <div class="improvement-formula">
+                                mₜ = β₁·mₜ₋₁ + (1-β₁)·∇w L<br>
+                                vₜ = β₂·vₜ₋₁ + (1-β₂)·(∇w L)²<br>
+                                w := w - η · m̂ₜ / (√v̂ₜ + ε)
+                            </div>
+                            <div class="improvement-details">
+                                <p><strong>Принцип:</strong> Сочетает преимущества адаптивного LR и momentum.</p>
+                                <p><strong>Рекомендация:</strong> Стандартный выбор для большинства задач.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Сравнение оптимизаторов</h3>
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>Оптимизатор</th>
+                            <th>Скорость</th>
+                            <th>Стабильность</th>
+                            <th>Настройка LR</th>
+                            <th>Рекомендация</th>
+                        </tr>
+                        <tr>
+                            <td>SGD</td>
+                            <td>Медленная</td>
+                            <td>Высокая</td>
+                            <td>Требует точной настройки</td>
+                            <td>Для простых задач</td>
+                        </tr>
+                        <tr>
+                            <td>SGD + Momentum</td>
+                            <td>Быстрая</td>
+                            <td>Средняя</td>
+                            <td>Требует настройки</td>
+                            <td>Для плавных поверхностей</td>
+                        </tr>
+                        <tr>
+                            <td>Adam</td>
+                            <td>Очень быстрая</td>
+                            <td>Высокая</td>
+                            <td>Автоматическая</td>
+                            <td>Стандартный выбор</td>
+                        </tr>
+                        <tr>
+                            <td>RMSProp</td>
+                            <td>Быстрая</td>
+                            <td>Высокая</td>
+                            <td>Автоматическая</td>
+                            <td>Для RNN и нестационарных задач</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Практический совет:</strong> Начинайте с Adam для большинства задач. Если сеть не
+                        сходится или показывает плохие результаты, попробуйте SGD с настроенным learning rate для более
+                        стабильного, но медленного обучения.</p>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="gradient-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="gradient-page-indicator">Страница 1 из 4</div>
+                    <div class="pagination-numbers" id="gradient-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="gradient-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-activation'">
+                        <i class="fas fa-arrow-left"></i> Функции активации
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-supervised'">
+                        Обучение с учителем <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <!-- Модальное окно опросника -->
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <div class="survey-header">
+                <h2>Опрос по теме сайта</h2>
+                <p>Пожалуйста, ответьте на несколько вопросов</p>
+            </div>
+            <div id="surveyContent">
+                <!-- Контент опросника будет генерироваться динамически -->
+            </div>
+            <div class="survey-navigation">
+                <button class="survey-btn" id="prevBtn" disabled>Назад</button>
+                <button class="survey-btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'components/js-section.html' %}
+</body>
+</html>

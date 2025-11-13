@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="Чёрный ящик - Нейронные сетиsection-perceptron" css="css/index.css" %}
+<body>
+    <!-- Шапка с навигацией -->
+    {% include 'components/header.html' %}
+<!-- YouTube плеер -->
+{% include 'components/youtube-player.html' %}
+    <!-- Боковая панель навигации -->
+{% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="blackbox-page-1">
+                <h2>Понятие "чёрного ящика" в машинном обучении</h2>
+
+                <div class="definition">
+                    <p>Термин "чёрный ящик" описывает модели машинного обучения, внутренняя работа которых сложна для
+                        интерпретации человеком. Несмотря на высокую точность предсказаний, понять, как именно модель пришла к
+                        тому или иному выводу, бывает затруднительно.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/blackbox.png' %}" alt="Концепция черного ящика" class="content-image">
+                    <div class="image-caption">Схематическое представление концепции "черного ящика" в машинном обучении</div>
+                </div>
+
+                <h3>Что такое "чёрный ящик"?</h3>
+                <p>В контексте машинного обучения "чёрный ящик" относится к моделям, где:</p>
+                
+                <div class="highlight">
+                    <ul>
+                        <li>Мы видим <strong>входные данные</strong> и <strong>выходные результаты</strong></li>
+                        <li>Но <strong>внутренние процессы преобразования</strong> остаются скрытыми или непонятными</li>
+                        <li>Сложно объяснить, <strong>почему</strong> модель приняла то или иное решение</li>
+                    </ul>
+                </div>
+
+                <h3>Почему нейронные сети становятся "чёрными ящиками"?</h3>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-layer-group"></i>
+                        <div>
+                            <h4>Глубокая архитектура</h4>
+                            <p>Современные сети содержат десятки или сотни слоёв с миллионами параметров</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fas fa-project-diagram"></i>
+                        <div>
+                            <h4>Сложные взаимодействия</h4>
+                            <p>Параметры взаимодействуют нелинейно и сложным образом</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fas fa-robot"></i>
+                        <div>
+                            <h4>Автоматическое обучение</h4>
+                            <p>Сети сами находят признаки, которые человек мог бы не заметить</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="blackbox-page-2" style="display: none;">
+                <h3>Проблемы интерпретируемости</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>1. Доверие и принятие решений</h4>
+                    </div>
+                    <p>В критических областях (медицина, финансы, юриспруденция) важно понимать, почему модель приняла 
+                       определённое решение. Без этого трудно доверять её рекомендациям.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>2. Юридические и этические вопросы</h4>
+                    </div>
+                    <p>Регуляторы требуют объяснимости алгоритмов, особенно когда они влияют на жизнь людей 
+                       (кредитные решения, медицинские диагнозы, найм на работу).</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-bug"></i>
+                        <h4>3. Отладка и улучшение</h4>
+                    </div>
+                    <p>Без понимания внутренней работы сложно находить и исправлять ошибки, а также улучшать модель.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/problems.png' %}" alt="Проблемы интерпретируемости" class="content-image">
+                    <div class="image-caption">Основные вызовы в области интерпретируемости моделей машинного обучения</div>
+                </div>
+            </div>
+
+            <div class="page-content" id="blackbox-page-3" style="display: none;">
+                <h3>Методы интерпретации</h3>
+
+                <div class="applications-grid">
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>LIME</h4>
+                            <p>Local Interpretable Model-agnostic Explanations - объяснение предсказаний через локальные аппроксимации</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-chess"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>SHAP</h4>
+                            <p>SHapley Additive exPlanations - основано на теории игр для распределения вклада признаков</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Attention механизмы</h4>
+                            <p>Визуализация того, на что модель "обращает внимание" при принятии решений</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Saliency Maps</h4>
+                            <p>Карты значимости, показывающие важные области входных данных</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Пример работы LIME</h3>
+
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Локальная аппроксимация</h4>
+                        <p>Создаются perturbed примеры вокруг интересующего нас предсказания</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Обучение интерпретируемой модели</h4>
+                        <p>На этих примерах обучается простая интерпретируемая модель (например, линейная регрессия)</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Объяснение предсказания</h4>
+                        <p>Интерпретируемая модель показывает, какие признаки наиболее важны для данного конкретного предсказания</p>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Важно:</strong> Интерпретируемость становится ключевым требованием для внедрения систем 
+                       искусственного интеллекта в ответственных областях. Исследования в этой области активно развиваются.</p>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="blackbox-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="blackbox-page-indicator">Страница 1 из 3</div>
+                    <div class="pagination-numbers" id="blackbox-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="blackbox-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-paradigms'">
+                        <i class="fas fa-arrow-left"></i> Парадигмы обучения
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-research'">
+                        Цели исследования <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+        {% include 'components/js-section.html' %}
+
+</body>
+</html>

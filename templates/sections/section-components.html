@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+{% include 'components/head.html' with title="Основные компоненты нейронных сетей - Нейронные сети" css="css/index.css" %}
+<body>
+    <!-- Шапка с навигацией -->
+{% include 'components/header.html' %}
+<!-- YouTube плеер -->
+{% include 'components/youtube-player.html' %}
+    <!-- Боковая панель навигации -->
+    {% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="components-page-1">
+                <h2>Основные компоненты нейронных сетей</h2>
+
+                <div class="definition">
+                    <p>Нейронные сети состоят из трех основных типов слоев, каждый из которых выполняет определенную
+                        функцию в процессе обработки информации.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/image001.png' %}" alt="Компоненты нейронной сети" class="content-image">
+                    <div class="image-caption">Схема основных компонентов нейронной сети</div>
+                </div>
+
+                <h3>Схема работы нейронной сети</h3>
+                <div class="network-scheme">
+                    <div class="scheme-item">
+                        <div class="scheme-icon">x₁, x₂, x₃</div>
+                        <div class="scheme-label">Входные данные</div>
+                    </div>
+                    <div class="scheme-arrow">→</div>
+                    <div class="scheme-item">
+                        <div class="scheme-icon">h₁, h₂, h₃...</div>
+                        <div class="scheme-label">Скрытые нейроны</div>
+                    </div>
+                    <div class="scheme-arrow">→</div>
+                    <div class="scheme-item">
+                        <div class="scheme-icon">y₁, y₂</div>
+                        <div class="scheme-label">Выходные результаты</div>
+                    </div>
+                </div>
+
+                <div class="component-overview">
+                    <div class="overview-card">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h4>Входной слой</h4>
+                        <p>Получает данные из внешнего мира</p>
+                    </div>
+                    <div class="overview-card">
+                        <i class="fas fa-cogs"></i>
+                        <h4>Скрытые слои</h4>
+                        <p>Обрабатывают и извлекают признаки</p>
+                    </div>
+                    <div class="overview-card">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <h4>Выходной слой</h4>
+                        <p>Формирует конечный результат</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="components-page-2" style="display: none;">
+                <h3>Входные данные (Input Layer)</h3>
+
+                <div class="component-detail">
+                    <div class="detail-header">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <div>
+                            <h4>Что это?</h4>
+                            <p>Первый слой сети, который получает данные из внешнего мира.</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-content">
+                        <h5>Примеры входных данных:</h5>
+                        <div class="examples-grid">
+                            <div class="example-card">
+                                <i class="fas fa-image"></i>
+                                <div>
+                                    <strong>Изображения</strong>
+                                    <p>Пиксели изображения (для CNN)</p>
+                                </div>
+                            </div>
+                            <div class="example-card">
+                                <i class="fas fa-table"></i>
+                                <div>
+                                    <strong>Табличные данные</strong>
+                                    <p>Характеристики клиента (для MLP)</p>
+                                </div>
+                            </div>
+                            <div class="example-card">
+                                <i class="fas fa-font"></i>
+                                <div>
+                                    <strong>Текст</strong>
+                                    <p>Слова в тексте (для NLP)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="features-list">
+                            <h5>Особенности входного слоя:</h5>
+                            <ul>
+                                <li>Каждый нейрон входного слоя соответствует одному признаку данных</li>
+                                <li>Входной слой не выполняет вычислений, а только передаёт данные дальше</li>
+                                <li>Размерность слоя определяется размерностью входных данных</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/сзема входных данныз.png' %}" alt="Входной слой" class="content-image">
+                    <div class="image-caption">Структура входного слоя нейронной сети</div>
+                </div>
+            </div>
+
+            <div class="page-content" id="components-page-3" style="display: none;">
+                <h3>Скрытые слои (Hidden Layers)</h3>
+
+                <div class="component-detail">
+                    <div class="detail-header">
+                        <i class="fas fa-cogs"></i>
+                        <div>
+                            <h4>Что это?</h4>
+                            <p>Слои между входом и выходом, где сеть обрабатывает и извлекает признаки.</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-content">
+                        <h5>Особенности скрытых слоев:</h5>
+                        <ul>
+                            <li>Каждый нейрон суммирует входы с весами и добавляет смещение (bias)</li>
+                            <li>Затем результат пропускается через функцию активации (ReLU, Sigmoid, Tanh)</li>
+                            <li>Могут быть один слой или десятки/сотни слоёв в глубоких сетях</li>
+                        </ul>
+
+                        <h5>Роль скрытых слоев:</h5>
+                        <ul>
+                            <li>На скрытых слоях сеть учится находить скрытые зависимости в данных</li>
+                            <li>В CNN скрытые слои включают свёрточные слои, которые автоматически выделяют признаки</li>
+                            <li>Преобразуют исходные данные в более абстрактные представления</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="depth-comparison">
+                    <div class="depth-card">
+                        <h4>Мелкая сеть</h4>
+                        <div class="depth-visual">
+                            <div class="layer">Вход</div>
+                            <div class="layer">Скрытый</div>
+                            <div class="layer">Выход</div>
+                        </div>
+                        <p>1-2 скрытых слоя для простых задач</p>
+                    </div>
+                    <div class="depth-card">
+                        <h4>Глубокая сеть</h4>
+                        <div class="depth-visual deep">
+                            <div class="layer">Вход</div>
+                            <div class="layer">Скрытый</div>
+                            <div class="layer">Скрытый</div>
+                            <div class="layer">Скрытый</div>
+                            <div class="layer">Скрытый</div>
+                            <div class="layer">Выход</div>
+                        </div>
+                        <p>Десятки/сотни слоёв для сложных задач</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="components-page-4" style="display: none;">
+                <h3>Выходные данные (Output Layer)</h3>
+
+                <div class="component-detail">
+                    <div class="detail-header">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <div>
+                            <h4>Что это?</h4>
+                            <p>Последний слой сети, который формирует результат работы сети.</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-content">
+                        <h5>Примеры выходных данных:</h5>
+                        <div class="examples-grid">
+                            <div class="example-card">
+                                <i class="fas fa-tags"></i>
+                                <div>
+                                    <strong>Классификация</strong>
+                                    <p>Вероятность принадлежности к классу</p>
+                                </div>
+                            </div>
+                            <div class="example-card">
+                                <i class="fas fa-chart-line"></i>
+                                <div>
+                                    <strong>Регрессия</strong>
+                                    <p>Число или вектор значений</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5>Функции активации выходного слоя:</h5>
+                        <div class="activation-types">
+                            <div class="activation-card">
+                                <h6>Softmax</h6>
+                                <p>Для многоклассовой классификации</p>
+                                <code>P(class_i) = e<sup>z_i</sup> / ∑e<sup>z_j</sup></code>
+                            </div>
+                            <div class="activation-card">
+                                <h6>Sigmoid</h6>
+                                <p>Для бинарной классификации</p>
+                                <code>σ(z) = 1 / (1 + e<sup>-z</sup>)</code>
+                            </div>
+                            <div class="activation-card">
+                                <h6>Linear</h6>
+                                <p>Для регрессии</p>
+                                <code>f(z) = z</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Важно:</strong> Выбор функции активации на выходном слое зависит от типа решаемой задачи
+                        и должен соответствовать формату ожидаемого результата.</p>
+                </div>
+
+                <h3>Взаимодействие компонентов</h3>
+                <div class="interaction-flow">
+                    <div class="flow-stage">
+                        <div class="stage-number">1</div>
+                        <div class="stage-content">
+                            <h4>Входной слой</h4>
+                            <p>Принимает сырые данные и нормализует их</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-stage">
+                        <div class="stage-number">2</div>
+                        <div class="stage-content">
+                            <h4>Скрытые слои</h4>
+                            <p>Последовательно преобразуют данные, извлекая признаки</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-stage">
+                        <div class="stage-number">3</div>
+                        <div class="stage-content">
+                            <h4>Выходной слой</h4>
+                            <p>Формирует конечный результат в нужном формате</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="components-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="components-page-indicator">Страница 1 из 4</div>
+                    <div class="pagination-numbers" id="components-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="components-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-cnn'">
+                        <i class="fas fa-arrow-left"></i> Сверточные сети
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-activation'">
+                        Функции активации <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <!-- Модальное окно опросника -->
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <div class="survey-header">
+                <h2>Опрос по теме сайта</h2>
+                <p>Пожалуйста, ответьте на несколько вопросов</p>
+            </div>
+            <div id="surveyContent">
+                <!-- Контент опросника будет генерироваться динамически -->
+            </div>
+            <div class="survey-navigation">
+                <button class="survey-btn" id="prevBtn" disabled>Назад</button>
+                <button class="survey-btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+    </div>
+
+    {% include 'components/js-section.html' %}
+</body>
+</html>

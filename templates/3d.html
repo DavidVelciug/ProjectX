@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="3D вариант - Рисование цифр" css="css/3d.css" %}
+<body>
+    <!-- Видео-прелоадер -->
+    {% include 'components/preloader.html' with loader="Загрузка 3D холста..." %}
+
+    <!-- Модальное окно подсказки -->
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Как пользоваться 3D холстом</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4><i class="fas fa-mouse"></i> Рисование цифр в 3D режиме</h4>
+                    <p>Используйте мышь или касание на сенсорном экране для рисования цифры от 0 до 9 в области для
+                        рисования.</p>
+                    <ul>
+                        <li><strong>Мышь:</strong> Зажмите левую кнопку и рисуйте на холсте</li>
+                        <li><strong>Сенсорный экран:</strong> Коснитесь и проведите пальцем по холсту</li>
+                        <li><strong>Толщина линии:</strong> Автоматически настроена для лучшего распознавания</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><i class="fas fa-robot"></i> Распознавание и 3D отображение</h4>
+                    <p>После рисования нажмите кнопку "Распознать" для анализа цифры:</p>
+                    <ul>
+                        <li>Результат появится в виде вращающегося 3D куба</li>
+                        <li>Цифра отобразится на всех гранях куба</li>
+                        <li>Распознанная цифра покажется в текстовом блоке</li>
+                        <li>Выберите модель ИИ для анализа (CNN, MLP или Perceptron)</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><i class="fas fa-chart-bar"></i> Проценты схожести</h4>
+                    <p>В правой части отображаются проценты схожести вашего рисунка со всеми цифрами:</p>
+                    <ul>
+                        <li>Каждая цифра от 0 до 9 имеет свой процент уверенности</li>
+                        <li>Более высокий процент означает большую схожесть</li>
+                        <li>Максимальный процент показывает распознанную цифру</li>
+                        <li>Проценты обновляются после каждого распознавания</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><i class="fas fa-bullseye"></i> Предполагаемая цифра</h4>
+                    <p>Укажите цифру, которую вы нарисовали, для сравнения с результатом распознавания:</p>
+                    <ul>
+                        <li>Введите цифру от 0 до 9 в поле "Введите предполагаемую цифру"</li>
+                        <li>Система сравнит ваш ввод с результатом распознавания</li>
+                        <li>Помогает оценить точность работы модели ИИ</li>
+                        <li>Нажмите Enter для быстрого распознавания после ввода</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><i class="fas fa-cube"></i> Управление 3D кубом</h4>
+                    <ul>
+                        <li><strong>Автовращение:</strong> Куб автоматически вращается для лучшего обзора</li>
+                        <li><strong>Пауза:</strong> Наведите курсор на куб, чтобы остановить вращение</li>
+                        <li><strong>Анимация:</strong> Уберите курсор, чтобы возобновить вращение</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><i class="fas fa-eraser"></i> Управление 3D холстом</h4>
+                    <ul>
+                        <li><strong>Стереть:</strong> Очищает холст для нового рисунка</li>
+                        <li><strong>Смена темы:</strong> Переключение между темной и светлой темой</li>
+                        <li><strong>Выбор модели:</strong> CNN - для изображений, MLP - универсальная, Perceptron -
+                            простая</li>
+                        <li><strong>Автоматическое распознавание:</strong> Запускается через секунду после завершения
+                            рисования</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="modalGotIt">Понятно!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <div class="logo-placeholder"
+                    style="width: 50px; height: 50px; background: var(--accent-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                    <i class="fas fa-cube" style="color: white; font-size: 24px;"></i>
+                </div>
+                <span class="logo-text">3D рисование цифр</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Выбор вариантов интерфейса -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="variantsBtn">
+                    Варианты <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="variantsContent">
+                    <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+                    <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+                    <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+                </div>
+            </div>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+
+            <!-- модель ИИ выбранная пользователем -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="modelBtn">
+                    Модель ИИ <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="modelContent">
+                    <a href="#" data-model="CNN"><i class="fas fa-brain"></i> CNN</a>
+                    <a href="#" data-model="MLP"><i class="fas fa-network-wired"></i> MLP</a>
+                    <a href="#" data-model="Perceptron"><i class="fas fa-circle-nodes"></i> Perceptron</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основное содержимое приложения -->
+    <main class="app-content">
+        <section class="drawing-section">
+            <h2>3D Рисование цифр</h2>
+
+            <div class="instruction-container">
+                <p>Нарисуйте цифру в области для рисования. Результат отобразится в 3D кубе.</p>
+                <button class="help-btn" id="helpBtn">
+                    <i class="fas fa-question-circle"></i> Подсказка
+                </button>
+            </div>
+
+            <!-- Контейнер для основного интерфейса -->
+            <div class="drawing-interface">
+                <!-- Левая часть: холст и управление -->
+                <div class="drawing-controls">
+                    <!-- Холст для рисования -->
+                    <div class="canvas-wrapper">
+                        <div class="canvas-title">Область для рисования</div>
+                        <div class="canvas-container">
+                            <canvas id="drawing-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Предполагаемая цифра, выбранная пользователем -->
+                    <div class="expected-number-container">
+                        <label for="expected-number">
+                            Введите предполагаемую цифру:
+                        </label>
+                        <input type="text" id="expected-number" required maxlength="1" pattern="[0-9]"
+                            placeholder="0-9">
+                    </div>
+
+                    <!-- Управление процессом распознавания -->
+                    <div class="controls">
+                        <button class="control-btn" id="recognize-btn">
+                            <i class="fas fa-search"></i> Распознать
+                        </button>
+                        <button class="control-btn" id="erase-btn">
+                            <i class="fas fa-eraser"></i> Стереть
+                        </button>
+                    </div>
+
+                    <!-- 3D визуализация результата -->
+                    <div class="visualization-3d">
+                        <div class="cube-container">
+                            <div class="cube-face cube-front">
+                                <div class="cube-digit" id="cube-digit">—</div>
+                            </div>
+                            <div class="cube-face cube-back">
+                                <div class="cube-digit">—</div>
+                            </div>
+                            <div class="cube-face cube-right">
+                                <div class="cube-digit">—</div>
+                            </div>
+                            <div class="cube-face cube-left">
+                                <div class="cube-digit">—</div>
+                            </div>
+                            <div class="cube-face cube-top">
+                                <div class="cube-digit">—</div>
+                            </div>
+                            <div class="cube-face cube-bottom">
+                                <div class="cube-digit">—</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Текстовый результат распознавания -->
+                    <div class="result">
+                        <h3>Распознанная цифра:</h3>
+                        <div class="result-text" id="result-text">—</div>
+                    </div>
+                </div>
+
+                <!-- Правая часть: проценты схожести -->
+                <div class="similarity-container">
+                    <h3>Проценты схожести:</h3>
+                    <div class="similarity-grid" id="similarityGrid">
+                        <!-- Проценты будут добавляться динамически -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/3d.js' %}"></script>
+</body>
+
+</html>

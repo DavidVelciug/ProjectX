@@ -1,0 +1,1152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #0a1929;
+    --secondary-color: #0d2337;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #0b1c2e;
+    --light-color: #e6f2ff;
+    --text-color: #e0f2fe;
+    --header-height: 90px;
+    --transition-speed: 0.3s;
+    --bg-color: #0a1929;
+    --content-bg: rgba(13, 35, 55, 0.4);
+    --card-bg: rgba(13, 35, 55, 0.4);
+    --border-color: rgba(42, 157, 143, 0.25);
+    --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --button-bg: rgba(42, 157, 143, 0.25);
+    --button-border: 1px solid var(--accent-color);
+    --button-text: var(--accent-light);
+    --button-hover-bg: rgba(42, 157, 143, 0.35);
+    --button-hover-shadow: 0 0 10px rgba(42, 157, 143, 0.5);
+}
+
+body.light-theme {
+    --primary-color: #ffffff;
+    --secondary-color: #f8fafc;
+    --accent-color: #2a9d8f;
+    --accent-light: #38b2ac;
+    --dark-color: #e2e8f0;
+    --light-color: #0a1929;
+    --text-color: #1e293b;
+    --bg-color: #ffffff;
+    --content-bg: rgba(248, 250, 252, 0.8);
+    --card-bg: rgba(248, 250, 252, 0.9);
+    --border-color: rgba(42, 157, 143, 0.3);
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --button-bg: #38b2ac;
+    --button-border: 1px solid #38b2ac;
+    --button-text: #ffffff;
+    --button-hover-bg: #2a9d8f;
+    --button-hover-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.15) 0%, transparent 25%);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+body.light-theme {
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(56, 178, 172, 0.08) 0%, transparent 25%);
+}
+
+/* Стили для видео-прелоадера */
+.video-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 25, 41, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.loading-text {
+    font-size: clamp(20px, 4vw, 32px);
+    margin-bottom: 20px;
+    color: var(--accent-light);
+    text-shadow: 0 0 15px rgba(56, 178, 172, 0.7);
+    font-weight: 600;
+    padding: 0 20px;
+}
+
+.loading-progress {
+    width: min(300px, 80%);
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.loading-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 15px var(--accent-light);
+}
+
+.loading-percentage {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 600;
+    color: var(--accent-light);
+}
+
+.content-reveal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 1;
+}
+
+.content-reveal.active {
+    width: 3000px;
+    height: 3000px;
+    opacity: 1;
+}
+
+/* Улучшенный header с поддержкой масштабирования */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 max(20px, 5vw);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all var(--transition-speed);
+    border-bottom: 1px solid var(--border-color);
+    max-height: 100px;
+}
+
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    animation: fadeIn 1s ease;
+    transition: all var(--transition-speed);
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+.logo-placeholder {
+    width: clamp(40px, 8vw, 50px) !important;
+    height: clamp(40px, 8vw, 50px) !important;
+    background: var(--accent-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: clamp(10px, 2vw, 15px);
+    flex-shrink: 0;
+}
+
+.logo-placeholder i {
+    color: white;
+    font-size: clamp(18px, 3vw, 24px);
+}
+
+.logo-text {
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--accent-light);
+    text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+    transition: all var(--transition-speed);
+    white-space: nowrap;
+}
+
+.logo:hover .logo-text {
+    color: #48cae4;
+    text-shadow: 0 0 12px rgba(72, 202, 228, 0.6);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 20px);
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+/* Общие стили для всех кнопок */
+.theme-toggle,
+.dropdown-btn,
+.control-btn,
+.help-btn,
+.modal-btn {
+    background: var(--button-bg);
+    border: var(--button-border);
+    border-radius: 6px;
+    color: var(--button-text);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover,
+.dropdown-btn:hover,
+.control-btn:hover,
+.help-btn:hover,
+.modal-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--button-hover-shadow);
+}
+
+/* Стили для конкретных кнопок */
+.theme-toggle {
+    border-radius: 50%;
+    width: clamp(40px, 6vw, 50px);
+    height: clamp(40px, 6vw, 50px);
+    justify-content: center;
+    font-size: clamp(16px, 2.5vw, 20px);
+}
+
+/* Стили для выпадающих меню */
+.dropdown-menu {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.dropdown-btn {
+    padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px);
+    font-size: clamp(12px, 1.8vw, 16px);
+    white-space: nowrap;
+    gap: 8px;
+}
+
+.dropdown-btn i {
+    font-size: clamp(12px, 1.8vw, 14px);
+    transition: transform var(--transition-speed);
+}
+
+.dropdown-btn.active i {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 5px;
+    background-color: var(--dark-color);
+    min-width: min(200px, 40vw);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1;
+    animation: slideDown 0.5s ease;
+    border: 1px solid var(--accent-color);
+}
+
+.dropdown-content a {
+    color: var(--light-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: all var(--transition-speed);
+    font-size: clamp(12px, 1.8vw, 14px);
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(42, 157, 143, 0.2);
+    padding-left: 20px;
+    color: var(--accent-light);
+}
+
+.dropdown-content a i {
+    margin-right: 10px;
+    color: var(--accent-light);
+    font-size: clamp(12px, 1.8vw, 14px);
+}
+
+.show {
+    display: block;
+}
+
+/* Основная область содержимого */
+.app-content {
+    margin-top: var(--header-height);
+    padding: clamp(15px, 3vw, 30px);
+    background: var(--bg-color);
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drawing-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: clamp(15px, 3vw, 25px);
+    margin-bottom: clamp(15px, 3vw, 25px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.8s ease;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(6px);
+    transition: all var(--transition-speed);
+    max-width: min(1200px, 95vw);
+    width: 100%;
+    text-align: center;
+}
+
+.drawing-section h2 {
+    color: var(--accent-light);
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-color);
+    font-size: clamp(20px, 3.5vw, 28px);
+}
+
+.drawing-section p {
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: 20px;
+}
+
+/* Улучшенный адаптивный canvas с ограничением масштабирования */
+.canvas-container {
+    position: relative;
+    margin: 15px 0;
+    width: 100%;
+    max-width: min(400px, 85vw, 85vh);
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    touch-action: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transform-origin: left center;
+}
+
+#drawing-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    background-color: #000;
+    display: block;
+    touch-action: none;
+    transform: none !important;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-start;
+    gap: clamp(12px, 2.5vw, 20px);
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: clamp(10px, 1.8vw, 12px) clamp(15px, 2.5vw, 20px);
+    font-size: clamp(14px, 1.8vw, 16px);
+    min-width: min(140px, 35vw);
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+}
+
+.control-btn i {
+    font-size: clamp(14px, 1.8vw, 16px);
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(42, 157, 143, 0.15);
+    border-left: 4px solid var(--accent-color);
+}
+
+.result h3 {
+    color: var(--accent-light);
+    margin-bottom: 12px;
+    font-size: clamp(18px, 2.5vw, 22px);
+}
+
+.result-text {
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: bold;
+    color: var(--accent-light);
+}
+
+.expected-number-container {
+    display: inline-block;
+    margin: 8px 0;
+    padding: 8px 12px;
+    background-color: rgba(42, 157, 143, 0.15);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+}
+
+.expected-number-container label {
+    font-size: clamp(11px, 1.5vw, 13px);
+    font-weight: 500;
+    color: var(--accent-light);
+    margin-right: 5px;
+}
+
+.expected-number-container input {
+    padding: 4px 8px;
+    font-size: clamp(11px, 1.5vw, 13px);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    background-color: rgba(56, 178, 172, 0.1);
+    color: var(--accent-light);
+    width: 45px;
+    max-width: 50px;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes eraseAnimation {
+    from {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    to {
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+/* Контейнер инструкции */
+.instruction-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2.5vw, 15px);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.instruction-container p {
+    margin: 0;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+/* Кнопка подсказки */
+.help-btn {
+    padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 15px);
+    font-size: clamp(12px, 1.6vw, 14px);
+    white-space: nowrap;
+    gap: 5px;
+}
+
+.help-btn i {
+    font-size: clamp(12px, 1.6vw, 16px);
+}
+
+/* Интерфейс рисования */
+.drawing-interface {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Левая часть 3/4, правая 1/4 */
+    gap: clamp(15px, 3vw, 25px);
+    align-items: start;
+    width: 100%;
+}
+
+.drawing-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* Контейнер схожести */
+.similarity-container {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: clamp(12px, 2.5vw, 20px);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+    max-height: calc(100vh - var(--header-height) - 40px);
+    overflow-y: auto;
+    
+    /* Стили для scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) rgba(42, 157, 143, 0.1);
+}
+
+.similarity-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.similarity-container::-webkit-scrollbar-track {
+    background: rgba(42, 157, 143, 0.1);
+    border-radius: 3px;
+}
+
+.similarity-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--accent-color), var(--accent-light));
+    border-radius: 3px;
+}
+
+.similarity-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--accent-light), #48cae4);
+}
+
+.similarity-container h3 {
+    color: var(--accent-light);
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: clamp(16px, 2.5vw, 18px);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.similarity-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.similarity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(6px, 1.5vw, 8px) clamp(8px, 1.8vw, 12px);
+    background: rgba(42, 157, 143, 0.1);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.similarity-item:hover {
+    background: rgba(42, 157, 143, 0.2);
+    transform: translateX(3px);
+}
+
+.similarity-digit {
+    font-size: clamp(14px, 2vw, 16px);
+    font-weight: bold;
+    color: var(--accent-light);
+    min-width: 20px;
+}
+
+.similarity-bar-container {
+    flex: 1;
+    margin: 0 10px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.similarity-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 6px rgba(56, 178, 172, 0.4);
+}
+
+.similarity-percentage {
+    font-size: clamp(11px, 1.5vw, 13px);
+    font-weight: 600;
+    color: var(--accent-light);
+    min-width: 35px;
+    text-align: right;
+}
+
+/* Стили для модального окна */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-overlay-bg);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(8px);
+    padding: 15px;
+}
+
+.modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 12px;
+    width: min(550px, 95vw);
+    max-height: min(75vh, 700px);
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.4s ease;
+    
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) rgba(42, 157, 143, 0.1);
+    scroll-behavior: smooth;
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(42, 157, 143, 0.1);
+    border-radius: 3px;
+    margin: 4px 0;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--accent-color), var(--accent-light));
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--accent-light), #48cae4);
+    box-shadow: 0 0 6px rgba(56, 178, 172, 0.6);
+}
+
+body.light-theme .modal-content::-webkit-scrollbar-track {
+    background: rgba(42, 157, 143, 0.15);
+}
+
+body.light-theme .modal-content::-webkit-scrollbar-thumb {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(12px, 2.5vw, 20px) clamp(15px, 3vw, 25px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    background: var(--card-bg);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.modal-header h3 {
+    color: var(--accent-light);
+    margin: 0;
+    font-size: clamp(18px, 3vw, 22px);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--accent-light);
+    font-size: clamp(14px, 2.5vw, 18px);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(42, 157, 143, 0.2);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: clamp(15px, 3vw, 25px);
+    line-height: 1.5;
+}
+
+.help-section {
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.help-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.help-section h4 {
+    color: var(--accent-light);
+    margin-bottom: 8px;
+    font-size: clamp(14px, 2.5vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.help-section h4 i {
+    color: var(--accent-color);
+}
+
+.help-section p {
+    margin-bottom: 6px;
+    line-height: 1.4;
+    font-size: clamp(12px, 1.8vw, 14px);
+}
+
+.help-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.help-section li {
+    margin-bottom: 5px;
+    padding-left: 15px;
+    position: relative;
+    line-height: 1.3;
+    font-size: clamp(12px, 1.8vw, 14px);
+}
+
+.help-section li:before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.help-section strong {
+    color: var(--accent-light);
+}
+
+.modal-footer {
+    padding: clamp(12px, 2.5vw, 15px) clamp(15px, 3vw, 25px);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+    background: var(--card-bg);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.modal-btn {
+    padding: clamp(8px, 1.8vw, 10px) clamp(15px, 2.5vw, 20px);
+    font-size: clamp(12px, 1.8vw, 14px);
+}
+
+/* Эффект тени при скролле */
+.modal-content.scrolled .modal-header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content.scrolled .modal-footer {
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Анимации для модального окна */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Медиа-запросы для разных уровней масштабирования */
+@media screen and (min-resolution: 120dpi), 
+       screen and (max-width: 1400px) and (min-resolution: 96dpi) {
+    header {
+        height: clamp(70px, 9vh, 85px);
+        padding: 0 max(15px, 3vw);
+    }
+    
+    .app-content {
+        margin-top: clamp(70px, 9vh, 85px);
+    }
+    
+    .canvas-container {
+        max-width: min(350px, 75vw, 75vh);
+    }
+    
+    .logo-text {
+        font-size: clamp(16px, 2.2vw, 24px);
+    }
+}
+
+@media screen and (min-resolution: 144dpi), 
+       screen and (max-width: 1200px) {
+    header {
+        height: clamp(65px, 8vh, 75px);
+        padding: 0 max(12px, 2vw);
+    }
+    
+    .app-content {
+        margin-top: clamp(65px, 8vh, 75px);
+        padding: clamp(12px, 2.5vw, 20px);
+    }
+    
+    .canvas-container {
+        max-width: min(320px, 70vw, 70vh);
+    }
+    
+    .drawing-interface {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .similarity-container {
+        order: -1;
+        position: relative;
+        top: 0;
+        max-height: none;
+    }
+}
+
+@media screen and (min-resolution: 168dpi), 
+       screen and (max-width: 900px) {
+    header {
+        height: clamp(60px, 7vh, 70px);
+        flex-wrap: wrap;
+        padding: 8px max(10px, 1.5vw);
+    }
+    
+    .app-content {
+        margin-top: clamp(60px, 7vh, 70px);
+    }
+    
+    .header-controls {
+        gap: clamp(6px, 1.2vw, 12px);
+    }
+    
+    .canvas-container {
+        max-width: min(280px, 65vw, 65vh);
+    }
+    
+    .dropdown-content {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 280px;
+    }
+}
+
+/* Мобильные устройства и маленькие экраны */
+@media (max-width: 768px) {
+    header {
+        height: auto;
+        min-height: 70px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 8px 12px;
+    }
+    
+    .logo {
+        margin-right: 10px;
+    }
+    
+    .header-controls {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+    
+    .canvas-container {
+        max-width: min(300px, 85vw, 85vh);
+    }
+    
+    .drawing-interface {
+        grid-template-columns: 1fr;
+    }
+    
+    .similarity-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    /* На мобильных скрываем текст в кнопках, оставляем только иконки */
+    .dropdown-btn span {
+        display: none;
+    }
+    
+    .dropdown-btn i {
+        margin: 0;
+    }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+    header {
+        padding: 6px 8px;
+    }
+    
+    .logo-text {
+        font-size: clamp(14px, 4vw, 18px);
+    }
+    
+    .header-controls {
+        gap: 6px;
+    }
+    
+    .dropdown-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 40px;
+        justify-content: center;
+    }
+    
+    .theme-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .canvas-container {
+        max-width: min(260px, 90vw, 90vh);
+        border-width: 1px;
+    }
+    
+    .similarity-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Портретная ориентация на мобильных */
+@media (max-height: 700px) and (orientation: portrait) {
+    .canvas-container {
+        max-width: min(250px, 75vw, 75vh);
+    }
+}
+
+/* Ландшафтная ориентация на мобильных */
+@media (max-height: 500px) and (orientation: landscape) {
+    header {
+        height: 60px;
+    }
+    
+    .app-content {
+        margin-top: 60px;
+        padding: 10px;
+    }
+    
+    .canvas-container {
+        max-width: min(200px, 50vh, 60vw);
+    }
+}
+
+/* Адаптивность для планшетов */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .drawing-interface {
+        grid-template-columns: 2fr 1fr;
+        gap: clamp(15px, 2vw, 20px);
+    }
+    
+    .similarity-container {
+        position: sticky;
+        top: calc(var(--header-height) + 15px);
+    }
+}
+
+/* Адаптивность для больших экранов 1440px - 1600px */
+@media (min-width: 1441px) and (max-width: 1600px) {
+    :root {
+        --header-height: 95px;
+    }
+    
+    .drawing-section {
+        max-width: 1400px;
+    }
+    
+    .canvas-container {
+        max-width: min(450px, 80vw, 80vh);
+    }
+}
+
+/* Адаптивность для больших экранов 1601px - 1920px */
+@media (min-width: 1601px) and (max-width: 1920px) {
+    :root {
+        --header-height: 100px;
+    }
+    
+    .drawing-section {
+        max-width: 1500px;
+        padding: clamp(25px, 4vw, 40px);
+    }
+    
+    .canvas-container {
+        max-width: min(500px, 75vw, 75vh);
+    }
+    
+    .similarity-container {
+        padding: clamp(15px, 3vw, 25px);
+    }
+}
+
+/* Адаптивность для огромных экранов 1921px - 2560px */
+@media (min-width: 1921px) and (max-width: 2560px) {
+    :root {
+        --header-height: 110px;
+    }
+    
+    header {
+        padding: 0 max(30px, 6vw);
+    }
+    
+    .drawing-section {
+        max-width: 1600px;
+        padding: clamp(30px, 5vw, 50px);
+    }
+    
+    .canvas-container {
+        max-width: min(550px, 70vw, 70vh);
+    }
+    
+    .similarity-container {
+        padding: clamp(20px, 4vw, 30px);
+    }
+    
+    .control-btn {
+        padding: clamp(12px, 2vw, 15px) clamp(18px, 3vw, 25px);
+        font-size: clamp(16px, 2vw, 18px);
+    }
+}
+
+/* Улучшенная поддержка доступности */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.theme-toggle:focus-visible,
+.dropdown-btn:focus-visible,
+.control-btn:focus-visible,
+.help-btn:focus-visible,
+.modal-btn:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 2px;
+}
+
+/* Фикс для логотипа в HTML */
+.logo .logo-placeholder {
+    width: clamp(40px, 8vw, 50px) !important;
+    height: clamp(40px, 8vw, 50px) !important;
+    margin-right: clamp(10px, 2vw, 15px) !important;
+}
+
+.logo .logo-placeholder i {
+    font-size: clamp(18px, 3vw, 24px) !important;
+}

@@ -1,0 +1,371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+{% include 'components/head.html' with title="Метод обратного распространения ошибки - Нейронные сети" css="css/index.css"%}
+<body>
+    <!-- Шапка с навигацией -->
+{% include 'components/header.html' %}
+<!-- YouTube плеер -->
+{% include 'components/youtube-player.html' %}
+
+    <!-- Боковая панель навигации -->
+{% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="backprop-page-1">
+                <h2>Метод обратного распространения ошибки</h2>
+
+                <div class="definition">
+                    <p>Обратное распространение ошибки — это алгоритм, который позволяет нейронной сети вычислять
+                        градиенты функции потерь по всем весам и корректировать их, чтобы минимизировать ошибку сети.
+                    </p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Obratnoerasp.png' %}" alt="Обратное распространение ошибки" class="content-image">
+                    <div class="image-caption">Схема алгоритма обратного распространения ошибки</div>
+                </div>
+
+                <h3>Определение</h3>
+
+                <div class="key-points">
+                    <div class="point-card">
+                        <div class="point-icon">🔄</div>
+                        <div class="point-content">
+                            <h4>Используется с градиентным спуском</h4>
+                            <p>Составляет основу процесса обучения нейронных сетей</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-icon">🏗️</div>
+                        <div class="point-content">
+                            <h4>Позволяет обучать многослойные сети</h4>
+                            <p>Ключевой алгоритм для MLP и глубоких сетей</p>
+                        </div>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-icon">🎯</div>
+                        <div class="point-content">
+                            <h4>Автоматическое вычисление градиентов</h4>
+                            <p>Эффективно рассчитывает производные для всех параметров</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Историческое значение:</strong> Backpropagation стал прорывом в 1980-х годах, позволившим
+                        эффективно обучать многослойные нейронные сети и открывшим путь к современному глубокому
+                        обучению.</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="backprop-page-2" style="display: none;">
+                <h3>Идея метода</h3>
+
+                <div class="algorithm-steps">
+                    <div class="algorithm-step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-title">
+                                <h4>Прямой проход (Forward Pass)</h4>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <p>Входные данные проходят через все слои сети → получаем выход ŷ.</p>
+                            <div class="step-visual">
+                                <div class="forward-flow">
+                                    <span class="flow-item">Вход x</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="flow-item">Слой 1</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="flow-item">Слой 2</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="flow-item">...</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="flow-item">Выход ŷ</span>
+                                </div>
+                            </div>
+                            <p>Вычисляется функция потерь L(ŷ, y) — мера ошибки сети.</p>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title">
+                                <h4>Обратный проход (Backward Pass)</h4>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <p>Ошибка распространяется обратно по сети от выходного слоя к входному.</p>
+                            <div class="step-visual">
+                                <div class="backward-flow">
+                                    <span class="flow-item">Ошибка ∂L/∂y</span>
+                                    <span class="flow-arrow">←</span>
+                                    <span class="flow-item">Слой N</span>
+                                    <span class="flow-arrow">←</span>
+                                    <span class="flow-item">Слой N-1</span>
+                                    <span class="flow-arrow">←</span>
+                                    <span class="flow-item">...</span>
+                                    <span class="flow-arrow">←</span>
+                                    <span class="flow-item">Слой 1</span>
+                                </div>
+                            </div>
+                            <p>Вычисляются частные производные функции потерь по каждому весу:</p>
+                            <div class="gradient-formula">
+                                ∂L/∂w
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-title">
+                                <h4>Обновление весов (Gradient Descent)</h4>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <p>Каждое соединение корректируется пропорционально градиенту:</p>
+                            <div class="update-formula">
+                                w := w - η · ∂L/∂w
+                            </div>
+                            <div class="parameters-explanation">
+                                <div class="param">
+                                    <span class="param-symbol">w</span>
+                                    <span class="param-desc">— текущее значение веса</span>
+                                </div>
+                                <div class="param">
+                                    <span class="param-symbol">η</span>
+                                    <span class="param-desc">— скорость обучения</span>
+                                </div>
+                                <div class="param">
+                                    <span class="param-symbol">∂L/∂w</span>
+                                    <span class="param-desc">— градиент функции потерь по весу</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="backprop-page-3" style="display: none;">
+                <h3>Как это работает на практике</h3>
+
+                <div class="practical-explanation">
+                    <div class="explanation-point">
+                        <div class="point-icon">📊</div>
+                        <div class="point-content">
+                            <h4>Сравнение с правильным ответом</h4>
+                            <p>Ошибка на выходе сети сравнивается с правильным ответом. Разница определяет величину
+                                корректировки.</p>
+                        </div>
+                    </div>
+
+                    <div class="explanation-point">
+                        <div class="point-icon">🎭</div>
+                        <div class="point-content">
+                            <h4>Распределение ответственности</h4>
+                            <p>Каждый слой получает часть ошибки, которую он «внёс» в общий результат. Более глубокие
+                                слои получают меньшую долю ошибки из-за затухания градиентов.</p>
+                        </div>
+                    </div>
+
+                    <div class="explanation-point">
+                        <div class="point-icon">⚖️</div>
+                        <div class="point-content">
+                            <h4>Принцип пропорциональности</h4>
+                            <p>Слои корректируют веса по принципу: <strong>чем больше вклад в ошибку, тем сильнее
+                                    коррекция</strong>. Это обеспечивает целенаправленное обучение.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chain-rule-explanation">
+                    <h4>Математическая основа: Цепное правило</h4>
+                    <p>Backpropagation основан на цепном правиле дифференцирования сложных функций:</p>
+                    <div class="chain-rule-formula">
+                        <p>Для функции f(g(x)) производная вычисляется как:</p>
+                        <div class="formula">
+                            df/dx = df/dg · dg/dx
+                        </div>
+                        <p>В нейронной сети каждый слой представляет собой функцию, применяемую к выходу предыдущего
+                            слоя.</p>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/detailschem.png' %}" alt="Детальная схема backpropagation"
+                        class="content-image">
+                    <div class="image-caption">Детализированная схема распространения ошибки через слои сети</div>
+                </div>
+            </div>
+
+            <div class="page-content" id="backprop-page-4" style="display: none;">
+                <h3>Преимущества метода</h3>
+
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🏔️</div>
+                        <div class="advantage-content">
+                            <h4>Обучение глубоких сетей</h4>
+                            <p>Позволяет обучать <strong>глубокие сети</strong> с множеством скрытых слоёв, что было
+                                невозможно до его изобретения.</p>
+                        </div>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🤖</div>
+                        <div class="advantage-content">
+                            <h4>Автоматическое вычисление</h4>
+                            <p><strong>Автоматически вычисляет градиенты</strong> для всех весов сети, избавляя от
+                                ручного расчёта производных.</p>
+                        </div>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🔄</div>
+                        <div class="advantage-content">
+                            <h4>Универсальность</h4>
+                            <p><strong>Совместим с любыми функциями активации</strong>, которые дифференцируемы (ReLU,
+                                Sigmoid, Tanh, Softmax).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Ограничения и решения</h3>
+
+                <div class="limitations-solutions">
+                    <div class="issue-card">
+                        <div class="issue-header">
+                            <div class="issue-icon">⚠️</div>
+                            <div class="issue-title">
+                                <h4>Затухание градиентов (Vanishing Gradient)</h4>
+                            </div>
+                        </div>
+                        <div class="issue-content">
+                            <p><strong>Проблема:</strong> В глубоких сетях градиенты могут становиться очень маленькими,
+                                что останавливает обучение.</p>
+                            <div class="solutions">
+                                <h5>Решения:</h5>
+                                <ul>
+                                    <li>Использование ReLU вместо Sigmoid/Tanh</li>
+                                    <li>Правильная инициализация весов (He/Xavier)</li>
+                                    <li>Skip-connections (ResNet)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="issue-card">
+                        <div class="issue-header">
+                            <div class="issue-icon">💥</div>
+                            <div class="issue-title">
+                                <h4>Взрыв градиентов (Exploding Gradient)</h4>
+                            </div>
+                        </div>
+                        <div class="issue-content">
+                            <p><strong>Проблема:</strong> Градиенты могут становиться очень большими, вызывая
+                                нестабильность обучения.</p>
+                            <div class="solutions">
+                                <h5>Решения:</h5>
+                                <ul>
+                                    <li>Градиентное clipping (ограничение величины)</li>
+                                    <li>Правильная настройка learning rate</li>
+                                    <li>Batch Normalization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Современные реализации</h3>
+
+                <div class="modern-implementations">
+                    <div class="implementation-card">
+                        <div class="impl-icon">⚡</div>
+                        <div class="impl-content">
+                            <h4>Автоматическое дифференцирование</h4>
+                            <p>Современные фреймворки (PyTorch, TensorFlow) автоматически вычисляют градиенты используя
+                                технику autodiff.</p>
+                        </div>
+                    </div>
+
+                    <div class="implementation-card">
+                        <div class="impl-icon">📊</div>
+                        <div class="impl-content">
+                            <h4>Вычислительные графы</h4>
+                            <p>Операции представляются в виде графа, что позволяет эффективно вычислять производные.</p>
+                        </div>
+                    </div>
+
+                    <div class="implementation-card">
+                        <div class="impl-icon">🚀</div>
+                        <div class="impl-content">
+                            <h4>Распределённое обучение</h4>
+                            <p>Backpropagation эффективно масштабируется на несколько GPU и кластеров.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="historical-note">
+                    <h4>Историческая справка</h4>
+                    <p>Алгоритм backpropagation был независимо переоткрыт несколько раз. Наиболее известная работа —
+                        статья 1986 года Румельхарта, Хинтона и Вильямса, которая популяризировала метод и показала его
+                        эффективность для обучения многослойных сетей.</p>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="backprop-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="backprop-page-indicator">Страница 1 из 4</div>
+                    <div class="pagination-numbers" id="backprop-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="backprop-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-supervised'">
+                        <i class="fas fa-arrow-left"></i> Обучение с учителем
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/index'">
+                        Главная страница <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <!-- Модальное окно опросника -->
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <div class="survey-header">
+                <h2>Опрос по теме сайта</h2>
+                <p>Пожалуйста, ответьте на несколько вопросов</p>
+            </div>
+            <div id="surveyContent">
+                <!-- Контент опросника будет генерироваться динамически -->
+            </div>
+            <div class="survey-navigation">
+                <button class="survey-btn" id="prevBtn" disabled>Назад</button>
+                <button class="survey-btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+    </div>
+
+        {% include 'components/js-section.html' %}
+
+</body>
+</html>

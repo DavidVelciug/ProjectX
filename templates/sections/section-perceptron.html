@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+{% include 'components/head.html' with title="Перцептрон и его развитие - Нейронные сети" css="css/index.css" %}
+<body>
+    <!-- Шапка с навигацией -->
+    {% include "components/header.html" %}
+<!-- YouTube плеер -->
+{% include 'components/youtube-player.html' %}
+    <!-- Боковая панель навигации -->
+{% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="perceptron-page-1">
+                <h2>Перцептрон и его развитие</h2>
+
+                <div class="definition">
+                    <p>Перцептрон — это одна из первых моделей искусственного нейрона, предложенная в 1958 году
+                        психологом Фрэнком Розенблаттом.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Схема перцептрона.png' %}" alt="Схема перцептрона" class="content-image">
+                    <div class="image-caption">Схематическое изображение перцептрона Розенблатта</div>
+                </div>
+
+                <h3>Что такое перцептрон</h3>
+                <p>Перцептрон имитирует работу биологических нейронов:</p>
+
+                <ul>
+                    <li>принимает на вход несколько сигналов (входные данные)</li>
+                    <li>умножает их на веса (важность каждого входа)</li>
+                    <li>суммирует</li>
+                    <li>пропускает результат через функцию активации (решает, активироваться или нет)</li>
+                </ul>
+
+                <p>Идея проста: перцептрон — это линейный классификатор, то есть он делит данные на два класса, проводя
+                    прямую (или гиперплоскость в многомерном случае).</p>
+
+                <h3>Ограничения перцептрона</h3>
+                <p>Перцептрон умеет решать задачи, которые линейно разделимы (например, AND, OR). Но он не способен
+                    решить задачи типа XOR (исключающее ИЛИ), где данные разделяются нелинейно.</p>
+
+                <div class="image-container">
+                    <img src="{% static 'img/problemsperceptron.png' %}" alt="Проблема XOR" class="content-image">
+                    <div class="image-caption">Задача XOR - классический пример нелинейно разделимой проблемы</div>
+                </div>
+
+                <p>Эта проблема была подробно описана в книге Мински и Пейперта «Perceptrons» (1969), что привело к
+                    «зиме ИИ» — снижению интереса и финансирования исследований в области нейросетей почти на 10–15 лет.
+                </p>
+            </div>
+
+            <div class="page-content" id="perceptron-page-2" style="display: none;">
+                <h3>Развитие идеи перцептрона</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>1. Многослойный перцептрон (MLP, 1980-е)</h4>
+                    </div>
+                    <ul>
+                        <li>Добавили скрытые слои (hidden layers)</li>
+                        <li>Появилась возможность решать задачи, которые не разделяются линейно</li>
+                        <li>Важный прорыв — алгоритм обратного распространения ошибки (backpropagation) для обучения
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-microchip"></i>
+                        <h4>2. Нейронные сети 1990-х</h4>
+                    </div>
+                    <ul>
+                        <li>Стали использовать для распознавания речи и изображений</li>
+                        <li>Вычислительные мощности и объёмы данных ограничивали развитие</li>
+                    </ul>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-brain"></i>
+                        <h4>3. Современные глубокие сети (Deep Learning, 2000–2020-е)</h4>
+                    </div>
+                    <ul>
+                        <li>Архитектуры на основе идей перцептрона (CNN, RNN, трансформеры) работают уже с десятками и
+                            сотнями слоёв</li>
+                        <li>Перцептрон можно считать прародителем всех современных нейросетей</li>
+                    </ul>
+                </div>
+
+                <h3>Интересные факты</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>Перцептрон Розенблатта изначально был реализован не только программно, но и аппаратно — в
+                            виде устройства <strong>Mark I Perceptron</strong>. Оно умело распознавать простые
+                            изображения (например, различать треугольник и квадрат).</li>
+                        <li>Основная идея "веса" в перцептроне стала фундаментальной: именно на их основе современные
+                            модели учатся находить закономерности в данных.</li>
+                        <li>Современные трансформеры (например, GPT, BERT) формально тоже основаны на идее "взвешивания
+                            входов", только с более сложными функциями (attention = улучшенный способ выделения
+                            «важности»).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-content" id="perceptron-page-3" style="display: none;">
+                <h3>Где используется наследие перцептрона сегодня</h3>
+
+                <div class="image-container">
+                    <img src="{% static 'img/useperceptron.png' %}" alt="Применение перцептрона" class="content-image">
+                    <div class="image-caption">Современные применения технологий на основе перцептрона</div>
+                </div>
+
+                <div class="applications-grid">
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Компьютерное зрение</h4>
+                            <p>Распознавание лиц, объектов, сцен</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Обработка речи и текста</h4>
+                            <p>От Siri и Alexa до ChatGPT</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Автопилоты и робототехника</h4>
+                            <p>Автономные системы управления</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Биология и медицина</h4>
+                            <p>Анализ ДНК, диагностика болезней</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Историческое значение:</strong> Несмотря на простоту, перцептрон заложил фундаментальные
+                        принципы, которые до сих пор используются в современных нейронных сетей. От идеи взвешивания
+                        входных сигналов до концепции обучения через коррекцию весов — все эти принципы берут начало в
+                        работе Розенблатта.</p>
+                </div>
+
+                <div class="inventor-card">
+                    <img src="{% static 'img/frank.png' %}" alt="Фрэнк Розенблатт" class="inventor-img">
+                    <div class="inventor-info">
+                        <h4>Фрэнк Розенблатт (1928-1971)</h4>
+                        <p>Американский психолог и пионер в области искусственного интеллекта. Разработал перцептрон в
+                            Корнеллской авиационной лаборатории. Его работа заложила основы для всего последующего
+                            развития нейронных сетей.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="perceptron-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="perceptron-page-indicator">Страница 1 из 3</div>
+                    <div class="pagination-numbers" id="perceptron-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="perceptron-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-research.html'">
+                        <i class="fas fa-arrow-left"></i> Исследование
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-mlp.html'">
+                        Многослойный перцептрон <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+    {% include 'components/js-section.html' %}
+</body>
+</html>

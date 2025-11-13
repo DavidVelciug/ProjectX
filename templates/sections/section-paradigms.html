@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="Основные парадигмы обучения - Нейронные сети" css="css/index.css" %}
+
+
+<body>
+    <!-- Шапка с навигацией -->
+    {% include 'components/header.html' %}
+
+{% include 'components/youtube-player.html' %}
+
+{% include 'components/side-bar.html' %}
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="paradigm-page-1">
+                <h2>Основные парадигмы обучения</h2>
+
+                <div class="definition">
+                    <p>В машинном обучении существует три фундаментальные парадигмы обучения, которые отличаются
+                        подходом к получению знаний из данных и характеру взаимодействия с окружающей средой.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/machine_obuchenie.png' %}" alt="Парадигмы машинного обучения" class="content-image">
+                    <div class="image-caption">Сравнение основных парадигмы машинного обучения</div>
+                </div>
+
+                <h3>1. Обучение с учителем (Supervised Learning)</h3>
+                <p>Это наиболее распространенный подход, при котором алгоритм обучается на размеченных данных. Каждый
+                    пример в обучающей выборке состоит из пары "входные данные - ожидаемый ответ".</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Наличие помеченных данных (labeled data)</li>
+                        <li>Четко определенная целевая переменная</li>
+                        <li>Возможность оценки точности predictions</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные задачи:</strong></p>
+                <ul>
+                    <li><strong>Классификация</strong> - отнесение объектов к определенным категориям (спам/не спам,
+                        распознавание изображений)</li>
+                    <li><strong>Регрессия</strong> - предсказание непрерывных значений (прогнозирование цен,
+                        температуры)</li>
+                </ul>
+            </div>
+
+            <div class="page-content" id="paradigm-page-2" style="display: none;">
+                <h3>2. Обучение без учителя (Unsupervised Learning)</h3>
+                <p>При этом подходе алгоритм работает с неразмеченными данными и самостоятельно выявляет скрытые
+                    закономерности, структуры и взаимосвязи.</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Отсутствие помеченных данных</li>
+                        <li>Самостоятельное выявление patterns</li>
+                        <li>Обнаружение скрытых структур</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные задачи:</strong></p>
+                <ul>
+                    <li><strong>Кластеризация</strong> - группировка похожих объектов (сегментация клиентов)</li>
+                    <li><strong>Снижение размерности</strong> - упрощение данных при сохранении ключевой информации</li>
+                    <li><strong>Обнаружение аномалий</strong> - выявление нестандартных patterns</li>
+                </ul>
+            </div>
+
+            <div class="page-content" id="paradigm-page-3" style="display: none;">
+                <h3>3. Обучение с подкреплением (Reinforcement Learning)</h3>
+                <p>Агент обучается через взаимодействие со средой, получая reward за правильные действия и penalty за
+                    ошибки. Это процесс обучения методом проб и ошибок.</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Обучение через взаимодействие со средой</li>
+                        <li>Система вознаграждений и штрафов</li>
+                        <li>Баланс между исследованием и эксплуатацией</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные компоненты:</strong></p>
+                <ul>
+                    <li><strong>Агент</strong> - обучающаяся система</li>
+                    <li><strong>Среда</strong> - внешнее окружение</li>
+                    <li><strong>Действия</strong> - возможные операции агента</li>
+                    <li><strong>Вознаграждение</strong> - feedback от среды</li>
+                </ul>
+
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>Парадигма</th>
+                            <th>Данные</th>
+                            <th>Цель</th>
+                            <th>Примеры применения</th>
+                        </tr>
+                        <tr>
+                            <td>С учителем</td>
+                            <td>Размеченные</td>
+                            <td>Предсказание</td>
+                            <td>Распознавание образов, прогнозирование</td>
+                        </tr>
+                        <tr>
+                            <td>Без учителя</td>
+                            <td>Неразмеченные</td>
+                            <td>Обнаружение закономерностей</td>
+                            <td>Кластеризация, анализ данных</td>
+                        </tr>
+                        <tr>
+                            <td>С подкреплением</td>
+                            <td>Взаимодействие со средой</td>
+                            <td>Оптимальное поведение</td>
+                            <td>Робототехника, игры, автономные системы</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p>На практике эти парадигмы часто комбинируются, создавая гибридные подходы, такие как
+                    полу-контролируемое обучение (semi-supervised learning), которое использует как размеченные, так и неразмеченные данные.</p>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="paradigm-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="pagination-container">
+                    <div class="page-indicator" id="paradigm-page-indicator">Страница 1 из 3</div>
+                    <div class="pagination-numbers" id="paradigm-pagination-numbers"></div>
+                </div>
+                <button class="nav-btn" id="paradigm-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-history'">
+                        <i class="fas fa-arrow-left"></i> История развития
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-blackbox'">
+                        Чёрный ящик <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+    {% include 'components/js-section.html' %}
+</body>
+</html>
