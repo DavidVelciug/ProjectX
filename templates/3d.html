@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="3D вариант - Рисование цифр" css="css/3d.css"%}
+
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">3D рисование цифр</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Выбор вариантов интерфейса -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="variantsBtn">
+                    Варианты <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="variantsContent">
+                    <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+                    <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+                    <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+                </div>
+            </div>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
+                </div>
+            </div>
+
+            <!-- модель ИИ выбранная пользователем -->
+            <div class="model-selector">
+                <form>
+                    <label for="II_model-select">
+                        Модель ИИ:
+                    </label>
+                    <select id="II_model-select">
+                        <option value="CNN">CNN</option>
+                        <option value="MLP">MLP</option>
+                        <option value="Perceptron">Perceptron</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основное содержимое приложения -->
+    <main class="app-content">
+        <section class="drawing-section">
+            <h2>3D Рисование цифр</h2>
+            <p>Нарисуйте цифру в левой области. Результат обработки отобразится справа в 3D.</p>
+
+            <!-- Холсты для рисования и отображения результата -->
+            <div class="canvases-container">
+                <div class="canvas-wrapper">
+                    <div class="canvas-title">Область для рисования</div>
+                    <div class="canvas-container">
+                        <canvas id="drawing-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <div class="canvas-title">Результат обработки</div>
+                    <div class="canvas-container">
+                        <canvas id="result-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Управление процессом распознавания -->
+            <div class="controls">
+                <button class="control-btn" id="recognize-btn">
+                    <i class="fas fa-search"></i> Распознать
+                </button>
+                <button class="control-btn" id="erase-btn">
+                    <i class="fas fa-eraser"></i> Стереть
+                </button>
+            </div>
+
+            <!-- 3D визуализация результата -->
+            <div class="visualization-3d">
+                <div class="cube-container">
+                    <div class="cube-face cube-front">
+                        <div class="cube-digit" id="cube-digit">—</div>
+                    </div>
+                    <div class="cube-face cube-back">
+                        <div class="cube-digit">—</div>
+                    </div>
+                    <div class="cube-face cube-right">
+                        <div class="cube-digit">—</div>
+                    </div>
+                    <div class="cube-face cube-left">
+                        <div class="cube-digit">—</div>
+                    </div>
+                    <div class="cube-face cube-top">
+                        <div class="cube-digit">—</div>
+                    </div>
+                    <div class="cube-face cube-bottom">
+                        <div class="cube-digit">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Текстовый результат распознавания -->
+            <div class="result">
+                <h3>Распознанная цифра:</h3>
+                <div class="result-text" id="result-text">—</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/3d.js' %}">
+    </script>
+</body>
+
+</html>

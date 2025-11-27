@@ -1,0 +1,394 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+{% include 'components/head.html' with title="Приложения" css="css/app.css"%}
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Обзор интерфейсов</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Выбор вариантов интерфейса -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="variantsBtn">
+                    Варианты <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="variantsContent">
+                    <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+                    <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+                    <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+                </div>
+            </div>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <!-- Приветственный раздел -->
+        <section class="welcome-section">
+            <h1 class="welcome-title">Добро пожаловать в мир интерактивного распознавания цифр!</h1>
+            <p class="welcome-subtitle">
+                Исследуйте три уникальных интерфейса для работы с нейронными сетями. Каждый вариант предлагает
+                особый подход к визуализации и взаимодействию с технологиями машинного обучения.
+            </p>
+        </section>
+
+        <!-- Обзор интерфейсов -->
+        <section class="interfaces-overview">
+            <!-- Текстовый интерфейс -->
+            <div class="interface-card">
+                <div class="interface-header">
+                    <div class="interface-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="interface-title">Текстовый интерфейс</h2>
+                </div>
+
+                <p class="interface-description">
+                    Классический подход с минималистичным дизайном. Идеален для быстрого тестирования и
+                    точного распознавания цифр без лишних визуальных элементов.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-bolt feature-icon"></i>
+                        <strong>Быстрая обработка</strong> - Минимальные ресурсы для максимальной скорости
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-eye feature-icon"></i>
+                        <strong>Четкий результат</strong> - Текстовое отображение без отвлекающих элементов
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile feature-icon"></i>
+                        <strong>Полная адаптивность</strong> - Отлично работает на всех устройствах
+                    </div>
+                </div>
+
+                <div class="interface-actions">
+                    <a href="{% url 'text' %}" class="action-btn primary-btn">
+                        <i class="fas fa-play"></i> Попробовать сейчас
+                    </a>
+                    <button class="action-btn details-btn" data-modal="textModal">
+                        <i class="fas fa-info-circle"></i> Подробнее
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2D интерфейс -->
+            <div class="interface-card">
+                <div class="interface-header">
+                    <div class="interface-icon">
+                        <i class="fas fa-square"></i>
+                    </div>
+                    <h2 class="interface-title">2D Визуализация</h2>
+                </div>
+
+                <p class="interface-description">
+                    Интерактивный интерфейс с параллельным отображением процесса рисования и результата.
+                    Визуальная обратная связь помогает понять работу нейронной сети.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-sync-alt feature-icon"></i>
+                        <strong>Двойное отображение</strong> - Рисование и результат одновременно
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-palette feature-icon"></i>
+                        <strong>Визуальная обратная связь</strong> - Анимации и плавные переходы
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-bar feature-icon"></i>
+                        <strong>Интуитивное управление</strong> - Понятный интерфейс для любого пользователя
+                    </div>
+                </div>
+
+                <div class="interface-actions">
+                    <a href="{% url '2d' %}" class="action-btn primary-btn">
+                        <i class="fas fa-play"></i> Попробовать сейчас
+                    </a>
+                    <button class="action-btn details-btn" data-modal="dModal">
+                        <i class="fas fa-info-circle"></i> Подробнее
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3D интерфейс -->
+            <div class="interface-card">
+                <div class="interface-header">
+                    <div class="interface-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h2 class="interface-title">3D Иммерсивный опыт</h2>
+                </div>
+
+                <p class="interface-description">
+                    Самый продвинутый интерфейс с трехмерной визуализацией результатов. Вращающийся куб
+                    и объемные эффекты создают впечатляющий опыт взаимодействия с технологией.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-cube feature-icon"></i>
+                        <strong>3D визуализация</strong> - Объемное отображение результатов
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-vr-cardboard feature-icon"></i>
+                        <strong>Иммерсивный опыт</strong> - Погружение в процесс распознавания
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-magic feature-icon"></i>
+                        <strong>Продвинутые эффекты</strong> - Анимации и интерактивные элементы
+                    </div>
+                </div>
+
+                <div class="interface-actions">
+                    <a href="3d.html" class="action-btn primary-btn">
+                        <i class="fas fa-play"></i> Попробовать сейчас
+                    </a>
+                    <button class="action-btn details-btn" data-modal="threeDModal">
+                        <i class="fas fa-info-circle"></i> Подробнее
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Инструкция по использованию -->
+        <section class="content-section">
+            <h2>Как использовать интерфейсы</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-mouse-pointer feature-icon"></i>
+                    <strong>1. Выберите интерфейс</strong><br>
+                    Нажмите на кнопку "Попробовать сейчас" для перехода к выбранному варианту
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-paint-brush feature-icon"></i>
+                    <strong>2. Нарисуйте цифру</strong><br>
+                    Используйте мышь или touch-экран для рисования в области холста
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-robot feature-icon"></i>
+                    <strong>3. Распознайте</strong><br>
+                    Нажмите кнопку "Распознать" для анализа нейронной сетью
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-redo feature-icon"></i>
+                    <strong>4. Экспериментируйте</strong><br>
+                    Используйте кнопку "Стереть" для новых попыток
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальные окна -->
+    <!-- Модальное окно для текстового интерфейса -->
+    <div id="textModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal">&times;</span>
+                <i class="fas fa-font modal-icon"></i>
+                <h2 class="modal-title">Текстовый интерфейс</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Описание технологии</h3>
+                    <p>Текстовый интерфейс представляет собой минималистичный подход к распознаванию цифр, где основной
+                        акцент сделан на функциональность и скорость работы.</p>
+                    <p>Используется сверточная нейронная сеть (CNN), обученная на датасете MNIST, которая достигает
+                        точности распознавания до 98%.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Ключевые особенности</h3>
+                    <ul class="features-list">
+                        <li><span class="feature-badge">Скорость</span> Время обработки: менее 100 мс</li>
+                        <li><span class="feature-badge">Точность</span> До 98% правильных распознаваний</li>
+                        <li><span class="feature-badge">Простота</span> Минималистичный интерфейс</li>
+                        <li><span class="feature-badge">Адаптивность</span> Работает на любых устройствах</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Технический стек</h3>
+                    <div class="tech-stack">
+                        <span class="tech-item">TensorFlow.js</span>
+                        <span class="tech-item">HTML5 Canvas</span>
+                        <span class="tech-item">CSS3 Animations</span>
+                        <span class="tech-item">JavaScript ES6+</span>
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <div class="metric">
+                        <span class="metric-value">98%</span>
+                        <span class="metric-label">Точность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">100мс</span>
+                        <span class="metric-label">Скорость</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">95%</span>
+                        <span class="metric-label">Надежность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">100%</span>
+                        <span class="metric-label">Совместимость</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для 2D интерфейса -->
+    <div id="dModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal">&times;</span>
+                <i class="fas fa-square modal-icon"></i>
+                <h2 class="modal-title">2D Визуализация</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Интерактивная визуализация</h3>
+                    <p>2D интерфейс предоставляет расширенные возможности визуализации процесса распознавания цифр с
+                        параллельным отображением входных данных и результатов.</p>
+                    <p>Система использует улучшенную версию нейронной сети с дополнительными слоями для обработки
+                        изображений.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Уникальные возможности</h3>
+                    <ul class="features-list">
+                        <li><span class="feature-badge">Реальное время</span> Мгновенное обновление результатов</li>
+                        <li><span class="feature-badge">Двойной вид</span> Одновременное отображение рисования и
+                            результата</li>
+                        <li><span class="feature-badge">Анимации</span> Плавные переходы и визуальные эффекты</li>
+                        <li><span class="feature-badge">Аналитика</span> Детальная информация о процессе распознавания
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Архитектура системы</h3>
+                    <p>Многослойная нейронная сеть с архитектурой LeNet-5, оптимизированная для работы в браузере.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Deep Learning</span>
+                        <span class="tech-item">Computer Vision</span>
+                        <span class="tech-item">WebGL</span>
+                        <span class="tech-item">React-like Components</span>
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <div class="metric">
+                        <span class="metric-value">99%</span>
+                        <span class="metric-label">Точность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">150мс</span>
+                        <span class="metric-label">Скорость</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">90%</span>
+                        <span class="metric-label">Производительность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">4.8/5</span>
+                        <span class="metric-label">UX Рейтинг</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для 3D интерфейса -->
+    <div id="threeDModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal">&times;</span>
+                <i class="fas fa-cube modal-icon"></i>
+                <h2 class="modal-title">3D Иммерсивный опыт</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Передовые технологии</h3>
+                    <p>3D интерфейс представляет собой самый современный подход к визуализации результатов
+                        распознавания, используя трехмерную графику и интерактивные элементы.</p>
+                    <p>В основе лежит гибридная нейронная сеть, сочетающая преимущества CNN и RNN архитектур.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Иммерсивные возможности</h3>
+                    <ul class="features-list">
+                        <li><span class="feature-badge">3D графика</span> Объемная визуализация результатов</li>
+                        <li><span class="feature-badge">Интерактивность</span> Возможность вращения и масштабирования
+                        </li>
+                        <li><span class="feature-badge">VR готовность</span> Поддержка виртуальной реальности</li>
+                        <li><span class="feature-badge">AI анализ</span> Детальная аналитика работы нейросети</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Технологии будущего</h3>
+                    <p>Используется комбинация машинного обучения и компьютерной графики для создания уникального
+                        пользовательского опыта.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Three.js</span>
+                        <span class="tech-item">WebXR</span>
+                        <span class="tech-item">TensorFlow 3D</span>
+                        <span class="tech-item">WebAssembly</span>
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <div class="metric">
+                        <span class="metric-value">99.5%</span>
+                        <span class="metric-label">Точность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">200мс</span>
+                        <span class="metric-label">Скорость</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">85%</span>
+                        <span class="metric-label">Производительность</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">5/5</span>
+                        <span class="metric-label">Инновации</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

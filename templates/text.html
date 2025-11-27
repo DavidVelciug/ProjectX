@@ -1,0 +1,110 @@
+{% load static %}
+<html lang="ru">
+
+{% include 'components/head.html' with title="Текстовый вариант - Рисование цифр" css="css/text.css" %}
+
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Текстовый вариант</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Выбор вариантов интерфейса -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="variantsBtn">
+                    Варианты <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="variantsContent">
+                    <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+                    <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+                    <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+                </div>
+            </div>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Контакты</a>
+                </div>
+            </div>
+
+            <!-- модель ИИ выбранная пользователем -->
+            <div class="model-selector">
+                <form>
+                    <label for="II_model-select">
+                        Модель ИИ:
+                    </label>
+                    <select id="II_model-select">
+                        <option value="CNN">CNN</option>
+                        <option value="MLP">MLP</option>
+                        <option value="Perceptron">Perceptron</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основная область содержимого -->
+    <main class="app-content">
+        <section class="drawing-section">
+            <h2>Нарисуйте цифру</h2>
+            <p>Используйте мышь или touch-экран для рисования цифры в области ниже</p>
+
+            <!-- Холст для рисования -->
+            <div class="canvas-container">
+                <canvas id="drawing-canvas"></canvas>
+            </div>
+
+            <!-- Предполагаемая цифра, выбранная  -->
+            <div class="expected-number-container">
+                <label for="expected-number">
+                    Введите предполагаемую цифру:
+                </label>
+                <input
+                    type="text"
+                    id="expected-number"
+                    required
+                    maxlength="1"
+                    pattern="[0-9]"
+                >
+            </div>
+
+            <!-- Управление процессом распознавания -->
+            <div class="controls">
+                <button class="control-btn" id="recognize-btn">
+                    <i class="fas fa-search"></i> Распознать
+                </button>
+                <button class="control-btn" id="erase-btn">
+                    <i class="fas fa-eraser"></i> Стереть
+                </button>
+            </div>
+
+            <!-- Текстовый результат распознавания -->
+            <div class="result">
+                <h3>Результат распознавания:</h3>
+                <div class="result-text" id="result-text">—</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/text.js' %}">
+    </script>
+</body>
+
+</html>
