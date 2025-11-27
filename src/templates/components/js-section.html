@@ -1,0 +1,9 @@
+{% load static %}
+<script src="{% static 'js/state-manager.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/section-navigation.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            changePage('cnn', 1);
+        });
+    </script>

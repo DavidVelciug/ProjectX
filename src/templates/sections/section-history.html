@@ -1,0 +1,418 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История развития - Нейронные сети</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Нейронные сети</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <button class="music-toggle" id="musicToggle">
+                <i class="fas fa-music"></i>
+            </button>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- YouTube плеер -->
+<div class="youtube-player hidden" id="youtubePlayer">
+    <div class="player-header">
+        <h3>Фоновая музыка</h3>
+        <button class="close-player" id="closePlayer">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <iframe class="youtube-iframe" 
+        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&modestbranding=1&autoplay=0"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+    <!-- Боковая панель навигации -->
+<aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-robot"></i> Машинное обучение, роль в программировании
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-ml' %}" class="submenu-item active">Машинное обучение</a></li>
+                    <li><a href="{% url 'section' 'section-history' %}" class="submenu-item">История развития</a></li>
+                    <li><a href="{% url 'section' 'section-paradigms' %}" class="submenu-item">Основные парадигмы обучения</a></li>
+                    <li><a href="{% url 'section' 'section-blackbox' %}" class="submenu-item">Понятие "чёрного ящика"</a></li>
+                    <li><a href="{% url 'section' 'section-research' %}" class="submenu-item">Цель и задачи исследования</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-network-wired"></i> Нейронные сети как инструмент
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-perceptron' %}" class="submenu-item">Перцептрон и его развитие</a></li>
+                    <li><a href="{% url 'section' 'section-mlp' %}" class="submenu-item">Многослойный перцептрон (MLP)</a></li>
+                    <li><a href="{% url 'section' 'section-cnn' %}" class="submenu-item">Сверточные нейронные сети (CNN)</a></li>
+                    <li><a href="{% url 'section' 'section-components' %}" class="submenu-item">Основные компоненты нейронных сетей</a></li>
+                    <li><a href="{% url 'section' 'section-activation' %}" class="submenu-item">Функции активации</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-graduation-cap"></i> Методы обучения нейронных сетей
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-gradient' %}" class="submenu-item">Градиентный спуск</a></li>
+                    <li><a href="{% url 'section' 'section-supervised' %}" class="submenu-item">Обучение с учителем</a></li>
+                    <li><a href="{% url 'section' 'section-backpropagation' %}" class="submenu-item">Метод обратного распространения ошибки</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <!-- Страница 1: Ранние годы -->
+            <div class="page-content" id="history-page-1">
+                <h2>История развития машинного обучения: Ранние годы (1950-1970)</h2>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Ранняя история машинного обучения.png' %}" alt="Ранняя история машинного обучения"
+                        class="content-image">
+                    <div class="image-caption">Первые шаги в создании искусственного интеллекта и машинного обучения</div>
+                </div>
+
+                <div class="definition">
+                    <p>Машинное обучение зародилось в середине XX века как междисциплинарная область на стыке
+                        компьютерных наук, статистики и нейробиологии.</p>
+                </div>
+
+                <h3>1950-е годы: Зарождение идеи</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-brain"></i>
+                        <h4>Алан Тьюринг и "Обучающиеся машины"</h4>
+                    </div>
+                    <p>В 1950 году Алан Тьюринг опубликовал статью "Вычислительные машины и разум", где предложил
+                        концепцию "обучающейся машины" и знаменитый тест Тьюринга для оценки интеллекта машин.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-chess-board"></i>
+                        <h4>Артур Самуэль и самообучающиеся шашки</h4>
+                    </div>
+                    <p>В 1959 году Артур Самуэль создал первую самообучающуюся программу для игры в шашки
+                        и ввел термин "машинное обучение". Его программа использовала alpha-beta отсечение
+                        и могла улучшать свою игру, накапливая опыт.</p>
+                </div>
+
+                <h3>1960-е годы: Первые нейронные сети</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Перцептрон Розенблатта</h4>
+                    </div>
+                    <p>В 1958 году Фрэнк Розенблатт разработал перцептрон - первую искусственную нейронную сеть,
+                        способную к обучению. Перцептрон мог решать задачи линейной классификации и стал фундаментом
+                        для будущих разработок в области нейронных сетей.</p>
+
+                    <div class="inventor-card">
+                        <img src="{% static 'img/frank.png' %}" alt="Фрэнк Розенблатт" class="inventor-img">
+                        <div class="inventor-info">
+                            <h4>Фрэнк Розенблатт (1928-1971)</h4>
+                            <p>Американский психолог и пионер в области искусственного интеллекта.
+                                Разработал перцептрон в Корнеллской авиационной лаборатории.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-book"></i>
+                        <h4>Критика Минского и Пейперта</h4>
+                    </div>
+                    <p>В 1969 году Марвин Минский и Сеймур Пейперт опубликовали книгу "Перцептроны",
+                        где математически доказали ограничения однослойных перцептронов. Эта работа привела
+                        к снижению интереса к нейронным сетям на долгие годы.</p>
+                </div>
+
+                <h3>Ключевые достижения этого периода</h3>
+
+                <ul class="breakthrough-list">
+                    <li>Создание первых самообучающихся систем</li>
+                    <li>Разработка перцептрона - первой нейронной сети</li>
+                    <li>Формирование теоретической базы машинного обучения</li>
+                    <li>Появление первых алгоритмов обучения</li>
+                </ul>
+            </div>
+
+            <!-- Страница 2: Возрождение и развитие -->
+            <div class="page-content" id="history-page-2" style="display: none;">
+                <h2>История развития машинного обучения: Возрождение (1980-2000)</h2>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Vozrojdenie.png' %}" alt="Возрождение машинного обучения" class="content-image">
+                    <div class="image-caption">Период возрождения интереса к нейронным сетям и машинному обучению</div>
+                </div>
+
+                <div class="definition">
+                    <p>1980-е и 1990-е годы стали временем возрождения интереса к нейронным сетям
+                        и появления новых фундаментальных алгоритмов машинного обучения.</p>
+                </div>
+
+                <h3>1980-е годы: Алгоритм обратного распространения</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-forward"></i>
+                        <h4>Обратное распространение ошибки</h4>
+                    </div>
+                    <p>В 1986 году Дэвид Румельхарт, Джеффри Хинтон и Рональд Вильямс независимо
+                        переоткрыли и популяризировали алгоритм обратного распространения ошибки.
+                        Это позволило эффективно обучать многослойные нейронные сети и преодолеть
+                        ограничения, отмеченные Минским.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-microchip"></i>
+                        <h4>Специализированные архитектуры</h4>
+                    </div>
+                    <p>Появились специализированные архитектуры нейронных сетей:</p>
+                    <ul>
+                        <li>Сверточные нейронные сети (Ян Лекун, 1988)</li>
+                        <li>Рекуррентные нейронные сети</li>
+                        <li>Сети Хопфилда (Джон Хопфилд, 1982)</li>
+                    </ul>
+                </div>
+
+                <h3>1990-е годы: Новые алгоритмы и практическое применение</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Метод опорных векторов (SVM)</h4>
+                    </div>
+                    <p>В 1995 году Корнелия Кортес и Владимир Вапник предложили метод опорных векторов
+                        (Support Vector Machines), который стал мощным инструментом для классификации
+                        и регрессии и широко применяется до сих пор.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-memory"></i>
+                        <h4>LSTM сети</h4>
+                    </div>
+                    <p>В 1997 году Зепп Хохрайтер и Юрген Шмидхубер предложили архитектуру
+                        долгой краткосрочной памяти (LSTM), которая революционизировала обработку
+                        последовательных данных и временных рядов.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-random"></i>
+                        <h4>Случайные леса и бустинг</h4>
+                    </div>
+                    <p>Появились ансамблевые методы машинного обучения:</p>
+                    <ul>
+                        <li>Случайные леса (Лео Брейман, 2001)</li>
+                        <li>Адабуст (Йоав Фройнд и Роберт Шапир, 1997)</li>
+                        <li>Градиентный бустинг (Джером Фридман, 1999)</li>
+                    </ul>
+                </div>
+
+                <h3>Практическое применение в 1990-е</h3>
+
+                <ul class="breakthrough-list">
+                    <li>Фильтрация спама с помощью наивного байесовского классификатора</li>
+                    <li>Распознавание рукописного текста и почтовых индексов</li>
+                    <li>Рекомендательные системы (Amazon, Netflix)</li>
+                    <li>Системы обнаружения мошенничества</li>
+                </ul>
+            </div>
+
+            <!-- Страница 3: Современная эра -->
+            <div class="page-content" id="history-page-3" style="display: none;">
+                <h2>История развития машинного обучения: Современная эра (2000-настоящее время)</h2>
+
+                <div class="image-container">
+                    <img src="{% static 'img/Эра машинного обучения и данных.png' %}" alt="Современная эра машинного обучения"
+                        class="content-image">
+                    <div class="image-caption">Эра глубокого обучения и больших данных</div>
+                </div>
+
+                <div class="definition">
+                    <p>С начала 2000-х годов машинное обучение переживает беспрецедентный рост благодаря
+                        увеличению вычислительных мощностей, доступности больших данных и развитию новых алгоритмов.</p>
+                </div>
+
+                <h3>2000-е годы: Большие данные и глубокое обучение</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-database"></i>
+                        <h4>Эра больших данных</h4>
+                    </div>
+                    <p>Рост объемов данных и вычислительных мощностей позволил обучать более сложные модели.
+                        Появление Hadoop (2006) и других технологий big data сделало обработку больших
+                        массивов информации доступной.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-robot"></i>
+                        <h4>Возрождение глубокого обучения</h4>
+                    </div>
+                    <p>В 2006 году Джеффри Хинтон предложил эффективные алгоритмы для обучения
+                        глубоких belief-сетей, что положило начало современной эре глубокого обучения.</p>
+
+                    <div class="inventor-card">
+                        <img src="{% static 'img/djoseph.png' %}" alt="Джеффри Хинтон" class="inventor-img">
+                        <div class="inventor-info">
+                            <h4>Джеффри Хинтон (род. 1947)</h4>
+                            <p>Британско-канадский ученый, пионер глубокого обучения.
+                                Лауреат премии Тьюринга 2018 года.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>2010-е годы: Прорывы и широкое применение</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-eye"></i>
+                        <h4>AlexNet и революция в компьютерном зрении</h4>
+                    </div>
+                    <p>В 2012 году AlexNet (разработанная Алексеем Крижевским и др.) значительно
+                        превзошла существующие методы на конкурсе ImageNet, что привело к взрывному
+                        росту интереса к сверточным нейронным сетям.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-chess-knight"></i>
+                        <h4>AlphaGo и игры</h4>
+                    </div>
+                    <p>В 2016 году AlphaGo от DeepMind победила чемпиона мира по игре Го,
+                        что стало историческим достижением в области искусственного интеллекта.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-language"></i>
+                        <h4>Трансформеры и NLP</h4>
+                    </div>
+                    <p>В 2017 году был представлен архитектура трансформеров, которая произвела
+                        революцию в обработке естественного языка и привела к созданию моделей
+                        типа BERT, GPT и других.</p>
+                </div>
+
+                <h3>2020-е годы: Большие языковые модели и этика ИИ</h3>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-code"></i>
+                        <h4>GPT и большие языковые модели</h4>
+                    </div>
+                    <p>Появление GPT-3 (2020) и более поздних моделей продемонстрировало
+                        впечатляющие способности больших языковых моделей в генерации текста,
+                        переводе и решении сложных задач.</p>
+                </div>
+
+                <div class="era-card">
+                    <div class="era-title">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>Этика и ответственный ИИ</h4>
+                    </div>
+                    <p>Растет внимание к этическим аспектам ИИ, включая вопросы справедливости,
+                        прозрачности, конфиденциальности и влияния на общество.</p>
+                </div>
+
+                <h3>Текущие тенденции и будущее</h3>
+
+                <ul class="breakthrough-list">
+                    <li>Обучение с подкреплением в реальных приложениях</li>
+                    <li>Нейроморфные вычисления и специализированные процессоры</li>
+                    <li>Квантовое машинное обучение</li>
+                    <li>Обучение с небольшим количеством данных (few-shot learning)</li>
+                    <li>Мультимодальные модели</li>
+                </ul>
+            </div>
+
+            <!-- Навигация между страницами -->
+            <div class="section-navigation">
+                <button class="nav-btn" id="history-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="page-indicator" id="history-page-indicator">Страница 1 из 3</div>
+                <button class="nav-btn" id="history-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-ml'">
+                        <i class="fas fa-arrow-left"></i> Машинное обучение
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-paradigms'">
+                        Основные парадигмы <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+    <script src="{% static 'js/state-manager.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/section-navigation.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            changePage('history', 1);
+        });
+    </script>
+</body>
+</html>

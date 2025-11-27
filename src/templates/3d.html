@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D вариант - Рисование цифр</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="{% static 'css/3d.css' %}">
+</head>
+
+<body>
+    <!-- Видео-прелоадер -->
+    <div class="video-preloader" id="videoPreloader">
+        <div class="video-container">
+            <video id="preloaderVideo" muted loop playsinline>
+                <source src="{% static 'gif/wmremove-transformed.mp4' %}" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="video-overlay">
+                <div class="loading-text">Загрузка 3D холста...</div>
+                <div class="loading-progress">
+                    <div class="loading-progress-bar" id="progressBar"></div>
+                </div>
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+            </div>
+        </div>
+        <div class="content-reveal" id="contentReveal"></div>
+    </div>
+
+    <!-- Модальное окно с 3D анимацией -->
+    <div class="modal-overlay" id="animationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>3D Анализ цифры нейросетью CNN</h3>
+                <button class="modal-close" id="animationModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="animation-3d-container">
+                    <div id="threejs-container"></div>
+                    <div class="animation-stage-indicator" id="stageIndicator">
+                        <span class="stage-text" id="stageText">Инициализация анимации...</span>
+                    </div>
+                    <div class="camera-controls-info">
+                        <h4>Управление камерой:</h4>
+                        <ul>
+                            <li>ЛКМ + движение - вращение</li>
+                            <li>ПКМ + движение - панорамирование</li>
+                            <li>Колесо мыши - приближение/отдаление</li>
+                            <li>Двойной щелчок - сброс камеры</li>
+                        </ul>
+                    </div>
+                    <div class="digits-container" id="digitsContainer">
+                        <!-- Цифры 0-9 будут добавлены динамически -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <div class="logo-placeholder"
+                    style="width: 50px; height: 50px; background: var(--accent-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                    <i class="fas fa-cube" style="color: white; font-size: 24px;"></i>
+                </div>
+                <span class="logo-text">3D рисование цифр</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Выбор вариантов интерфейса -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="variantsBtn">
+                    Варианты <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="variantsContent">
+                    <a href="{% url 'text' %}"><i class="fas fa-font"></i> Текстовый</a>
+                    <a href="{% url '2d' %}"><i class="fas fa-square"></i> 2D</a>
+                    <a href="{% url '3d' %}"><i class="fas fa-cube"></i> 3D</a>
+                </div>
+            </div>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Основное содержимое приложения -->
+    <main class="app-content">
+        <section class="drawing-section">
+            <h2>3D Рисование цифр</h2>
+
+            <div class="instruction-container">
+                <p>Нарисуйте цифру в области для рисования. Результат отобразится в виде 3D анимации.</p>
+                <button class="help-btn" id="helpBtn">
+                    <i class="fas fa-question-circle"></i> Подсказка
+                </button>
+            </div>
+
+            <!-- Контейнер для основного интерфейса -->
+            <div class="drawing-interface">
+                <!-- Левая часть: холст и управление -->
+                <div class="drawing-controls">
+                    <!-- Холст для рисования -->
+                    <div class="canvas-wrapper">
+                        <div class="canvas-title">Область для рисования</div>
+                        <div class="canvas-container">
+                            <canvas id="drawing-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Предполагаемая цифра, выбранная пользователем -->
+                    <div class="expected-number-container">
+                        <label for="expected-number">
+                            Введите предполагаемую цифру:
+                        </label>
+                        <input type="text" id="expected-number" required maxlength="1" pattern="[0-9]"
+                            placeholder="0-9">
+                    </div>
+
+                    <!-- Управление процессом распознавания -->
+                    <div class="controls">
+                        <button class="control-btn" id="recognize-btn">
+                            <i class="fas fa-search"></i> Распознать
+                        </button>
+
+                        <!-- Выпадающий список моделей ИИ -->
+                        <div class="model-dropdown">
+                            <button class="model-select-btn" id="modelSelectBtn">
+                                <i class="fas fa-brain"></i> CNN
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="model-dropdown-content" id="modelDropdownContent">
+                                <div class="model-option active" data-model="CNN">
+                                    <i class="fas fa-brain"></i> CNN
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="control-btn" id="erase-btn">
+                            <i class="fas fa-eraser"></i> Стереть
+                        </button>
+                    </div>
+
+                    <!-- Текстовый результат распознавания -->
+                    <div class="result">
+                        <h3>Распознанная цифра:</h3>
+                        <div class="result-text" id="result-text">—</div>
+                    </div>
+                </div>
+
+                <!-- Правая часть: проценты схожести -->
+                <div class="similarity-container">
+                    <h3>Проценты схожести:</h3>
+                    <div class="similarity-grid" id="similarityGrid">
+                        <!-- Проценты будут добавляться динамически -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/3d.js' %}">
+    </script>
+</body>
+
+</html>

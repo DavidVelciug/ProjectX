@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анимация MLP - Визуализация нейронной сети</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/mlp-animation.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Анимация многослойного перцептрона (MLP)</h1>
+            <div class="subtitle">Визуализация работы нейронной сети 784-128-128-11</div>
+        </header>
+
+        <div class="network-area">
+            <div class="mlp-diagram">
+                <!-- входной слой -->
+                <div class="layer">
+                    <div class="layer-label">Input Layer<br><small>784 нейрона</small></div>
+                    <div class="neurons-container" id="input-layer"></div>
+                </div>
+
+                <!-- скрытый слой 1 -->
+                <div class="layer">
+                    <div class="layer-label">Hidden Layer 1<br><small>128 нейронов</small></div>
+                    <div class="neurons-container" id="hidden-layer-1"></div>
+                </div>
+
+                <!-- скрытый слой 2 -->
+                <div class="layer">
+                    <div class="layer-label">Hidden Layer 2<br><small>128 нейронов</small></div>
+                    <div class="neurons-container" id="hidden-layer-2"></div>
+                </div>
+
+                <!-- выходной слой -->
+                <div class="layer">
+                    <div class="layer-label">Output Layer<br><small>11 нейронов</small></div>
+                    <div class="neurons-container" id="output-layer"></div>
+                </div>
+
+                <!-- смещение между входным и скрытым слоем 1 -->
+                <div class="bias-container bias-position-1" id="w1n-container">
+                    <div class="bias-label">w1n</div>
+                </div>
+
+                <!-- смещение между скрытым слоем 1 и скрытым слоем 2 -->
+                <div class="bias-container bias-position-2" id="w2n-container">
+                    <div class="bias-label">w2n</div>
+                </div>
+
+                <div class="connections" id="connections"></div>
+            </div>
+
+            <div class="animation-progress-container">
+                <div class="animation-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>начало</span>
+                    <span>завершение</span>
+                </div>
+            </div>
+
+            <div class="animation-steps">
+                <h3>этапы анимации:</h3>
+                <ul class="steps-list" id="steps-list">
+                    <li class="step-item" id="step-1"><span class="step-number">1</span>активация входного слоя</li>
+                    <li class="step-item" id="step-2"><span class="step-number">2</span>bias нейрон w1n</li>
+                    <li class="step-item" id="step-3"><span class="step-number">3</span>связи к hidden layer 1</li>
+                    <li class="step-item" id="step-4"><span class="step-number">4</span>bias нейрон w2n</li>
+                    <li class="step-item" id="step-5"><span class="step-number">5</span>связи к hidden layer 2</li>
+                    <li class="step-item" id="step-6"><span class="step-number">6</span>связи к output layer</li>
+                </ul>
+            </div>
+
+            <div class="completion-message" id="completionMessage">
+                <h3>анимация завершена!</h3>
+                <p>вы успешно просмотрели процесс работы нейронной сети MLP.</p>
+            </div>
+        </div>
+
+        <div class="status" id="status">готов к работе</div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">запустить анимацию</button>
+            <button class="btn btn-secondary" id="resetBtn">сбросить</button>
+            <button class="btn btn-tertiary" id="stepBtn">пошаговая анимация</button>
+            <button class="btn btn-back" id="backBtn">
+                <i class="fas fa-arrow-left"></i> вернуться к 2D рисованию
+            </button>
+        </div>
+
+        <div class="info-panel">
+            <h2>архитектура сети</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>входной слой</h3>
+                    <p>784 нейрона, представляющих пиксели изображения размером 28×28 пикселей. каждый нейрон
+                        соответствует одному пикселю входного изображения.</p>
+                </div>
+                <div class="info-card">
+                    <h3>скрытые слои</h3>
+                    <p>два скрытых слоя по 128 нейронов каждый. эти слои выполняют нелинейные преобразования и извлекают
+                        признаки из входных данных.</p>
+                </div>
+                <div class="info-card">
+                    <h3>выходной слой</h3>
+                    <p>11 нейронов, представляющих 11 классов классификации. каждый нейрон соответствует вероятности
+                        принадлежности к определенному классу.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/mlp-animation.js' %}">
+    </script>
+</body>
+
+</html>

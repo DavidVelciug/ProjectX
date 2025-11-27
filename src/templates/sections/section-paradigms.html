@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основные парадигмы обучения - Нейронные сети</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Нейронные сети</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <button class="music-toggle" id="musicToggle">
+                <i class="fas fa-music"></i>
+            </button>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- YouTube плеер -->
+<div class="youtube-player hidden" id="youtubePlayer">
+    <div class="player-header">
+        <h3>Фоновая музыка</h3>
+        <button class="close-player" id="closePlayer">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <iframe class="youtube-iframe" 
+        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&modestbranding=1&autoplay=0"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-robot"></i> Машинное обучение, роль в программировании
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-ml' %}" class="submenu-item active">Машинное обучение</a></li>
+                    <li><a href="{% url 'section' 'section-history' %}" class="submenu-item">История развития</a></li>
+                    <li><a href="{% url 'section' 'section-paradigms' %}" class="submenu-item">Основные парадигмы обучения</a></li>
+                    <li><a href="{% url 'section' 'section-blackbox' %}" class="submenu-item">Понятие "чёрного ящика"</a></li>
+                    <li><a href="{% url 'section' 'section-research' %}" class="submenu-item">Цель и задачи исследования</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-network-wired"></i> Нейронные сети как инструмент
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-perceptron' %}" class="submenu-item">Перцептрон и его развитие</a></li>
+                    <li><a href="{% url 'section' 'section-mlp' %}" class="submenu-item">Многослойный перцептрон (MLP)</a></li>
+                    <li><a href="{% url 'section' 'section-cnn' %}" class="submenu-item">Сверточные нейронные сети (CNN)</a></li>
+                    <li><a href="{% url 'section' 'section-components' %}" class="submenu-item">Основные компоненты нейронных сетей</a></li>
+                    <li><a href="{% url 'section' 'section-activation' %}" class="submenu-item">Функции активации</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-graduation-cap"></i> Методы обучения нейронных сетей
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-gradient' %}" class="submenu-item">Градиентный спуск</a></li>
+                    <li><a href="{% url 'section' 'section-supervised' %}" class="submenu-item">Обучение с учителем</a></li>
+                    <li><a href="{% url 'section' 'section-backpropagation' %}" class="submenu-item">Метод обратного распространения ошибки</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="paradigm-page-1">
+                <h2>Основные парадигмы обучения</h2>
+
+                <div class="definition">
+                    <p>В машинном обучении существует три фундаментальные парадигмы обучения, которые отличаются
+                        подходом к получению знаний из данных и характеру взаимодействия с окружающей средой.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/machine_obuchenie.png' %}" alt="Парадигмы машинного обучения" class="content-image">
+                    <div class="image-caption">Сравнение основных парадигмы машинного обучения</div>
+                </div>
+
+                <h3>1. Обучение с учителем (Supervised Learning)</h3>
+                <p>Это наиболее распространенный подход, при котором алгоритм обучается на размеченных данных. Каждый
+                    пример в обучающей выборке состоит из пары "входные данные - ожидаемый ответ".</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Наличие помеченных данных (labeled data)</li>
+                        <li>Четко определенная целевая переменная</li>
+                        <li>Возможность оценки точности predictions</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные задачи:</strong></p>
+                <ul>
+                    <li><strong>Классификация</strong> - отнесение объектов к определенным категориям (спам/не спам,
+                        распознавание изображений)</li>
+                    <li><strong>Регрессия</strong> - предсказание непрерывных значений (прогнозирование цен,
+                        температуры)</li>
+                </ul>
+            </div>
+
+            <div class="page-content" id="paradigm-page-2" style="display: none;">
+                <h3>2. Обучение без учителя (Unsupervised Learning)</h3>
+                <p>При этом подходе алгоритм работает с неразмеченными данными и самостоятельно выявляет скрытые
+                    закономерности, структуры и взаимосвязи.</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Отсутствие помеченных данных</li>
+                        <li>Самостоятельное выявление patterns</li>
+                        <li>Обнаружение скрытых структур</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные задачи:</strong></p>
+                <ul>
+                    <li><strong>Кластеризация</strong> - группировка похожих объектов (сегментация клиентов)</li>
+                    <li><strong>Снижение размерности</strong> - упрощение данных при сохранении ключевой информации</li>
+                    <li><strong>Обнаружение аномалий</strong> - выявление нестандартных patterns</li>
+                </ul>
+            </div>
+
+            <div class="page-content" id="paradigm-page-3" style="display: none;">
+                <h3>3. Обучение с подкреплением (Reinforcement Learning)</h3>
+                <p>Агент обучается через взаимодействие со средой, получая reward за правильные действия и penalty за
+                    ошибки. Это процесс обучения методом проб и ошибок.</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевые характеристики:</strong></p>
+                    <ul>
+                        <li>Обучение через взаимодействие со средой</li>
+                        <li>Система вознаграждений и штрафов</li>
+                        <li>Баланс между исследованием и эксплуатацией</li>
+                    </ul>
+                </div>
+
+                <p><strong>Основные компоненты:</strong></p>
+                <ul>
+                    <li><strong>Агент</strong> - обучающаяся система</li>
+                    <li><strong>Среда</strong> - внешнее окружение</li>
+                    <li><strong>Действия</strong> - возможные операции агента</li>
+                    <li><strong>Вознаграждение</strong> - feedback от среды</li>
+                </ul>
+
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>Парадигма</th>
+                            <th>Данные</th>
+                            <th>Цель</th>
+                            <th>Примеры применения</th>
+                        </tr>
+                        <tr>
+                            <td>С учителем</td>
+                            <td>Размеченные</td>
+                            <td>Предсказание</td>
+                            <td>Распознавание образов, прогнозирование</td>
+                        </tr>
+                        <tr>
+                            <td>Без учителя</td>
+                            <td>Неразмеченные</td>
+                            <td>Обнаружение закономерностей</td>
+                            <td>Кластеризация, анализ данных</td>
+                        </tr>
+                        <tr>
+                            <td>С подкреплением</td>
+                            <td>Взаимодействие со средой</td>
+                            <td>Оптимальное поведение</td>
+                            <td>Робототехника, игры, автономные системы</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p>На практике эти парадигмы часто комбинируются, создавая гибридные подходы, такие как
+                    полу-контролируемое обучение (semi-supervised learning), которое использует как размеченные, так и неразмеченные данные.</p>
+            </div>
+
+            <div class="section-navigation">
+                <button class="nav-btn" id="paradigm-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="page-indicator" id="paradigm-page-indicator">Страница 1 из 3</div>
+                <button class="nav-btn" id="paradigm-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-history'">
+                        <i class="fas fa-arrow-left"></i> История развития
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-blackbox'">
+                        Чёрный ящик <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+    <script src="{% static 'js/state-manager.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/section-navigation.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            changePage('paradigm', 1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Машинное обучение и нейронные сети</title>
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="{% url 'index' %}" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Нейронные сети</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- Кнопка музыки -->
+            <button class="music-toggle" id="musicToggle">
+                <i class="fas fa-music"></i>
+            </button>
+
+            <!-- Переключение между темной и светлой темой -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Кнопка меню для мобильных устройств -->
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Основное меню навигации -->
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- YouTube плеер -->
+    <div class="youtube-player hidden" id="youtubePlayer">
+        <div class="player-header">
+            <h3>Фоновая музыка</h3>
+            <button class="close-player" id="closePlayer">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <iframe class="youtube-iframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&modestbranding=1&autoplay=0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Боковая панель навигации -->
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-robot"></i> Машинное обучение, роль в программировании
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-ml' %}" class="submenu-item">Машинное обучение</a></li>
+                    <li><a href="{% url 'section' 'section-history' %}" class="submenu-item">История развития</a></li>
+                    <li><a href="{% url 'section' 'section-paradigms' %}" class="submenu-item">Основные парадигмы обучения</a></li>
+                    <li><a href="{% url 'section' 'section-blackbox' %}" class="submenu-item">Понятие "чёрного ящика"</a></li>
+                    <li><a href="{% url 'section' 'section-research' %}" class="submenu-item">Цель и задачи исследования</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-network-wired"></i> Нейронные сети как инструмент
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-perceptron' %}" class="submenu-item">Перцептрон и его развитие</a></li>
+                    <li><a href="{% url 'section' 'section-mlp' %}" class="submenu-item">Многослойный перцептрон (MLP)</a></li>
+                    <li><a href="{% url 'section' 'section-cnn' %}" class="submenu-item">Сверточные нейронные сети (CNN)</a></li>
+                    <li><a href="{% url 'section' 'section-components' %}" class="submenu-item">Основные компоненты нейронных сетей</a>
+                    </li>
+                    <li><a href="{% url 'section' 'section-activation' %}" class="submenu-item">Функции активации</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-graduation-cap"></i> Методы обучения нейронных сетей
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-gradient' %}" class="submenu-item">Градиентный спуск</a></li>
+                    <li><a href="{% url 'section' 'section-supervised' %}" class="submenu-item">Обучение с учителем</a></li>
+                    <li><a href="{% url 'section' 'section-backpropagation' %}" class="submenu-item">Метод обратного распространения
+                            ошибки</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <!-- Приветственный раздел -->
+        <section id="welcome-section" class="content-section">
+            <h2>Добро пожаловать в мир распознавания рукописных цифр!</h2>
+
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <p>Этот сайт посвящен увлекательной области машинного обучения - распознаванию рукописных цифр с
+                        помощью нейронных сетей. Здесь вы найдете:</p>
+
+                    <div class="features-grid">
+                        <div class="feature-car">
+                            <i class="fas fa-paint-brush"></i>
+                            <h3>Интерактивное приложение</h3>
+                            <p>Нарисуйте цифру от 0 до 9 и наблюдайте, как нейронная сеть распознает ее с высокой
+                                точностью</p>
+                        </div>
+
+                        <div class="feature-car">
+                            <i class="fas fa-brain"></i>
+                            <h3>Обучение нейронных сетей</h3>
+                            <p>Подробные объяснения принципов работы и обучения различных архитектур нейронных сетей</p>
+                        </div>
+
+                        <div class="feature-car">
+                            <i class="fas fa-history"></i>
+                            <h3>История развития</h3>
+                            <p>От первых перцептронов до современных сверточных сетей - полная история технологии</p>
+                        </div>
+                    </div>
+
+                    <div class="application-description">
+                        <h3>О приложении для распознавания цифр</h3>
+                        <p>Наше веб-приложение использует предварительно обученную нейронную сеть для распознавания
+                            рукописных цифр. Вы можете:</p>
+                        <ul>
+                            <li><strong>Рисовать цифры</strong> с помощью мыши или касания на специальном холсте</li>
+                            <li><strong>Наблюдать процесс распознавания</strong> в реальном времени</li>
+                            <li><strong>Узнавать вероятность</strong> для каждой возможной цифры</li>
+                            <li><strong>Тестировать разные стили написания</strong> и оценивать точность модели</li>
+                        </ul>
+
+                        <div class="tech-stack">
+                            <h4>Технологический стек:</h4>
+                            <div class="tech-items">
+                                <span class="tech-item">TensorFlow.js</span>
+                                <span class="tech-item">Сверточные нейронные сети (CNN)</span>
+                                <span class="tech-item">HTML5 Canvas</span>
+                                <span class="tech-item">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-start">
+                        <h3>Как начать?</h3>
+                        <div class="steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <p>Перейдите в раздел <a href="{% url 'app' %}" class="app-link">"Распознавание цифр"</a></p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <p>Нарисуйте цифру от 0 до 9 на холсте</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <p>Нажмите кнопку "Распознать" и наблюдайте результат!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-visual">
+                    <div class="demo-container">
+                        <div class="canvas-placeholder">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <p>Область для рисования цифр</p>
+                        </div>
+                        <div class="recognition-result">
+                            <div class="result-label">Распознанная цифра:</div>
+                            <div class="result-value">-</div>
+                            <div class="confidence">Вероятность: -</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-promo">
+                <h3>Изучите теорию перед практикой</h3>
+                <p>Прежде чем переходить к приложению, рекомендуем ознакомиться с теоретическими основами:</p>
+                <div class="theory-links">
+                    <a href="{% url 'section' 'section-ml' %}" class="theory-link">
+                        <i class="fas fa-robot"></i>
+                        <span>Основы машинного обучения</span>
+                    </a>
+                    <a href="{% url 'section' 'section-cnn' %}" class="theory-link">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Сверточные нейронные сети</span>
+                    </a>
+                    <a href="{% url 'section' 'section-supervised' %}" class="theory-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Обучение с учителем</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <!-- Модальное окно опросника -->
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <div class="survey-header">
+                <h2>Опрос по теме сайта</h2>
+                <p>Пожалуйста, ответьте на несколько вопросов</p>
+            </div>
+
+            <div class="survey-progress">
+                <div class="survey-progress-bar" id="surveyProgress"></div>
+            </div>
+
+            <div id="surveyContent">
+                <!-- Контент опросника будет генерироваться динамически -->
+            </div>
+
+            <div class="survey-navigation">
+                <button class="survey-btn" id="prevBtn" disabled>Назад</button>
+                <button class="survey-btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/state-manager.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+
+</html>

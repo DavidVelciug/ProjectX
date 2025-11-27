@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Многослойный перцептрон (MLP) - Нейронные сети</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="logo">
+                <img src="{% static 'img/Безымянный.png' %}" alt="Логотип">
+                <span class="logo-text">Нейронные сети</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <button class="music-toggle" id="musicToggle">
+                <i class="fas fa-music"></i>
+            </button>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    Меню <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a href="{% url 'app' %}"><i class="fas fa-rocket"></i> Приложение</a>
+                    <a href="{% url 'aboutproject' %}"><i class="fas fa-book"></i> О проекте</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- YouTube плеер -->
+<div class="youtube-player hidden" id="youtubePlayer">
+    <div class="player-header">
+        <h3>Фоновая музыка</h3>
+        <button class="close-player" id="closePlayer">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <iframe class="youtube-iframe" 
+        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&modestbranding=1&autoplay=0"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+    <!-- Боковая панель навигации -->
+<aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-robot"></i> Машинное обучение, роль в программировании
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-ml' %}" class="submenu-item active">Машинное обучение</a></li>
+                    <li><a href="{% url 'section' 'section-history' %}" class="submenu-item">История развития</a></li>
+                    <li><a href="{% url 'section' 'section-paradigms' %}" class="submenu-item">Основные парадигмы обучения</a></li>
+                    <li><a href="{% url 'section' 'section-blackbox' %}" class="submenu-item">Понятие "чёрного ящика"</a></li>
+                    <li><a href="{% url 'section' 'section-research' %}" class="submenu-item">Цель и задачи исследования</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-network-wired"></i> Нейронные сети как инструмент
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-perceptron' %}" class="submenu-item">Перцептрон и его развитие</a></li>
+                    <li><a href="{% url 'section' 'section-mlp' %}" class="submenu-item">Многослойный перцептрон (MLP)</a></li>
+                    <li><a href="{% url 'section' 'section-cnn' %}" class="submenu-item">Сверточные нейронные сети (CNN)</a></li>
+                    <li><a href="{% url 'section' 'section-components' %}" class="submenu-item">Основные компоненты нейронных сетей</a></li>
+                    <li><a href="{% url 'section' 'section-activation' %}" class="submenu-item">Функции активации</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-graduation-cap"></i> Методы обучения нейронных сетей
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-gradient' %}" class="submenu-item">Градиентный спуск</a></li>
+                    <li><a href="{% url 'section' 'section-supervised' %}" class="submenu-item">Обучение с учителем</a></li>
+                    <li><a href="{% url 'section' 'section-backpropagation' %}" class="submenu-item">Метод обратного распространения ошибки</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Основная область содержимого -->
+    <main class="main-content">
+        <section class="content-section">
+            <div class="page-content" id="mlp-page-1">
+                <h2>Многослойный перцептрон (MLP)</h2>
+
+                <div class="definition">
+                    <p>MLP — это искусственная нейронная сеть, состоящая из нескольких слоёв перцептронов. Это первый
+                        шаг от простого перцептрона к глубокому обучению.</p>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/ArchMLP.png' %}" alt="Архитектура MLP" class="content-image">
+                    <div class="image-caption">Архитектура многослойного перцептрона с входным, скрытыми и выходным
+                        слоями</div>
+                </div>
+
+                <h3>Определение MLP</h3>
+                <p>MLP состоит из трех основных типов слоев:</p>
+
+                <div class="highlight">
+                    <ul>
+                        <li><strong>Входной слой (input layer)</strong> — получает данные</li>
+                        <li><strong>Скрытые слои (hidden layers)</strong> — выполняют преобразования данных, находя
+                            более сложные зависимости</li>
+                        <li><strong>Выходной слой (output layer)</strong> — выдаёт результат (например, вероятность
+                            принадлежности к классу)</li>
+                    </ul>
+                </div>
+
+                <h3>Почему MLP важен</h3>
+                <ul>
+                    <li>Решает проблему простого перцептрона (может работать с нелинейно разделимыми данными, например,
+                        XOR)</li>
+                    <li>Лежит в основе современных нейросетей: сверточные сети (CNN), рекуррентные сети (RNN),
+                        трансформеры — это всё расширения идей MLP</li>
+                </ul>
+            </div>
+
+            <div class="page-content" id="mlp-page-2" style="display: none;">
+                <h3>Как работает MLP</h3>
+
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Линейное преобразование</h4>
+                        <p>Каждый нейрон в слое получает значения от предыдущего слоя, умножает их на свои веса и
+                            складывает:</p>
+                        <div class="formula">
+                            z = w · x + b
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Нелинейная функция активации</h4>
+                        <p>После суммирования результат пропускается через функцию активации (ReLU, sigmoid, tanh и
+                            др.). Это позволяет решать нелинейные задачи.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Передача дальше</h4>
+                        <p>Выход нейрона идёт на вход следующему слою.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Обучение</h4>
+                        <p>Используется алгоритм обратного распространения ошибки (backpropagation) + метод оптимизации
+                            (например, градиентный спуск).</p>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="{% static 'img/rabotamlp.png' %}" alt="Работа MLP" class="content-image">
+                    <div class="image-caption">Процесс прямого распространения сигнала в MLP</div>
+                </div>
+            </div>
+
+            <div class="page-content" id="mlp-page-3" style="display: none;">
+                <h3>Примеры применения MLP</h3>
+
+                <div class="applications-grid">
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Классификация изображений</h4>
+                            <p>Распознать, есть ли кот на картинке</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Прогнозирование временных рядов</h4>
+                            <p>Курс акций, погода</p>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="app-content">
+                            <h4>Обработка текста</h4>
+                            <p>Определение тональности сообщения</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Важные особенности MLP</h3>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-network-wired"></i>
+                        <div>
+                            <h4>Полносвязная архитектура</h4>
+                            <p>MLP — это полносвязная сеть (fully connected): каждый нейрон связан со всеми нейронами
+                                предыдущего слоя.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fas fa-layer-group"></i>
+                        <div>
+                            <h4>Гибкая глубина</h4>
+                            <p>Может иметь 1–2 скрытых слоя для простых задач, десятки и сотни слоёв — в глубоких
+                                моделях.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fas fa-table"></i>
+                        <div>
+                            <h4>Универсальность</h4>
+                            <p>Хорошо подходит для табличных данных, простых изображений и базовых NLP-задач.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>Характеристика</th>
+                            <th>Простой перцептрон</th>
+                            <th>Многослойный перцептрон (MLP)</th>
+                        </tr>
+                        <tr>
+                            <td>Количество слоёв</td>
+                            <td>1 слой</td>
+                            <td>3+ слоя (входной, скрытые, выходной)</td>
+                        </tr>
+                        <tr>
+                            <td>Способность решать XOR</td>
+                            <td>❌ Не может</td>
+                            <td>✅ Может</td>
+                        </tr>
+                        <tr>
+                            <td>Выразительная мощность</td>
+                            <td>Линейная классификация</td>
+                            <td>Универсальный аппроксиматор</td>
+                        </tr>
+                        <tr>
+                            <td>Области применения</td>
+                            <td>Ограниченные</td>
+                            <td>Широкий спектр задач</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Универсальный аппроксиматор:</strong> Теоретически доказано, что MLP с хотя бы одним
+                        скрытым слоем и нелинейной функцией активации может аппроксимировать любую непрерывную функцию с
+                        любой желаемой точностью.</p>
+                </div>
+            </div>
+
+            <div class="section-navigation">
+                <button class="nav-btn" id="mlp-prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <div class="page-indicator" id="mlp-page-indicator">Страница 1 из 3</div>
+                <button class="nav-btn" id="mlp-next-btn">Вперед <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Навигация между темами -->
+            <div class="theme-navigation-container">
+                <div class="theme-navigation">
+                    <button class="nav-btn theme-prev-btn" onclick="window.location.href = window.location.origin + '/section-perceptron'">
+                        <i class="fas fa-arrow-left"></i> Перцептрон
+                    </button>
+                    <button class="nav-btn theme-next-btn" onclick="window.location.href = window.location.origin + '/section-cnn'">
+                        Сверточные сети <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Иконка опросника и модальное окно -->
+    <div class="survey-icon hidden" id="surveyIcon">
+        <i class="fas fa-poll"></i>
+    </div>
+
+    <div class="survey-modal" id="surveyModal">
+        <div class="survey-container">
+            <!-- Содержимое опросника -->
+        </div>
+    </div>
+
+    <script src="{% static 'js/state-manager.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/section-navigation.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            changePage('mlp', 1);
+        });
+    </script>
+</body>
+</html>

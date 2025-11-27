@@ -1,0 +1,40 @@
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-robot"></i> Машинное обучение, роль в программировании
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-ml' %}" class="submenu-item">Машинное обучение</a></li>
+                    <li><a href="{% url 'section' 'section-history' %}" class="submenu-item">История развития</a></li>
+                    <li><a href="{% url 'section' 'section-paradigms' %}" class="submenu-item">Основные парадигмы обучения</a></li>
+                    <li><a href="{% url 'section' 'section-blackbox' %}" class="submenu-item">Понятие "чёрного ящика"</a></li>
+                    <li><a href="{% url 'section' 'section-research' %}" class="submenu-item">Цель и задачи исследования</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-network-wired"></i> Нейронные сети как инструмент
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-perceptron' %}" class="submenu-item">Перцептрон и его развитие</a></li>
+                    <li><a href="{% url 'section' 'section-mlp' %}" class="submenu-item">Многослойный перцептрон (MLP)</a></li>
+                    <li><a href="{% url 'section' 'section-cnn' %}" class="submenu-item">Сверточные нейронные сети (CNN)</a></li>
+                    <li><a href="{% url 'section' 'section-components' %}" class="submenu-item">Основные компоненты нейронных сетей</a></li>
+                    <li><a href="{% url 'section' 'section-activation' %}" class="submenu-item active">Функции активации</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <div class="menu-label">
+                    <i class="fas fa-graduation-cap"></i> Методы обучения нейронных сетей
+                </div>
+                <ul class="submenu">
+                    <li><a href="{% url 'section' 'section-gradient' %}" class="submenu-item">Градиентный спуск</a></li>
+                    <li><a href="{% url 'section' 'section-supervised' %}" class="submenu-item">Обучение с учителем</a></li>
+                    <li><a href="{% url 'section' 'section-backpropagation' %}" class="submenu-item">Метод обратного распространения ошибки</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>

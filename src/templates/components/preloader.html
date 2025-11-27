@@ -1,0 +1,17 @@
+{% load static %}
+<div class="video-preloader" id="videoPreloader">
+        <div class="video-container">
+            <video id="preloaderVideo" muted loop>
+                <source src="{% static 'gif/wmremove-transformed.mp4' %}" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="video-overlay">
+                <div class="loading-text">{{ loader }}</div>
+                <div class="loading-progress">
+                    <div class="loading-progress-bar" id="progressBar"></div>
+                </div>
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+            </div>
+        </div>
+    <div class="content-reveal" id="contentReveal"></div>
+</div>
